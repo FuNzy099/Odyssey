@@ -2,6 +2,10 @@
 
 {% block title %}Register{% endblock %}
 
+{% block stylesheets %}
+    <link href="{{ asset('css/layoutStyles/layout.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
 {% block body %}
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
@@ -10,7 +14,9 @@
     <h1>Register</h1>
 
     {{ form_start(registrationForm) }}
+    {{ form_row(registrationForm.pseudonyme) }}
         {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.phoneNumber) }}
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}

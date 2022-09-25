@@ -4,16 +4,98 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
+            <link href="{{ asset('css/layout/layout.css') }}" type="text/css" rel="stylesheet" />
         {% endblock %}
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
+
     <body>
-        {% block body %}{% endblock %}
+
+        <header>
+            
+            <nav>
+
+                {# Si le user est en session #}
+                {% if app.user %}
+
+                    <div class="groupInfos">
+                        <figure>
+                            <a class="parentLogo" href="{{ path('app_home')}}">
+                                <img src="{{ asset('img/logo.png')}}" class="logo" alt="Logo du site représentant Saturne incrusté du non du site web: 'Space Odyssey'">
+                            </a>
+                        </figure>
+                        <span class="pseudo">{{app.user.pseudonyme}}</span>
+                    </div>
+                    
+                    <div class="groupButton">
+
+                        <div class="dropdown">
+                            <button class="dropbtn">Évènements</button>
+                            <div class="dropdown-content">
+                                <a href='{{ path('list_events')}}' class="linkHeaderNav" id="deco">Liste des évènements</a>
+                                <a href="{{ path('show_registration_list', {'id': app.user.id} )}}" > Vos inscriptions </a>
+                                <a href="{{ path('show_organization_list', {'id': app.user.id} )}}"> Vos évènements </a>
+                                <a href="{{ path('add_event')}}">Créer un évènement</a>
+                            </div>
+                        </div>
+    
+                        <div class="dropdown">
+                            <button class="dropbtn">Profil</button>
+                            <div class="dropdown-content">
+                                <a href='{{ path('edit_profil')}}' class="linkHeaderNav" id="deco">Modifier le profil</a>
+                                <a href='#' class="linkHeaderNav">Messages</a>
+                            </div>
+                        </div>
+    
+                        
+                        <a href="{{ path('app_logout') }}" > <button class="button dropbtn"> Déconnexion</button> </a>
+                         
+                    </div>
+                    
+                {# sinon #}
+                {% else %}
+
+                <div class="groupInfos">
+                    <figure>
+                        <a class="parentLogo" href="{{ path('app_home')}}">
+                            <img src="{{ asset('img/logo.png')}}" class="logo" alt="Logo du site représentant Saturne incrusté du non du site web: 'Space Odyssey'">
+                        </a>
+                    </figure>
+                </div>
+                
+                <div class="navGuest">
+                    <a href="{{ path('list_events')}}" class="button dropbtn"> Liste des évènements </a>
+                    <a href="{{ path('app_login') }}" class="button dropbtn"> Connexion </a>
+                    <a href="{{ path('app_register') }}" class="button dropbtn"> Inscription </a>   
+                </div>
+                {% endif %}
+            </nav>
+
+        </header>
+
+        {% for message in app.flashes('message') %}
+
+            <div class="p-3 my-2 rounded-2 success">{{ message }}</div>
+
+        {% endfor %}
+
+
+        {% for warning in app.flashes('warning') %}
+
+            <div class="p-3 my-2 rounded-2 warning">{{ warning }}</div>
+
+        {% endfor %}
+
+        {% block body %}
+                
+        {% endblock %}
     </body>
+
 </html>

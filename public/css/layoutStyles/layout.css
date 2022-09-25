@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+
+
+                                            /*Paramètre général*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* font-family: 'play', sans-serif; */
+    /* font-family:  'Roboto Slab', serif; */
+
+}
+
+img {
+    width: 100%;
+    height: auto;
+    margin: auto;
+}
+
+/* ! a supprimer */
+.example-wrapper {
+    margin: 1em auto;
+    max-width: 800px;
+    width: 95%;
+    font: 18px/1.5 sans-serif;
+}
+
+.example-wrapper code {
+    background: #F5F5F5;
+    padding: 2px 6px;
+}
+
+
+
+
+
+                                            /*Navigation*/
+nav {
+    display: flex;
+    background-color: #252737;
+    height: 70px;
+    justify-content: space-between;
+    font-family: 'play', sans-serif;
+}
+
+/* Pseudo de la personne connecté */
+.pseudo {
+    color: white;
+    font-size: 2.5em;
+    align-self: center;
+}
+
+/* Logo du site */
+.parentLogo{
+    display: flex;
+}
+
+.logo {
+    width: 80px;
+    height: auto;
+    align-self: center;
+}
+
+/* div contenant les liens du dropdown */
+.groupButton{
+    align-self: center;
+    margin-right: 15%;
+}
+
+/* Div contenant le logo et le pseudo de la personne connecté */
+.groupInfos{
+    display: flex;
+    margin-left: 5%;
+}
+
+.groupInfos span{
+    margin-left: 20px;
+}
+
+/* Navigation des personnes non connecté */
+.navGuest{
+    align-self: center;
+    margin-right: 15%;
+}
+
+/* Effet des liens */
+.navGuest a{
+    color: white;
+    align-self: center;
+}
+
+
+
+
+                                            /* Paramètre du dropdown profil */
+
+.dropbtn, .button {
+    background-color: #252737;
+    color: azure;
+    border: none;
+    margin-left: 30px;
+    font-size: 1em;
+    text-decoration: none;
+    font-family: 'play', sans-serif;
+}
+
+.dropbtn{
+    font-size: larger;
+}
+
+/* Le container <div class="dropdown> - nécessaire pour positionner le contenu de la liste déroulante */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #252737;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* Liens à l'intérieur du dropdown */
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 1em;
+    margin: 0;
+    text-align: center;
+}
+
+/* Effet au survolement de la souris à l'intérieur du menu déroulant du dropdown */
+.dropdown-content a:hover {
+    color: rgb(175, 81, 13);
+}
+
+/* Effet au survolement de la souris à l'entête du dropdown */
+.dropdown:hover .dropbtn, .button:hover {
+    color: rgb(175, 81, 13);
+}
+
+/* Afficher le menu déroulant au survol */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+

@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des évènement enregistrés{% endblock %}
+
+{% block stylesheets %}
+
+<link href="{{ asset('css/layoutStyles/layout.css') }}" type="text/css" rel="stylesheet" />
+<link href="{{ asset('css/eventStyles/event.css') }}" type="text/css" rel="stylesheet" />
+
+{% endblock %}
+
+{% block body %}
+
+    <h1>holla</h1>
+
+    {% for user in users %}
+
+        {# Si la liste des évènements enregistré est vide on affiche un message #}
+        {% if user.registrationEvents is empty %}
+
+            <p> Vous êtes inscrit à aucun évènement </p>
+
+        {% else %}
+
+            {% for registrationEvent in user.registrationEvents %}
+
+                <div class="example-wrapper">
+
+                    <div class="mesCartes">
+
+                        <div class="card">
+                            <h5>{{ registrationEvent.title}}</h5>
+                            <p>{{ registrationEvent.description}}</p>
+                            <p>{{ registrationEvent.userCreator.pseudonyme}}</p>
+                            <p>
+                                Lieu du rendez-vous <br>
+                                {#
+                                    Si on veux autoriser que certains tags HTML avec le filtre raw on peut utiliser striptags dans le but d'autoriser UNIQUEMENT la balise <br> !
+                                        Donc même si on injectait une balise potentiellement dangereuse (un script en l'occurence) elle ne serais pas interptétée !
+                                        DOCUMENTATION:
+                                        triptags => https://twig.symfony.com/doc/3.x/filters/striptags.html
+                                        raw => https://twig.symfony.com/doc/3.x/filters/raw.html
+                                #}
+                                {{registrationEvent.fullAddressEvent| striptags('<br>')|raw}}
+                            </p>
+
+                            <p>
+                                Heure du rendez-vous <br>
+                                Débute le {{ registrationEvent.startDate|date('d/m/Y à H:i') }} <br>
+                                Termine le {{ registrationEvent.endDate|date('d/m/Y à H:i') }}
+                            </p>
+
+                            <p>
+                                Nombre de place restant : {{ registrationEvent.nbSeatsAvailable }} / {{ registrationEvent.maxPlaces }}
+                            </p>
+
+                            {% if app.user  %}         
+
+                                {# Si le user en session ce trouve dans la liste des user participant à un événement il peut ce désinscrire  #}
+                                {% if app.user in registrationEvent.users %}
+                            
+                                    <a href="{{ path('unsub_event', {'id': registrationEvent.id} )}}">Désinscription à l'évènement</a>
+                                
+                                {% endif %}
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+            
+        {% endif %}
+
+    {% endfor %}
+    
+
+{% endblock %}
+
+
+

@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des évènements{% endblock %}
+
+{% block stylesheets %}
+
+    <link href="{{ asset('css/layoutStyles/layout.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('css/eventStyles/event.css') }}" type="text/css" rel="stylesheet" />
+
+{% endblock %}
+
+{% block body %}
+
+<div class="example-wrapper">
+
+    <h1>Je suis dans la liste des évènements ✅</h1>
+
+    <div class="mesCartes">
+
+        {% for event in events %}
+
+
+            <div class="card">
+                <h5>{{ event.title}}</h5>
+                <p>{{ event.description}}</p>
+                <p>{{ event.userCreator.pseudonyme}}</p>
+                <p> 
+                    Lieu du rendez-vous <br>
+                    {# 
+                        Si on veux autoriser que certains tags HTML avec le filtre raw on peut utiliser striptags dans le but d'autoriser UNIQUEMENT la balise <br> !
+                        Donc même si on injectait une balise potentiellement dangereuse (un script en l'occurence) elle ne serais pas interptétée !
+                        DOCUMENTATION:
+                        triptags => https://twig.symfony.com/doc/3.x/filters/striptags.html
+                        raw => https://twig.symfony.com/doc/3.x/filters/raw.html
+                    #}
+                    {{event.fullAddressEvent| striptags('<br>')|raw}}
+                </p>
+        
+                <p> 
+                    Heure du rendez-vous <br>
+                    Débute le {{ event.startDate|date('d/m/Y à H:i') }} <br>
+                    Termine le {{ event.endDate|date('d/m/Y à H:i') }}
+                </p>
+
+                <p>
+                    Nombre de place disponible : {{ event.nbSeatsAvailable }} / {{ event.maxPlaces }}
+                </p>
+
+                {# Si il y a un user en session on lui offre la possibilité de s'inscrire et/ou de se désinscrire d'un évènement #}
+                {% if app.user  %}         
+
+                    {# Si le user en session ce trouve dans la liste des user participant à un événement il peut ce désinscrire  #}
+                    {% if app.user in event.users %}
+                
+                        <a href="{{ path('unsub_event', {'id': event.id} )}}">Désinscription à l'évènement</a>
+
+                    {# Sinon si le user en session est le createur de l'évènement on lui indique  #}
+                    {% elseif app.user == event.userCreator %}
+                    
+                        <p>Vous êtes l'organisateur de cet évènement</p>
+                        
+                    {# Sinon, si le user en session n'est pas dans la liste des users participant à l'événement et qu'il n'est pas le createur il peut s'inscrire #}
+
+                    {% elseif event.users|length == event.maxPlaces %}
+
+                        <p>L'évènement est complet</p> 
+
+                    {% else %}
+
+                        <a href="{{ path('registration_event', {'id': event.id} )}}">Inscription à l'évènement</a>  
+                                     
+                    {% endif %}
+
+                    {# si l'id de l'user en session et == à l'id de l'utilisateur eyant créé l'évènement il peut modifier ou supprimer ce dernier #}
+                    {% if app.user.id == event.userCreator.id %}
+
+                        <a href="{{ path('edit_event', {'id': event.id} )}}">Modifier</a>
+                        <a href="{{ path('delete_event', {'id': event.id} )}}">Supprimer</a>
+                        
+                    {% endif %}
+
+                {# Sinon si le user n'est pas en session on le renvoie au formulaire de connection au site #}
+                {% else %}
+
+                    <a href="{{ path('app_login')}}"> Connectez-vous</a>
+
+                {% endif %}
+
+            </div>
+
+        {% endfor %}
+    </div>
+
+
+</div>
+{% endblock %}

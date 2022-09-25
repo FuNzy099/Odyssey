@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -41,7 +42,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=25)
+     * @ORM\Column(type="string", length=25, unique=true)
      */
     private $pseudonyme;
 
@@ -75,9 +76,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $registrationEvents;
 
+    /**
+     * @ORM\Column(type="string", length=14)
+     */
+    private $phoneNumber;
 
     public function __construct()
     {
+        // new DataTime permet lors de la création d'un compte utilisateur d'inscrire en base de donnée la date est l'heure de l'inscription
+        $this -> registrationDate = new DateTime();
+        
         $this->articles = new ArrayCollection();
         $this->registrationEvents = new ArrayCollection();
         $this->createEvents = new ArrayCollection();
@@ -179,7 +187,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setPseudonyme(string $pseudonyme): self
     {
-        $this->pseudonyme = $pseudonyme;
+        /*
+            ucfirst permet de mettre le premier caractère en majuscule
+            strtolower renvoie une chaine en minuscules
+        */
+        $this->pseudonyme = ucfirst(strtolower($pseudonyme));
 
         return $this;
     }
@@ -300,6 +312,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $createEvent->setUserCreator(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
 
         return $this;
     }

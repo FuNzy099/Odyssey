@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des évènement enregistrés{% endblock %}
+
+{% block stylesheets %}
+
+<link href="{{ asset('css/layoutStyles/layout.css') }}" type="text/css" rel="stylesheet" />
+<link href="{{ asset('css/eventStyles/event.css') }}" type="text/css" rel="stylesheet" />
+
+{% endblock %}
+
+{% block body %}
+
+    <h1>holla</h1>
+
+    {% for user in users %}
+
+        {# Si la liste des évènements enregistré est vide on affiche un message #}
+        {% if user.createEvents is empty %}
+
+            <p> Vous n'organisez aucun évènement </p>
+
+        {% else %}
+
+            {% for createEvent in user.createEvents %}
+
+                <div class="example-wrapper">
+
+                    <div class="mesCartes">
+
+                        <div class="card">
+                            <h5>{{ createEvent.title}}</h5>
+                            <p>{{ createEvent.description}}</p>
+                            <p>{{ createEvent.userCreator.pseudonyme}}</p>
+                            <p>
+                                Lieu du rendez-vous <br>
+                                {#
+                                    Si on veux autoriser que certains tags HTML avec le filtre raw on peut utiliser striptags dans le but d'autoriser UNIQUEMENT la balise <br> !
+                                        Donc même si on injectait une balise potentiellement dangereuse (un script en l'occurence) elle ne serais pas interptétée !
+                                        DOCUMENTATION:
+                                        triptags => https://twig.symfony.com/doc/3.x/filters/striptags.html
+                                        raw => https://twig.symfony.com/doc/3.x/filters/raw.html
+                                #}
+                                {{createEvent.fullAddressEvent| striptags('<br>')|raw}}
+                            </p>
+
+                            <p>
+                                Heure du rendez-vous <br>
+                                Débute le {{ createEvent.startDate|date('d/m/Y à H:i') }} <br>
+                                Termine le {{ createEvent.endDate|date('d/m/Y à H:i') }}
+                            </p>
+
+                            <p>
+                                Nombre de place restant : {{ createEvent.nbSeatsAvailable }} / {{ createEvent.maxPlaces }}
+                            </p>
+
+                            {% if app.user  %}      
+
+                                {# Si le user en session est l'organisateur de l'évènement il peut le modifier ou supprimer  #}
+                            
+                                <a href="{{ path('edit_event', {'id': createEvent.id} )}}">Modifier</a>
+                                <a href="{{ path('delete_event', {'id': createEvent.id} )}}">Supprimer</a>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+                
+        {% endif %}
+
+    {% endfor %}
+
+{% endblock %}

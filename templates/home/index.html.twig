@@ -1,0 +1,132 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Acceuil {% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('css/layoutStyles/layout.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('css/homeStyles/home.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+
+<main>  
+
+    <figure class="MainImg">
+        <img src="{{ asset('img/earth.jpg')}}" class="imgEarth" alt="Image de la planète Terre">
+        <figcaption>
+            <h1>Space Odyssey</h1>
+            <p>Vers l'infini et l'au-delà</p>
+        </figcaption>
+    </figure>
+
+    <section class="diapo">
+        <div class="elements">
+            <div class="element active">
+
+                <figure>
+ 
+                    <img src="{{ asset('img/earthSlider.png')}}" class="imgPlanet">
+                    <p class="nbPosition">03</p>
+
+                </figure>
+
+                <div class="infosPlanet">
+
+                    <h2>Terre</h2>
+
+                    <div class="blockDescriptionAndDetail">
+
+                        <p class="descriptionPlanet">
+                            La Terre est la troisième planète par ordre d'éloignement au Soleil et la cinquième plus grande grande du système solaire, aussi bien par la masse que par son diamètre.
+                            La Terre est par ailleurs le seul objet céleste connu à abriter de la vie. 
+                            L'axe de rotation de la Terre possède une inclinaison de 23°, ce qui cause l'apparition des saisons.
+                            D'après la datation radiométrique, la Terre s'est formée il y a 4,54 milliards d'années. Elle possède un unique satellite naturel, la Lune, qui s'est formée peu après.
+                        </p>
+                        
+                    </div>
+                    
+                    <div class="moreDetail">
+
+                        <p> {Période orbitale: 365.26 jours terrestre} </p>
+
+                        <p>Satelites connus: 1</p>
+
+                    </div>
+
+                </div>
+
+            </div>  
+
+            {# <div class="listPlanets">
+                <p>Mercure</p>
+                <p>Venus</p>
+                <p>Terre</p>
+                <p>Mars</p>
+                <p>Jupiter</p>
+                <p>Saturne</p>
+                <p>Uranus</p>
+                <p>Neptune</p>
+            </div> #}
+
+
+
+
+
+            <div class="element">
+
+                <figure>
+ 
+                    <img src="{{ asset('img/marsSlider.png')}}" class="imgPlanet">
+                    <p class="nbPosition">04</p>
+
+                </figure>
+
+                <div class="infosPlanet">
+
+                    <h2>Mars</h2>
+
+                    <div class="blockDescriptionAndDetail">
+
+                        <p class="descriptionPlanet">
+                            Mars est la quatrième planète par ordre d'éloignement au Soleil et la deuxième plus petite, Mars à aujourd'hui perdu la presque totalité de son activité géologique interne, mais également son atmosphère.
+                            C’est une planète tellurique, environ dix fois moins massive que la Terre mais dix fois plus massive que la Lune. 
+                            Mars fait l'objet de programmes d'exploration plus embitieux que pour tout les autre objet du système solaire.
+                        </p>
+                        
+                    </div>
+                    
+                    <div class="moreDetail">
+
+                        <p> Période orbitale: 686.98 jours terrestre </p>
+
+                        <p>Satelites connus: 2</p>
+
+                    </div>
+
+                </div>
+
+            </div>  
+{# 
+            <div class="listPlanets">
+                <p>Mercure</p>
+                <p>Venus</p>
+                <p>Terre</p>
+                <p>Mars</p>
+                <p>Jupiter</p>
+                <p>Saturne</p>
+                <p>Uranus</p>
+                <p>Neptune</p>
+            </div> #}
+
+       
+        </div>
+    </section>        
+
+
+</main>
+
+{# <div class="example-wrapper">
+    <h1>Je suis dans le home ✅</h1>
+
+</div> #}
+{% endblock %}
