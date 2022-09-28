@@ -37,8 +37,9 @@ class SecurityController extends AbstractController
             $error = $authenticationUtils->getLastAuthenticationError();
             // last username entered by the user
             $lastUsername = $authenticationUtils->getLastUsername();
-
+            
             return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+
         } else {
             return $this->redirectToRoute('app_home');
         }
@@ -46,7 +47,7 @@ class SecurityController extends AbstractController
 
 
 
-    // --------------------- FUNCTION QUI PERMET DE CE DECONNECTER
+    //  --------------------- FUNCTION QUI PERMET DE CE DECONNECTER
 
     /**
      * @Route("/logout", name="app_logout")
@@ -58,15 +59,13 @@ class SecurityController extends AbstractController
 
 
 
-    //  --------------------- FUNCTION QUI D'EDITER LE PROFIL
+    //  --------------------- FUNCTION QUI PERMET D'EDITER LE PROFIL
 
     /**
      * @Route("/user/profil/edit", name="edit_profil")
      */
     public function editProfil(ManagerRegistry $doctrine, Request $request)
     {
-
-        // ! https://github.com/dean045/ProjetSortir/blob/37b55c19fb698ec9156bc9be2f83db8a22552af4/src/Controller/ProfilController.php
 
         // Si il y a un utilisateur en session
         if ($this->getUser()) {
@@ -75,7 +74,10 @@ class SecurityController extends AbstractController
             $user = $this->getUser();
 
             
-            // On récupère differents information de l'utilisateur
+            /*
+                On récupère differents information de l'utilisateur (Pseudo, numéro de téléphone et email),
+                Ces variables sont là dans le but d'effectuer des conditions un peut plus tard dans la function
+            */ 
             $actualPseudo = $user -> getPseudonyme();
             $actualPhoneNumber = $user -> getPhoneNumber();
             $actualEmail = $user -> getEmail();
@@ -84,6 +86,7 @@ class SecurityController extends AbstractController
             $form = $this->createForm(EditProfilType::class, $user);
 
             $form->handleRequest($request);
+
 
             if ($form->isSubmitted() && $form->isValid()) {
 
@@ -108,8 +111,19 @@ class SecurityController extends AbstractController
                 $newEmail = $form -> get('email') -> getData();
                 $checkEmail = $doctrine -> getRepository(User::class) -> findOneBy(['email' => $newEmail], []);
 
+                /*
+                    $newAvatar => On récupère l'image saisi dans le formulaire
+                */
+                $newAvatar = $form -> get('avatar') -> getData();
 
-                // On verifie si le nouveau pseudo est different au pseudo actuel
+                // dd($newAvatar);
+
+
+                /*
+                    PARTIE CONCERNANT LA MODIFICATION DU PSEUDONYME
+                
+                    On verifie si le nouveau pseudo est different au pseudo actuel
+                */
                 if($newPseudo != $actualPseudo){
             
 
@@ -144,7 +158,11 @@ class SecurityController extends AbstractController
                 }
 
 
-                // On verifie si le nouveau numéro de telephone est different au numéro déjà enregistré
+                /*
+                    PARTIE CONCERNANT LA MODIFICATION DU NUMERO DE TEL
+                
+                    On verifie si le nouveau numéro de telephone est different au numéro déjà enregistré
+                */
                 if($newPhoneNumber != $actualPhoneNumber){
 
                     // On verifie si le nouveau numéro de telephone n'est pas en base de donnée
@@ -176,8 +194,12 @@ class SecurityController extends AbstractController
    
                 }
 
-
-                //  On verifie si le nouveau numéro de telephone est different au numéro déjà enregistré
+ 
+                /*
+                    PARTIE CONCERNANT LA MODIFICATION DE L'EMAIL
+                
+                    On verifie si le nouveau numéro de telephone est different au numéro déjà enregistré
+                */
                 if($newEmail != $actualEmail){
 
                     if (!isset($checkEmail)){
@@ -202,11 +224,111 @@ class SecurityController extends AbstractController
    
                 }
 
+
+                /*
+                    PARTIE CONCERNANT LA MODIFICATION DE L'AVATAR
+
+                    On verifie si il existe un nouvelle avatar 
+                */   
+                if(isset($newAvatar)){
+
+                    /*
+                        Condition permetant de verifier si l'image que l'utilisateur souhaite mettre en avatar est dans un format autorisé
+
+                        in_array => Permet d'indiquer si une valeur appartient au tableau
+
+                        DOCUMENTATION : 
+                            in_array : https://www.php.net/manual/fr/function.in-array.php
+                    */
+                    if(in_array($newAvatar -> guessExtension(), ["png", "jpeg", "jpg", "webp" ])){
+
+                        // Condition dans l'optique de définir un poid maximum autorisé pour l'avatar, ici à l'occurrence 2Mo max !
+                        if($newAvatar -> getSize() <= 2000000){
+                            
+                            /*
+                                On hache et applique une iniqid au fichier
+
+                                md5 => C'est un algorithme de hachage faible
+                                uniqId => Permet de génèrer un identifiant unique basé sur la date et l'heure courante 
+
+                                DOCUMENTATION: 
+                                    md5 : https://www.php.net/manual/fr/function.md5.php
+                                    uniqid : https://www.php.net/manual/fr/function.uniqid.php
+                            */
+                            $file = md5(uniqid()) . '.' . $newAvatar -> guessExtension();
+                    
+                            /*
+                                On déplace le fichier avatar de l'utilisateur dans le répertoire public/img/avatars
+                                Pour ce faire j'ai declaré avatar_directory dans les parameters du fichier services.yaml,
+                            */ 
+                            $newAvatar -> move(
+                                $this -> getParameter('avatar_directory'),
+                                $file
+                            );
+
+                            /*
+                                On déclare nameActualAvatar dans le but de récuperer dans notre disque local l'avatar actuel avant modification par l'utilisateur,
+                                pour ce faire j'utilise de nouveau le getParameter('avatar_directory') pour localiser le fichier dans public/img/avatars 
+                            */ 
+                            $nameActualAvatar = $this -> getParameter('avatar_directory') . '/' . $user -> getAvatar();
+
+
+                            // Condition pour verifier si $nameActualAvatar est differents que l'avatar par defaut de l'application ! 
+                            if($nameActualAvatar != $this -> getParameter('avatar_directory') . '/default-avatar.png'){
+                        
+                                /*
+                                    Condition pour verifier si $nameActualAvatar existe, si c'est le cas nous supprimon l'ancien avatar 
+
+                                    file_exists() => Permet de verifier si un fichier ou dossier existe
+                                    unlink() => permet de supprimer le fichier ou dossier
+
+                                    DOCUMENTATION:
+                                        file_exists() : https://www.php.net/manual/fr/function.file-exists.php
+                                        unlink() : https://www.php.net/manual/fr/function.unlink.php
+                                */ 
+                                if(file_exists($nameActualAvatar) ){
+                                    unlink($nameActualAvatar);
+                                }
+
+                            }
+               
+                            // On initialiser le nouvelle avatar de l'utilisateur
+                            $user -> setAvatar($file);
+                            
+                            // On déclare $entityManager pour récupèrer getManager(), c'est grace à lui qu'on accéde à persist() et flush()
+                            $entityManager = $doctrine -> getManager();
+                        
+                            // On persit() notre user, c'est l'équivalent de prepare() en PDO
+                            $entityManager -> persist($user);
+
+                            
+                            // On flush(), c'est l'équivalent de execute() en PDO, c''est à cette étape que le inser_into ce fait !
+                            $entityManager -> flush();
+
+                            // Message
+                            $this -> addFlash('message', "Profil mis à jour");
+
+                        // Si le poid du fichier dépasse les 2 Mo, on affiche un message à l'utilisateur
+                        } else {
+
+                            $this -> addFlash('warning', "Votre fichier avatar pèse plus de 2 Mo ! ");
+
+                        }
+
+                    // Si le format du ficher n'est pas autorisé on affiche un message
+                    } else {
+
+                        $this -> addFlash('warning', "Le format du fichier de l'avatar n'est pas supporté .. Veuillez choisir un autre format !");
+
+                    }
+        
+                }
+                
             }
 
-            
             return $this->render('security/editProfil.html.twig', [
                 'formEditProfil' => $form -> createView(),
+                'users' => $user,
             ]);
 
         // Si il n'y à pas d'utilisateur en session on redirige vers le home du site
@@ -225,14 +347,14 @@ class SecurityController extends AbstractController
     /**
      * @Route("/user/profil/editPassword", name="edit_password")
      */
-    public function editPassword(ManagerRegistry $doctrine, Request $request, UserPasswordHasherInterface $passwordEncoder){
+    public function editPassword(ManagerRegistry $doctrine, Request $request, UserPasswordHasherInterface $passwordHasher)
+    {
 
         // On verifie si il y a un user en session
         if($this -> getUser()){
 
             // On récupère le user en session
             $user = $this->getUser();
-
 
             // La function createForm() => permet de construire un formulaire qui ce repose sur builder de editPasswordType qui lui même ce repose sur l'entity User
             $form = $this->createForm(EditPasswordType::class, $user);
@@ -257,26 +379,36 @@ class SecurityController extends AbstractController
                     pour ce faire on utilise la méthode password_verify !
 
                     password_verify => Permet de verifier que le hachage donné correspond au mot de passe donné.
-                    DOCUMENTATION : https://www.php.net/manual/en/function.password-verify.php
+
+                        DOCUMENTATION: 
+                            https://www.php.net/manual/en/function.password-verify.php
                 */
                 if(password_verify($actualPassword, $actualPasswordBd)){
 
                     /*
-                        On récupère le setPassword dans notre objet use dans le but d'initialiser le mot de passe.
+                        On récupère le setPassword dans notre objet user pour initialiser le mot de passe.
 
-                        hashassword => Permet de hacher le mot de passe
+                        hashPassword => Permet de hacher le nouveau mot de passe de l'utilisateur avec l'algoritme le meilleur du moment pour cette version de symfony
+                        L'algoritme peutè$etre changé dans le fichier dans packages/security.yaml
 
+                        DOCUMENTATION:
+                            Hachage du password: https://symfony.com/doc/current/security/passwords.html#configuring-a-password-hasher
                     */
-                    $user -> setPassword($passwordEncoder -> hashPassword($user,  $newPassword));
+                    $user -> setPassword($passwordHasher -> hashPassword($user,  $newPassword));
 
+                    // On déclare un $entityManager pour récupérer getManager()
                     $entityManager = $doctrine -> getManager();
 
+                    // On flush(), c'est l'équivalent du execute() en PDO
                     $entityManager -> flush();
 
+                    // Message
                     $this -> addFlash("message", "Votre mot de passe a été modifier");
 
+                    // redirection
                     return $this -> redirectToRoute('edit_password');
 
+                // Si le mot de passe saisi dans le formulaire n'est pas identique à celui de enregistrer en base de donnée on affiche un message
                 } else {
 
                    $this -> addFlash("warning", "Votre mot de passe est incorect");
@@ -284,16 +416,6 @@ class SecurityController extends AbstractController
                    return $this -> redirectToRoute('edit_password');
 
                 };
-
-                die;
-
-           
-                
-
-        
-
-
-              
 
             }
 
@@ -310,6 +432,10 @@ class SecurityController extends AbstractController
        
 
     }
+
+
+
+    // --------------------- FUNCTION QUI PERMET DE DE RESET PASSWORD
 
 
 }

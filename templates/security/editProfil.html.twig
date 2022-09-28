@@ -5,12 +5,43 @@
 {% block stylesheets %}
 
     <link href="{{ asset('css/layoutStyles/layout.css') }}" type="text/css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/axentix@0.5.3/dist/css/axentix.min.css">
+
+    <link href="{{ asset('css/formStyles/form.css') }}" type="text/css" rel="stylesheet">
 
 {% endblock %}
 
 {% block body %}
 
-    {{ form(formEditProfil) }}
+<main>
+
+    {{ form_start(formEditProfil) }}
+    <div class="containt">
+        <figure>
+            <img src="{{ asset('img/avatars/' ~ app.user.avatar) }}" class="avatar" alt="Image de profil de l'utilisateur !">
+        </figure>
+    </div>
+
+    <div class="inputs">
+        <div class="email-pseudo">
+            {{ form_row(formEditProfil.email) }}
+
+
+            {{ form_row(formEditProfil.pseudonyme) }}
+        </div>
+        <div>
+            {{ form_row(formEditProfil.phoneNumber) }}
+        </div>
+        <div>
+            {{ form_row(formEditProfil.avatar) }}
+        </div>
+        <div>
+            {{ form_row(formEditProfil.submit) }}
+        </div>
+    </div>
+
+    {{ form_end(formEditProfil) }}
+
+
+</main>
 
 {% endblock %}

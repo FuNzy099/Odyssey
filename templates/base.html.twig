@@ -3,16 +3,18 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
+
+        {# Link pour afficher le logo dans l'onglet du navigateur #}
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-            <link href="{{ asset('css/layout/layout.css') }}" type="text/css" rel="stylesheet" />
-        {% endblock %}
+        {# Link bootsrap pour l'affichage des flashs #}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
+        {% block stylesheets %}
+            {# {{ encore_entry_link_tags('app') }} #}
+
+            <link href="{{ asset('css/layout/layout.css') }}" type="text/css" rel="stylesheet" />
+
         {% endblock %}
     </head>
 
@@ -81,21 +83,29 @@
 
         </header>
 
-        {% for message in app.flashes('message') %}
+        <div class="sendMessage">
 
-            <div class="p-3 my-2 rounded-2 success">{{ message }}</div>
-
-        {% endfor %}
-
-
-        {% for warning in app.flashes('warning') %}
-
-            <div class="p-3 my-2 rounded-2 warning">{{ warning }}</div>
-
-        {% endfor %}
+            {% for message in app.flashes('message') %}
+    
+                <div class="alert alert-success" role="alert">{{ message }}</div>
+    
+            {% endfor %}
+    
+    
+            {% for warning in app.flashes('warning') %}
+    
+                <div class="alert alert-warning" role="alert">{{ warning }}</div>
+    
+            {% endfor %}
+            
+        </div>
 
         {% block body %}
                 
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </body>
 
