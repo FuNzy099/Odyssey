@@ -22,6 +22,7 @@ main{
     display: flex;
     position: relative;
     text-align: center;
+    margin-bottom: 0 ; /* POUR CONTRER LE BOOOOOOOTSRAP */
 }
 
 /* Image de la terre */

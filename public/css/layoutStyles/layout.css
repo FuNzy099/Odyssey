@@ -155,7 +155,7 @@ nav {
 .sendMessage{
     width: 50%;
     margin: auto;
-    margin-top: 20px;
+    /* margin-top: 20px; */
     text-align: center;
     font-size: large;
 }

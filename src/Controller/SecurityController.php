@@ -141,7 +141,7 @@ class SecurityController extends AbstractController
     
                         // Si tout à fonctionner on affiche le message
                         $this->addFlash('message', 'Profil mis à jour');
-    
+
                         // Redirection
                         return $this->redirectToRoute('edit_profil');
     
@@ -435,7 +435,40 @@ class SecurityController extends AbstractController
 
 
 
-    // --------------------- FUNCTION QUI PERMET DE DE RESET PASSWORD
+    // --------------------- FUNCTION QUI PERMET DE SUPPRIMER LE COMPTE
+
+    /**
+     * @Route("/user/profil/deleteAccount", name="delete_account")
+     */
+    public function deleteAccount(ManagerRegistry $doctrine, Request $request)
+    {
+
+        // Si il existe un user en session
+        if($this -> getUser()){
+
+
+            $user = $this -> getUser();
+            
+            // On déclarare un entityManager dans l'optique de récupérer getManager, c'est grace à lui que nous accédons à remove() et flush()
+            $entityManager = $doctrine -> getManager();
+
+            $entityManager->remove($user);
+
+            $entityManager->flush();
+    
+            $request->getSession()->invalidate();
+    
+            $this->container->get('security.token_storage')->setToken(null);
+    
+            $this -> addFlash('message', "Votre compte a bien été supprimé !");
+            
+            return $this->redirectToRoute('app_register');
+
+   
+        }
+
+
+    }
 
 
 }

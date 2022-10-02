@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -21,9 +22,21 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('pseudonyme', TextType::class)
-            ->add('email', EmailType::class)
-            ->add('phoneNumber', TextType::class)
+            ->add('pseudonyme', TextType::class,[
+                "attr" => [
+                    'class' => "form-control"
+                ],
+            ])
+            ->add('email', EmailType::class,[
+                "attr" => [
+                    'class' => "form-control"
+                ],
+            ])
+            ->add('phoneNumber', TextType::class,[
+                "attr" => [
+                    'class' => "form-control"
+                ],
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -45,8 +58,18 @@ class RegistrationFormType extends AbstractType
                 'invalid_message' => "Votre mot de passe n'est pas identique.",
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
-                'first_options'  => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Repeter le mot de passe'],
+                'first_options'  => [
+                    'label' => 'Mot de passe',
+                    "attr" => [
+                        'class' => "form-control"
+                    ],
+                ],
+                'second_options' => [
+                    'label' => 'Repeter le mot de passe',
+                    "attr" => [
+                        'class' => "form-control"
+                    ],
+                ],
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
@@ -74,6 +97,10 @@ class RegistrationFormType extends AbstractType
                         'max' => 64,
                     ]),
                 ],
+            ])
+
+            ->add('submit', SubmitType::class, [
+                'attr' => ['class' => 'btn btn-primary submitProfil']
             ])
         ;
     }
