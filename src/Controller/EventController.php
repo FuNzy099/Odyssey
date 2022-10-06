@@ -4,13 +4,18 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Event;
+use App\Data\SearchData;
+use App\Form\SearchType;
 use App\Form\AddEventType;
 use App\Form\EditEventType;
+use App\Repository\EventRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+// !30:06
 
 class EventController extends AbstractController
 {
@@ -19,17 +24,46 @@ class EventController extends AbstractController
 
     /**
      * @Route("/events", name="list_events")
+     * 
+     * ManagerRegistry => Nous permet d'utiliser $doctrine qui est une couche d'abstration qui permet de communiquer avec la base de donnée
      */
-    // ManagerRegistry => Nous permet d'utiliser $doctrine qui est une couche d'abstration qui permet de communiquer avec la base de donnée
-    public function index(ManagerRegistry $doctrine): Response
+    public function index(ManagerRegistry $doctrine, EventRepository $repository, Request $request): Response
     {
 
-        $events = $doctrine -> getRepository(Event::class)->findBy([], ["startDate" => "DESC"]);
         $user = $doctrine -> getRepository(User::class) -> findAll();
+
+        // On instancie un nouveau object SearchData
+        $data = new SearchData;
+
+        /*
+           Permet de définir au niveau de data la page dans la liste des évènements (pagination du bundle snk_paginator),
+           Pour ce faire on récupère dans la request le numéro de la page dans l'url, si la valeur de page n'est pas definit on lui attribut 1 par defaut
+        */ 
+        $data -> page = $request -> get('page', 1);
+
+        /*
+            On déclare $form dans le but de créer notre formulaire à l'aide de la methode createForm()
+
+            1er argument : On créer le formulaire à l'aide de la classe SearchType dans le namespace Form
+            2eme argument : Permet d'hydrater notre objet $data avec les données saisi dans le formulaire
+
+            Definition hydrater : C'est un terme précis pour dire que le formulaire vas remplir les attributs de l'objet avec les valeurs entrées pas l'uilisateur
+        */
+        $form = $this -> createForm(SearchType::class, $data);
+
+        // handleRequest permet de récupèrer et d'analyser les données saisis dans le formulaire
+        $form -> handleRequest($request);
+  
+        /*
+            La méthode findSearch() ce trouve dans le repository de Event,
+            il permettra de récupérer les évènements en lien avec une recherche, pour ce faire on lui injecte en paramètre $data qui represente les données d'une recherche
+        */
+        $events = $repository -> findSearch($data);
 
         return $this->render('event/index.html.twig', [
             'events' => $events,
             'user' => $user,
+            'form' => $form -> createView(),    // Permet de créer le formulaire dans la vue
         ]);
     }
 

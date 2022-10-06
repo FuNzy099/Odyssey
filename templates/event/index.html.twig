@@ -15,6 +15,24 @@
 
     <h1>Je suis dans la liste des évènements ✅</h1>
 
+    <div class="row filter-flash">
+        <div class="col-md-12">
+            {% include 'event/filter.html.twig' with {form: form} only %}     
+        </div>
+
+        {# Affichage d'un message d'erreur si le resultat de la recherche est vide #}
+        <div class="sendMessage">
+    
+            {% for warning in app.flashes('warningSearch') %}
+    
+                <div class="alert alert-warning" role="alert">{{ warning }}</div>
+    
+            {% endfor %}
+            
+        </div>
+    </div>
+
+    
     <div class="mesCartes">
 
         {% for event in events %}
@@ -88,9 +106,14 @@
 
             </div>
 
-        {% endfor %}
-    </div>
-
+            {% endfor %}
+            
+            
+        </div>
+        <div id="navPagination">
+            {{ knp_pagination_render(events) }}
+        </div>
+        
 
 </div>
 {% endblock %}

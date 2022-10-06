@@ -13,13 +13,11 @@
 {% block body %}
 
 <main>
-
-    <h1>Modification du profil de {{ app.user.pseudonyme}} </h1>
-
+    
     {{ form_start(formEditProfil) }}
     <div class="containt">
-        <figure>
-            <img src="{{ asset('img/avatars/' ~ app.user.avatar) }}" class="avatar" alt="Image de profil de l'utilisateur !">
+        <figure class="preview">
+            <img id="edit_profil_avatar_preview" src="{{ asset('img/avatars/' ~ app.user.avatar) }}" class="avatar" alt="Image de profil de l'utilisateur !">~
         </figure>
     </div>
 
@@ -50,4 +48,10 @@
 
 </main>
 
+{% endblock %}
+
+{% block javascripts %}
+    {# Script permetant à l'utilisateur d'avoir un aperçu de sont nouvelle avatar avant de l'avoir enregistré  #}
+    <script src="{{ asset('js/previewAvatar.js')}}"></script>
+    {{ encore_entry_script_tags('app') }}
 {% endblock %}

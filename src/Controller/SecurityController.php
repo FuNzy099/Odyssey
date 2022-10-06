@@ -30,16 +30,16 @@ class SecurityController extends AbstractController
         // if ($this->getUser()) {
         //     return $this->redirectToRoute('target_path');
         // }
-
+        
         if (!$this->getUser()) {
-
+            
             // get the login error if there is one
             $error = $authenticationUtils->getLastAuthenticationError();
             // last username entered by the user
             $lastUsername = $authenticationUtils->getLastUsername();
             
             return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
-
+            
         } else {
             return $this->redirectToRoute('app_home');
         }
@@ -89,7 +89,6 @@ class SecurityController extends AbstractController
 
 
             if ($form->isSubmitted() && $form->isValid()) {
-
                 /*
                     $newPseudo   => On récupère le pseudonyme saisi dans le formulaire
                     $checkPseudo => On effectue une requete DQL à l'aide du nouveau pseudo dans le but de voir si il est existant dans la base de donnée
@@ -132,6 +131,8 @@ class SecurityController extends AbstractController
     
                         // On passe par un manager pour récupérer depuis l'objet $doctrine notre getManager(), c'est grace à cette méthode qu'on à accès à persist() et flush()
                         $entityManager = $doctrine->getManager();
+
+                        
     
                         // On persist() notre objet user, c'est l'équivalent de prepare() en PDO
                         $entityManager->persist($user);

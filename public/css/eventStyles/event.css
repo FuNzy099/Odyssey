@@ -14,3 +14,38 @@
     background: #F5F5F5;
     padding: 2px 6px;
 }
+
+/* Message quand la recherche de l'utilisateur ne correspond à aucun évènement */
+.sendMessage{
+    width: 50%;
+    margin: auto;
+    margin-top: 60px;
+    text-align: center;
+    font-size: large;
+}
+
+/* Barre de pagination des évènement  */
+#navPagination{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+#navPagination nav{
+    background-color: unset ;
+}
+
+.resetFilter{
+    color: white;
+    text-decoration: none;
+}
+
+.button{
+    text-align: center;
+    background-color: unset;
+    margin-top: 1em;
+    
+}
+
+.button a:hover{
+    color: white;
+}

@@ -28,7 +28,7 @@ class EditProfilType extends AbstractType
                 "attr" => ['class' => "form-control"],
             ])
             ->add('avatar', FileType::class, [
-                'attr' => ['class' => "form-control"],
+                'attr' => ['class' => "form-control previewAvatar", 'accept' => 'image/*', 'onchange' => 'showPreview(event)' ],
                 'data_class' => null,
                 'required' => false,
                 'mapped' => false,

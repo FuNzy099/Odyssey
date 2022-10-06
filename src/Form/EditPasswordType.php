@@ -47,7 +47,7 @@ class EditPasswordType extends AbstractType
                     Une expression régulière est une séquence de caractères qui forme un modèle de recherche.
                 */
                 new Regex([
-                    'pattern' => "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$^", 
+                    'pattern' => "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,64}$^", 
                     'message' => 'Minimum 12 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial'
                 ]),
                 
