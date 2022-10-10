@@ -26,6 +26,7 @@ class EditProfilType extends AbstractType
             ])
             ->add('phoneNumber', TextType::class,[
                 "attr" => ['class' => "form-control"],
+                'label' => 'Télèphone'
             ])
             ->add('avatar', FileType::class, [
                 'attr' => ['class' => "form-control previewAvatar", 'accept' => 'image/*', 'onchange' => 'showPreview(event)' ],

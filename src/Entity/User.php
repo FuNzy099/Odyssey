@@ -88,6 +88,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $avatar = "default-avatar.png";
 
+    /**
+     * @ORM\OneToMany(targetEntity=PrivateMessage::class, mappedBy="sender", orphanRemoval=true)
+     */
+    private $send;
+
+    /**
+     * @ORM\OneToMany(targetEntity=PrivateMessage::class, mappedBy="recipient", orphanRemoval=true)
+     */
+    private $received;
+
     public function __construct()
     {
         // new DataTime permet lors de la création d'un compte utilisateur d'inscrire en base de donnée la date est l'heure de l'inscription
@@ -96,6 +106,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->articles = new ArrayCollection();
         $this->registrationEvents = new ArrayCollection();
         $this->createEvents = new ArrayCollection();
+        $this->send = new ArrayCollection();
+        $this->received = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -331,6 +343,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAvatar(string $avatar): self
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PrivateMessage>
+     */
+    public function getSend(): Collection
+    {
+        return $this->send;
+    }
+
+    public function addSend(PrivateMessage $send): self
+    {
+        if (!$this->send->contains($send)) {
+            $this->send[] = $send;
+            $send->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSend(PrivateMessage $send): self
+    {
+        if ($this->send->removeElement($send)) {
+            // set the owning side to null (unless already changed)
+            if ($send->getSender() === $this) {
+                $send->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PrivateMessage>
+     */
+    public function getReceived(): Collection
+    {
+        return $this->received;
+    }
+
+    public function addReceived(PrivateMessage $received): self
+    {
+        if (!$this->received->contains($received)) {
+            $this->received[] = $received;
+            $received->setRecipient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReceived(PrivateMessage $received): self
+    {
+        if ($this->received->removeElement($received)) {
+            // set the owning side to null (unless already changed)
+            if ($received->getRecipient() === $this) {
+                $received->setRecipient(null);
+            }
+        }
 
         return $this;
     }

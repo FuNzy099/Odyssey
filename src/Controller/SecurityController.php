@@ -88,243 +88,272 @@ class SecurityController extends AbstractController
             $form->handleRequest($request);
 
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                /*
-                    $newPseudo   => On récupère le pseudonyme saisi dans le formulaire
-                    $checkPseudo => On effectue une requete DQL à l'aide du nouveau pseudo dans le but de voir si il est existant dans la base de donnée
-                */
-                $newPseudo = $form->get('pseudonyme')->getData();
-                $checkPseudo = $doctrine->getRepository(User::class)->findOneBy(['pseudonyme' => $newPseudo], []);
+            if ($form->isSubmitted()) {
 
-                /*
-                    $newPhoneNumber   => On récupère le numéro de telephone saisi dans le formulaire
-                    $checkPhoneNumber => On effectue une requete DQL à l'aide du nouveau n° de tel dans le but de voir si il est existant dans la base de donnée
-                */
-                $newPhoneNumber = $form -> get('phoneNumber') -> getData();
-                $checkPhoneNumber = $doctrine -> getRepository(User::class) -> findOneBy(['phoneNumber' => $newPhoneNumber], []);
+                if($form -> isValid()){
 
-                /*
-                    $newEmail  => On récupère l'email saisi dans le formulaire
-                    $checkEmail => On effectue une requete DQL à l'aide du nouveau email dans le but de voir si il est existant dans la base de donnée
-                */
-                $newEmail = $form -> get('email') -> getData();
-                $checkEmail = $doctrine -> getRepository(User::class) -> findOneBy(['email' => $newEmail], []);
-
-                /*
-                    $newAvatar => On récupère l'image saisi dans le formulaire
-                */
-                $newAvatar = $form -> get('avatar') -> getData();
-
-                // dd($newAvatar);
-
-
-                /*
-                    PARTIE CONCERNANT LA MODIFICATION DU PSEUDONYME
-                
-                    On verifie si le nouveau pseudo est different au pseudo actuel
-                */
-                if($newPseudo != $actualPseudo){
-            
-
-                    //  On verifie si le nouveau pseudo n'est pas déjà dans la base de donnée
-                    if (!isset($checkPseudo)){
-    
-                        // On passe par un manager pour récupérer depuis l'objet $doctrine notre getManager(), c'est grace à cette méthode qu'on à accès à persist() et flush()
-                        $entityManager = $doctrine->getManager();
-
-                        
-    
-                        // On persist() notre objet user, c'est l'équivalent de prepare() en PDO
-                        $entityManager->persist($user);
-    
-                        // On flush(), c'est l'équivalent de execute() en PDO, c'est dans cette étape flush() que notre insert into ce fait !
-                        $entityManager->flush();
-    
-                        // Si tout à fonctionner on affiche le message
-                        $this->addFlash('message', 'Profil mis à jour');
-
-                        // Redirection
-                        return $this->redirectToRoute('edit_profil');
-    
-                        
-                    // Sinon, si le nouveau pseudo existe dans la base de donnée on affiche un message à l'utilisateur !
-                    } else {
-    
-                        $this->addFlash('warning', 'Le pseudonyme est déjà utilisé.. Veuillez en choisir un autre !');
-    
-                        //  reedirection
-                        return $this->redirectToRoute('edit_profil');
-                    }
-                    
-                }
-
-
-                /*
-                    PARTIE CONCERNANT LA MODIFICATION DU NUMERO DE TEL
-                
-                    On verifie si le nouveau numéro de telephone est different au numéro déjà enregistré
-                */
-                if($newPhoneNumber != $actualPhoneNumber){
-
-                    // On verifie si le nouveau numéro de telephone n'est pas en base de donnée
-                    if (!isset($checkPhoneNumber)){
-    
-                        //  On passe par un manager pour récupérer depuis l'objet $doctrine notre getManager(), c'est grace à cette méthode qu'on à accès à persist() et flush()
-                        $entityManager = $doctrine->getManager();
-    
-                        // On persist() notre objet user, c'est l'équivalent de prepare() en PDO
-                        $entityManager->persist($user);
-    
-                        // On flush(), c'est l'équivalent de execute() en PDO, c'est dans cette étape flush() que notre insert into ce fait !
-                        $entityManager->flush();
-    
-                        // Si tout à fonctionner on affiche le message
-                        $this->addFlash('message', 'Profil mis à jour');
-    
-                        //  Redirection
-                        return $this->redirectToRoute('edit_profil');
-    
-                    // Sinon, si le numéro de telephone existe dans la base de donnée on affiche un message à l'utilisateur !
-                    } else {
-    
-                        $this->addFlash('warning', 'Une erreur est survenue !');
-    
-                        // Redirection
-                        return $this->redirectToRoute('edit_profil');
-                    }
-   
-                }
-
- 
-                /*
-                    PARTIE CONCERNANT LA MODIFICATION DE L'EMAIL
-                
-                    On verifie si le nouveau numéro de telephone est different au numéro déjà enregistré
-                */
-                if($newEmail != $actualEmail){
-
-                    if (!isset($checkEmail)){
-    
-                        $entityManager = $doctrine->getManager();
-    
-                        $entityManager->persist($user);
-    
-                        $entityManager->flush();
-    
-                        $this->addFlash('message', 'Profil mis à jour');
-    
-                        return $this->redirectToRoute('edit_profil');
-    
-                        
-                    } else {
-    
-                        $this->addFlash("warning", "L'adresse Email est déjà utilisée.. Veuillez en saisir une autre !");
-    
-                        return $this->redirectToRoute('edit_profil');
-                    }
-   
-                }
-
-
-                /*
-                    PARTIE CONCERNANT LA MODIFICATION DE L'AVATAR
-
-                    On verifie si il existe un nouvelle avatar 
-                */   
-                if(isset($newAvatar)){
 
                     /*
-                        Condition permetant de verifier si l'image que l'utilisateur souhaite mettre en avatar est dans un format autorisé
-
-                        in_array => Permet d'indiquer si une valeur appartient au tableau
-
-                        DOCUMENTATION : 
-                            in_array : https://www.php.net/manual/fr/function.in-array.php
+                        $newPseudo   => On récupère le pseudonyme saisi dans le formulaire
+                        $checkPseudo => On effectue une requete DQL à l'aide du nouveau pseudo dans le but de voir si il est existant dans la base de donnée
                     */
-                    if(in_array($newAvatar -> guessExtension(), ["png", "jpeg", "jpg", "webp" ])){
-
-                        // Condition dans l'optique de définir un poid maximum autorisé pour l'avatar, ici à l'occurrence 2Mo max !
-                        if($newAvatar -> getSize() <= 2000000){
-                            
-                            /*
-                                On hache et applique une iniqid au fichier
-
-                                md5 => C'est un algorithme de hachage faible
-                                uniqId => Permet de génèrer un identifiant unique basé sur la date et l'heure courante 
-
-                                DOCUMENTATION: 
-                                    md5 : https://www.php.net/manual/fr/function.md5.php
-                                    uniqid : https://www.php.net/manual/fr/function.uniqid.php
-                            */
-                            $file = md5(uniqid()) . '.' . $newAvatar -> guessExtension();
+                    $newPseudo = $form->get('pseudonyme')->getData();
                     
-                            /*
-                                On déplace le fichier avatar de l'utilisateur dans le répertoire public/img/avatars
-                                Pour ce faire j'ai declaré avatar_directory dans les parameters du fichier services.yaml,
-                            */ 
-                            $newAvatar -> move(
-                                $this -> getParameter('avatar_directory'),
-                                $file
-                            );
 
-                            /*
-                                On déclare nameActualAvatar dans le but de récuperer dans notre disque local l'avatar actuel avant modification par l'utilisateur,
-                                pour ce faire j'utilise de nouveau le getParameter('avatar_directory') pour localiser le fichier dans public/img/avatars 
-                            */ 
-                            $nameActualAvatar = $this -> getParameter('avatar_directory') . '/' . $user -> getAvatar();
+                    /*
+                        $newPhoneNumber   => On récupère le numéro de telephone saisi dans le formulaire
+                        $checkPhoneNumber => On effectue une requete DQL à l'aide du nouveau n° de tel dans le but de voir si il est existant dans la base de donnée
+                    */
+                    $newPhoneNumber = $form -> get('phoneNumber') -> getData();
+                
+
+                    /*
+                        $newEmail  => On récupère l'email saisi dans le formulaire
+                        $checkEmail => On effectue une requete DQL à l'aide du nouveau email dans le but de voir si il est existant dans la base de donnée
+                    */
+                    $newEmail = $form -> get('email') -> getData();
+                
+
+                    /*
+                        $newAvatar => On récupère l'image saisi dans le formulaire
+                    */
+                    $newAvatar = $form -> get('avatar') -> getData();
+
+                    // dd($newAvatar);
 
 
-                            // Condition pour verifier si $nameActualAvatar est differents que l'avatar par defaut de l'application ! 
-                            if($nameActualAvatar != $this -> getParameter('avatar_directory') . '/default-avatar.png'){
-                        
-                                /*
-                                    Condition pour verifier si $nameActualAvatar existe, si c'est le cas nous supprimon l'ancien avatar 
+                    /*
+                        PARTIE CONCERNANT LA MODIFICATION DU PSEUDONYME
+                    
+                        On verifie si le nouveau pseudo est different au pseudo actuel
+                    */
+                    if($newPseudo != $actualPseudo){
 
-                                    file_exists() => Permet de verifier si un fichier ou dossier existe
-                                    unlink() => permet de supprimer le fichier ou dossier
-
-                                    DOCUMENTATION:
-                                        file_exists() : https://www.php.net/manual/fr/function.file-exists.php
-                                        unlink() : https://www.php.net/manual/fr/function.unlink.php
-                                */ 
-                                if(file_exists($nameActualAvatar) ){
-                                    unlink($nameActualAvatar);
-                                }
-
-                            }
-               
-                            // On initialiser le nouvelle avatar de l'utilisateur
-                            $user -> setAvatar($file);
-                            
-                            // On déclare $entityManager pour récupèrer getManager(), c'est grace à lui qu'on accéde à persist() et flush()
-                            $entityManager = $doctrine -> getManager();
-                        
-                            // On persit() notre user, c'est l'équivalent de prepare() en PDO
-                            $entityManager -> persist($user);
+                        $checkPseudo = $doctrine->getRepository(User::class)->findOneBy(['pseudonyme' => $newPseudo], []);
+                
+                        //  On verifie si le nouveau pseudo n'est pas déjà dans la base de donnée
+                        if (!isset($checkPseudo)){
+        
+                            // On passe par un manager pour récupérer depuis l'objet $doctrine notre getManager(), c'est grace à cette méthode qu'on à accès à persist() et flush()
+                            $entityManager = $doctrine->getManager();
 
                             
-                            // On flush(), c'est l'équivalent de execute() en PDO, c''est à cette étape que le inser_into ce fait !
-                            $entityManager -> flush();
+        
+                            // On persist() notre objet user, c'est l'équivalent de prepare() en PDO
+                            $entityManager->persist($user);
+        
+                            // On flush(), c'est l'équivalent de execute() en PDO, c'est dans cette étape flush() que notre insert into ce fait !
+                            $entityManager->flush();
+        
+                            // Si tout à fonctionner on affiche le message
+                            $this->addFlash('message', 'Profil mis à jour');
 
-                            // Message
-                            $this -> addFlash('message', "Profil mis à jour");
-
-                        // Si le poid du fichier dépasse les 2 Mo, on affiche un message à l'utilisateur
+                            // Redirection
+                            return $this->redirectToRoute('edit_profil');
+        
+                            
+                        // Sinon, si le nouveau pseudo existe dans la base de donnée on affiche un message à l'utilisateur !
                         } else {
+        
+                            $this->addFlash('warning', 'Le pseudonyme est déjà utilisé.. Veuillez en choisir un autre !');
+        
+                            $entityManager = $doctrine -> getManager();
 
-                            $this -> addFlash('warning', "Votre fichier avatar pèse plus de 2 Mo ! ");
+                            // refresh() petmet d'actualiser l'état d'un objet à partir de la base de donnée, ce qui remplace toutes les modification locales qui n'ont pas encore été persist()
+                            $entityManager -> refresh($user);
+                            //  reedirection
+                            return $this->redirectToRoute('edit_profil');
 
                         }
+                        
+                    }
 
-                    // Si le format du ficher n'est pas autorisé on affiche un message
-                    } else {
 
-                        $this -> addFlash('warning', "Le format du fichier de l'avatar n'est pas supporté .. Veuillez choisir un autre format !");
+                    /*
+                        PARTIE CONCERNANT LA MODIFICATION DU NUMERO DE TEL
+                    
+                        On verifie si le nouveau numéro de telephone est different au numéro déjà enregistré
+                    */
+                    if($newPhoneNumber != $actualPhoneNumber){
+
+                        $checkPhoneNumber = $doctrine -> getRepository(User::class) -> findOneBy(['phoneNumber' => $newPhoneNumber], []);
+        
+                        // On verifie si le nouveau numéro de telephone n'est pas en base de donnée
+                        if (!isset($checkPhoneNumber)){
+        
+                            //  On passe par un manager pour récupérer depuis l'objet $doctrine notre getManager(), c'est grace à cette méthode qu'on à accès à persist() et flush()
+                            $entityManager = $doctrine->getManager();
+        
+                            // On persist() notre objet user, c'est l'équivalent de prepare() en PDO
+                            $entityManager->persist($user);
+        
+                            // On flush(), c'est l'équivalent de execute() en PDO, c'est dans cette étape flush() que notre insert into ce fait !
+                            $entityManager->flush();
+        
+                            // Si tout à fonctionner on affiche le message
+                            $this->addFlash('message', 'Profil mis à jour');
+        
+                            //  Redirection
+                            return $this->redirectToRoute('edit_profil');
+        
+                        // Sinon, si le numéro de telephone existe dans la base de donnée on affiche un message à l'utilisateur !
+                        } else {
+        
+                            $this->addFlash('warning', 'Une erreur est survenue !');
+        
+                            // Redirection
+                            return $this->redirectToRoute('edit_profil');
+                        }
 
                     }
+
+
+                    /*
+                        PARTIE CONCERNANT LA MODIFICATION DE L'EMAIL
+                    
+                        On verifie si le nouveau numéro de telephone est different au numéro déjà enregistré
+                    */
+                    //dd( $actualEmail);
+                    // dd($newEmail);
+                    if($newEmail != $actualEmail){
+                        var_dump($newEmail);
+                        var_dump($actualEmail);
+                     
+                        $checkEmail = $doctrine -> getRepository(User::class) -> findOneBy(['email' => $newEmail], []);
+                        // $checkEmail = $doctrine -> getRepository(User::class) -> findAll();
         
-                }
+                        
+                        
+                        if (!isset($checkEmail)){
+                            
+                            
+                            $entityManager = $doctrine->getManager();
+                            
+                            $entityManager->persist($user);
+                            
+                            $entityManager->flush();
+                            
+                            $this->addFlash('message', 'Profil mis à jour');
+                            
+                            return $this->redirectToRoute('edit_profil');
+                            
+                            
+                        } else {
+                            
+                            $this->addFlash('warning', 'L\'adresse Email est déjà utilisée.. Veuillez en saisir une autre !');
+        
+                            return $this->redirectToRoute('edit_profil');
+                        }
+
+                    }
+
+
+                    /*
+                        PARTIE CONCERNANT LA MODIFICATION DE L'AVATAR
+
+                        On verifie si il existe un nouvelle avatar 
+                    */   
+                    if(isset($newAvatar)){
+
+                        /*
+                            Condition permetant de verifier si l'image que l'utilisateur souhaite mettre en avatar est dans un format autorisé
+
+                            in_array => Permet d'indiquer si une valeur appartient au tableau
+
+                            DOCUMENTATION : 
+                                in_array : https://www.php.net/manual/fr/function.in-array.php
+                        */
+                        if(in_array($newAvatar -> guessExtension(), ["png", "jpeg", "jpg", "webp" ])){
+
+                            // Condition dans l'optique de définir un poid maximum autorisé pour l'avatar, ici à l'occurrence 2Mo max !
+                            if($newAvatar -> getSize() <= 2000000){
+                                
+                                /*
+                                    On hache et applique une iniqid au fichier
+
+                                    md5 => C'est un algorithme de hachage faible
+                                    uniqId => Permet de génèrer un identifiant unique basé sur la date et l'heure courante 
+
+                                    DOCUMENTATION: 
+                                        md5 : https://www.php.net/manual/fr/function.md5.php
+                                        uniqid : https://www.php.net/manual/fr/function.uniqid.php
+                                */
+                                $file = md5(uniqid()) . '.' . $newAvatar -> guessExtension();
+                        
+                                /*
+                                    On déplace le fichier avatar de l'utilisateur dans le répertoire public/img/avatars
+                                    Pour ce faire j'ai declaré avatar_directory dans les parameters du fichier services.yaml,
+                                */ 
+                                $newAvatar -> move(
+                                    $this -> getParameter('avatar_directory'),
+                                    $file
+                                );
+
+                                /*
+                                    On déclare nameActualAvatar dans le but de récuperer dans notre disque local l'avatar actuel avant modification par l'utilisateur,
+                                    pour ce faire j'utilise de nouveau le getParameter('avatar_directory') pour localiser le fichier dans public/img/avatars 
+                                */ 
+                                $nameActualAvatar = $this -> getParameter('avatar_directory') . '/' . $user -> getAvatar();
+
+
+                                // Condition pour verifier si $nameActualAvatar est differents que l'avatar par defaut de l'application ! 
+                                if($nameActualAvatar != $this -> getParameter('avatar_directory') . '/default-avatar.png'){
+                            
+                                    /*
+                                        Condition pour verifier si $nameActualAvatar existe, si c'est le cas nous supprimon l'ancien avatar 
+
+                                        file_exists() => Permet de verifier si un fichier ou dossier existe
+                                        unlink() => permet de supprimer le fichier ou dossier
+
+                                        DOCUMENTATION:
+                                            file_exists() : https://www.php.net/manual/fr/function.file-exists.php
+                                            unlink() : https://www.php.net/manual/fr/function.unlink.php
+                                    */ 
+                                    if(file_exists($nameActualAvatar) ){
+                                        unlink($nameActualAvatar);
+                                    }
+
+                                }
                 
+                                // On initialiser le nouvelle avatar de l'utilisateur
+                                $user -> setAvatar($file);
+                                
+                                // On déclare $entityManager pour récupèrer getManager(), c'est grace à lui qu'on accéde à persist() et flush()
+                                $entityManager = $doctrine -> getManager();
+                            
+                                // On persit() notre user, c'est l'équivalent de prepare() en PDO
+                                $entityManager -> persist($user);
+
+                                
+                                // On flush(), c'est l'équivalent de execute() en PDO, c''est à cette étape que le inser_into ce fait !
+                                $entityManager -> flush();
+
+                                // Message
+                                $this -> addFlash('message', "Profil mis à jour");
+
+                            // Si le poid du fichier dépasse les 2 Mo, on affiche un message à l'utilisateur
+                            } else {
+
+                                $this -> addFlash('warning', "Votre fichier avatar pèse plus de 2 Mo ! ");
+
+                            }
+
+                        // Si le format du ficher n'est pas autorisé on affiche un message
+                        } else {
+
+                            $this -> addFlash('warning', "Le format du fichier de l'avatar n'est pas supporté .. Veuillez choisir un autre format !");
+
+                        }
+        
+                    }
+
+                }
+
+                $entityManager = $doctrine -> getManager();
+
+                // refresh() petmet d'actualiser l'état d'un objet à partir de la base de donnée, ce qui remplace toutes les modification locales qui n'ont pas encore été persist()
+                $entityManager -> refresh($user);
+               
             }
 
             return $this->render('security/editProfil.html.twig', [
