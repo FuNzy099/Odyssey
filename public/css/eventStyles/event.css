@@ -1,3 +1,7 @@
+main{
+    min-height: 657px;
+}
+
 .card{
     border: 1px solid black;
     margin-bottom: 50px ;
@@ -39,7 +43,7 @@
     text-decoration: none;
 }
 
-.button{
+.btnFilter{
     text-align: center;
     background-color: unset;
     margin-top: 1em;

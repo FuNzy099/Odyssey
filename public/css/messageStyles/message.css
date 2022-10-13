@@ -1,0 +1,103 @@
+body {
+    background-color: black;
+    color: white;
+}
+
+main {
+    display: flex;
+    width: 80%;
+    margin: 30px auto;
+    background-color: rgb(39, 39, 39);
+    border-radius: 30px;
+}
+
+.infoContainerSender,.infoContainerDiscussion {
+    display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    border-bottom: 1px solid rgb(128, 127, 127);
+}
+
+.infoContainerDiscussion {
+    margin-bottom: 20px;
+}
+
+.infoContainerSender i {
+    line-height: unset;
+}
+
+
+h1 {
+    font-size: 1.5em;
+    align-self: center;
+}
+
+.listUser {
+    background-color: red;
+}
+
+.listUser1 {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    border-right: 1px solid rgb(128, 127, 127);
+}
+
+.senderContainer {
+    padding: 10px 0;
+    border-bottom: 1px solid rgb(128, 127, 127);
+}
+
+.senderContainer .senderAvatar,.senderPseudonyme,.senderDate {
+    margin-bottom: 0;
+}
+
+.senderContainer .link {
+    display: flex;
+    justify-content: space-evenly;
+    text-decoration: none;
+    color: white;
+}
+
+.senderContainer:hover {
+    background-color: rgb(58, 58, 58);
+}
+
+.senderAvatar img {
+    object-fit: cover;
+    width: 100px;
+    height: 100px;
+    border-radius: 20px;
+}
+
+
+.discussion {
+    width: 70%;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.bubbleYou {
+    width: 35%;
+    background-color: rgb(0, 119, 255);
+    border-radius: 15px;
+    color: white !important;
+    padding: 15px;
+
+}
+
+.discussionThread .bubbleMe{
+    display: flex;
+    align-items: flex-end !important;
+}
+
+.bubbleMe {
+    width: 35%;
+    background-color: rgb(204, 204, 204);
+    border-radius: 15px;
+    color: black !important;
+    padding: 15px;
+    margin-inline-start: auto;
+}
+

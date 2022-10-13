@@ -21,7 +21,10 @@ class EditPasswordType extends AbstractType
       
         ->add('actualPassword', PasswordType::class,[
             'label' => 'Ancien mot de passe',
-            'mapped' => false
+            'mapped' => false,
+            'attr' => [
+                'class' => "form-control"
+            ],
         ])
         ->add('plainPassword', RepeatedType::class, [
             // instead of being set onto the object directly,
@@ -31,11 +34,25 @@ class EditPasswordType extends AbstractType
             'mapped' => false,
             'type' => PasswordType::class,
             'invalid_message' => "Votre mot de passe n'est pas identique.",
-            'options' => ['attr' => ['class' => 'password-field']],
+            'options' => [
+                'attr' => ['class' => 'password-field']
+            ],
             'required' => true,
-            'first_options'  => ['label' => 'Nouveau mot de passe'],
-            'second_options' => ['label' => 'Repeter le mot de passe'],
-            'attr' => ['autocomplete' => 'new-password'],
+            'first_options'  => [
+                'label' => 'Nouveau mot de passe',
+                'attr' => [
+                    'class' => "form-control"
+                ],
+            ],
+            'second_options' => [
+                'label' => 'Repeter le mot de passe',
+                'attr' => [
+                    'class' => "form-control"
+                ],
+            ],
+            'attr' => [
+                'autocomplete' => 'new-password',
+            ],
             'constraints' => [
                 new NotBlank([
                     'message' => 'Veuillez entrer un mot de passe',
@@ -67,6 +84,7 @@ class EditPasswordType extends AbstractType
         ])
 
         ->add('submit', SubmitType::class, [
+            'label' => 'Enregistrer',
             'attr' => ['class' => 'btn btn-primary']
         ]);
         

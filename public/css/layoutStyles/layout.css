@@ -35,7 +35,6 @@ img {
 
 
 
-
                                             /*Navigation*/
 nav {
     display: flex;
@@ -158,4 +157,37 @@ nav {
     /* margin-top: 20px; */
     text-align: center;
     font-size: large;
+}
+
+
+
+                                            /*Footer*/
+
+main{
+    position: relative;
+    max-width: 1280px;
+    margin: 0 auto;
+    min-height: 100%;
+}               
+
+footer{
+    display: flex;
+    position: absolute;
+    bottom: auto;
+    width: 100%;
+    height: 150px;
+    background-color: #252737;  
+}
+
+
+.blockFigureFooter{
+    position: absolute;
+    margin-bottom: 0;
+    align-self: center;
+}
+
+.logoFooter{
+    width: 150px;
+    height: auto;
+    margin-left: 80px;
 }

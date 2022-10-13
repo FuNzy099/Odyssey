@@ -5,8 +5,9 @@ namespace App\Form;
 
 use App\Entity\User;
 use App\Entity\PrivateMessage;
-use Symfony\Component\Form\AbstractType;
+use App\Repository\UserRepository;
 
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,34 +17,30 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class PrivateMessageType extends AbstractType
 {
+    private $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this -> userRepository = $userRepository;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', TextType::class,[
-                "attr" => [
-                    "class" => "form-control"
-                ],
-                "label" => "Titre"
-            ])
             ->add('message', TextareaType::class,[
                 "attr" => [
                     "class" => "form-control"
                 ],
                 "label" => "Votre message"          
             ])
-            // ->add('recipient', EntityType::class,[
-            //     "class" => User::class,
-            //     "choice_label" => "pseudonyme",
-            //     "attr" => [
-            //         "class" => "form-control"
-            //     ],
-            // ])
-            ->add('recipient', TextType::class,[
+            ->add('recipient', EntityType::class,[
+                "class" => User::class,
+                "choice_label" => "pseudonyme",
                 "attr" => [
                     "class" => "form-control"
                 ],
             ])
-            ->add('evoyer', SubmitType::class, [
+            ->add('envoyer', SubmitType::class, [
                 "attr" => [
                     "class" => "btn btn-primary"
                 ]

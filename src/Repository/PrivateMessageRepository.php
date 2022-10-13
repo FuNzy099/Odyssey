@@ -39,6 +39,20 @@ class PrivateMessageRepository extends ServiceEntityRepository
         }
     }
 
+    public function messageRequette(){
+
+        $query = $this
+        ->createQueryBuilder('pm')
+        ->select('pm.sender_id')
+        ->from('private_message', 'pm')
+        ->innerJoin('user', 'u', 'pm.sender_id', 'u.id')
+        ->groupBy('sender_id');
+
+        return $query;
+
+      
+    }
+
 //    /**
 //     * @return PrivateMessage[] Returns an array of PrivateMessage objects
 //     */

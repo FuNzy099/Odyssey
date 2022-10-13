@@ -19,7 +19,7 @@
     </head>
 
     <body>
-
+                                        {# PARTIE HEADER #}
         <header>
             
             <nav>
@@ -85,25 +85,57 @@
 
 
 
+                                        {# PARTIE POR AFFICHER LES FLASHES #}
+
         <div class="sendMessage">
 
             {% for message in app.flashes('message') %}
             
-                <div class="alert alert-success" role="alert">{{ message }}</div>
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                </div>
             
             {% endfor %}
     
             {% for warning in app.flashes('warning') %}
     
-                <div class="alert alert-warning" role="alert">{{ warning }}</div>
+                <div class="alert alert-warning" role="alert">
+                    {{ warning }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                </div>
     
             {% endfor %}
             
         </div>
 
-        {% block body %}
-                
-        {% endblock %}
+
+
+                                        {# PARTIE BODY #}
+
+        <main>
+            {% block body %}
+                    
+            {% endblock %}
+        </main>
+
+
+                                        {# PARTIE FOOTER #}
+
+        <footer>
+
+            <figure class="blockFigureFooter">
+                <a class="parentLogo" href="{{ path('app_home')}}">
+                    <img src="{{ asset('img/logo.png')}}" class="logoFooter" alt="Logo du site représentant Saturne incrusté du non du site web: 'Space Odyssey'">
+                </a>
+            </figure>
+
+        </footer>
+
+
+
+
+                                        {# PARTIE JAVASCRIPT #}                             
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}

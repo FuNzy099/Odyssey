@@ -15,8 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-// !30:06
-
 class EventController extends AbstractController
 {
 
@@ -61,9 +59,9 @@ class EventController extends AbstractController
         $events = $repository -> findSearch($data);
 
         return $this->render('event/index.html.twig', [
-            'events' => $events,
             'user' => $user,
             'form' => $form -> createView(),    // Permet de créer le formulaire dans la vue
+            'events' => $events,
         ]);
     }
 
@@ -81,7 +79,7 @@ class EventController extends AbstractController
         // Instanciation de Event (processus de création d'un objet depuis la class Event)
         $event = new Event();
 
-        // Permet de récuperer l'utilisateur qui à crée l'évènement
+        // Permet de récuperer l'utilisateur qui à crée l'évènement/
         $event->setUserCreator($this->getUser());
 
         // la function createForm() => permet de construire un formulaire qui ce repose dur le builder de AddEventForm qui lui même ce repose sur l'entity Event

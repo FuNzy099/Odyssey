@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Messagerie{% endblock %}
+
+{% block stylesheets %}
+
+    <link href="{{ asset('css/layoutStyles/layout.css') }}" type="text/css" rel="stylesheet" />
+
+{% endblock %}
+
+{% block body %}
+
+  <section class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>Messagerie</h1>
+            <h2>Boite de réception</h2>
+            <p>Vous avez reçu : {{app.user.received|length}} messages</p>
+        </div>  
+
+        <div class="col-3">De</div>
+        <div class="col-3">Sujet</div>
+        <div class="col-3">Date</div>
+        <div class="col-3">Actions</div>
+
+        {% for message in app.user.received %}
+            {% if message.isRead == 0 %}
+                {% set bold = "fw-bold" %}
+            {% else %}
+                {% set bold = "" %}
+            {% endif %}
+            <div class="col-3 {{bold}}">{{message.sender.pseudonyme}}</div>
+            <div class="col-3 {{bold}}">
+                <a href="{{ path("app_read", {"id": message.id})}}">
+                    {{message.title}}
+                </a>
+            </div>
+            <div class="col-3 {{bold}}">{{message.creationDate|date}}</div>
+            <div class="col-3 {{bold}}"></div>
+        {% endfor %}
+
+        <div class="col">
+            <a href="{{ path("send")}}" class="btn btn-primary">Envoyer un message</a>
+        </div>
+    </div>
+  </section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+{% endblock %}

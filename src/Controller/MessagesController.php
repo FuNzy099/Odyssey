@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\PrivateMessage;
 use App\Form\PrivateMessageType;
+use App\Repository\PrivateMessageRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,10 +16,17 @@ class MessagesController extends AbstractController
     /**
      * @Route("/messages", name="app_messages")
      */
-    public function index(): Response
-    {
+    public function index(ManagerRegistry $doctrine, PrivateMessageRepository $repository): Response
+    {        
+
+        // $messages = $repository -> messageRequette();
+
         return $this->render('messages/index.html.twig', [
+
             'controller_name' => 'MessagesController',
+
+            // "messages" => $messages
+
         ]);
     }
 
@@ -41,8 +49,6 @@ class MessagesController extends AbstractController
             // Permet d'ajouter l'expéditeur du message
             $message -> setSender($this -> getUser());
 
-            // $message -> setRecipient($form->get('recipient')->getData());
-
             $entityManager = $doctrine -> getManager();
 
             $entityManager -> persist($message);
@@ -59,7 +65,35 @@ class MessagesController extends AbstractController
             "formMessage" => $form -> createView()
 
         ]);
-
         
+    }
+
+
+
+    /**
+     * @Route("/reception", name="app_received")
+     */
+    public function received(): Response
+    {
+        return $this->render('messages/received.html.twig');
+    }
+
+
+
+    /**
+     * @Route("/reception/message/{id}", name="app_read")
+     */
+    public function read(PrivateMessage $message, ManagerRegistry $doctrine): Response
+    {
+        // Etant donnée que le message est ouvert on initialise sont statut à true
+        $message -> setIsRead(true);
+
+        $entityManager = $doctrine -> getManager();
+
+        $entityManager -> persist($message);
+
+        $entityManager -> flush(); 
+
+        return $this->render('messages/read.html.twig', compact('message'));
     }
 }
