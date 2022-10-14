@@ -87,6 +87,11 @@ h1 {
 
 }
 
+.discussionThread{
+    overflow-y: scroll ;
+    height: 850px;
+}
+
 .discussionThread .bubbleMe{
     display: flex;
     align-items: flex-end !important;

@@ -89,14 +89,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $avatar = "default-avatar.png";
 
     /**
-     * @ORM\OneToMany(targetEntity=PrivateMessage::class, mappedBy="sender", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Conversation::class, mappedBy="initiate")
      */
-    private $send;
+    private $initiator;
 
     /**
-     * @ORM\OneToMany(targetEntity=PrivateMessage::class, mappedBy="recipient", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Conversation::class, mappedBy="participate")
      */
-    private $received;
+    private $participation;
 
     public function __construct()
     {
@@ -106,8 +106,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->articles = new ArrayCollection();
         $this->registrationEvents = new ArrayCollection();
         $this->createEvents = new ArrayCollection();
-        $this->send = new ArrayCollection();
-        $this->received = new ArrayCollection();
+        $this->initiator = new ArrayCollection();
+        $this->participation = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -348,29 +348,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, PrivateMessage>
+     * @return Collection<int, Conversation>
      */
-    public function getSend(): Collection
+    public function getinitiator(): Collection
     {
-        return $this->send;
+        return $this->initiator;
     }
 
-    public function addSend(PrivateMessage $send): self
+    public function addConversation(Conversation $conversation): self
     {
-        if (!$this->send->contains($send)) {
-            $this->send[] = $send;
-            $send->setSender($this);
+        if (!$this->initiator->contains($conversation)) {
+            $this->initiator[] = $conversation;
+            $conversation->setInitiate($this);
         }
 
         return $this;
     }
 
-    public function removeSend(PrivateMessage $send): self
+    public function removeConversation(Conversation $conversation): self
     {
-        if ($this->send->removeElement($send)) {
+        if ($this->initiator->removeElement($conversation)) {
             // set the owning side to null (unless already changed)
-            if ($send->getSender() === $this) {
-                $send->setSender(null);
+            if ($conversation->getInitiate() === $this) {
+                $conversation->setInitiate(null);
             }
         }
 
@@ -378,29 +378,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, PrivateMessage>
+     * @return Collection<int, Conversation>
      */
-    public function getReceived(): Collection
+    public function getParticipation(): Collection
     {
-        return $this->received;
+        return $this->participation;
     }
 
-    public function addReceived(PrivateMessage $received): self
+    public function addParticipation(Conversation $participation): self
     {
-        if (!$this->received->contains($received)) {
-            $this->received[] = $received;
-            $received->setRecipient($this);
+        if (!$this->participation->contains($participation)) {
+            $this->participation[] = $participation;
+            $participation->setParticipate($this);
         }
 
         return $this;
     }
 
-    public function removeReceived(PrivateMessage $received): self
+    public function removeParticipation(Conversation $participation): self
     {
-        if ($this->received->removeElement($received)) {
+        if ($this->participation->removeElement($participation)) {
             // set the owning side to null (unless already changed)
-            if ($received->getRecipient() === $this) {
-                $received->setRecipient(null);
+            if ($participation->getParticipate() === $this) {
+                $participation->setParticipate(null);
             }
         }
 

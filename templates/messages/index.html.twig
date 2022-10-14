@@ -47,6 +47,7 @@
                 #}
     
                 {% for message in app.user.received %}
+                
                     {% if message.isRead == 0 %}
                         {% set bold = "fw-bold" %}
                     {% else %}
