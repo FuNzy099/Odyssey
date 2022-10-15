@@ -102,6 +102,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // new DataTime permet lors de la création d'un compte utilisateur d'inscrire en base de donnée la date est l'heure de l'inscription
         $this -> registrationDate = new DateTime();
+        $this -> saucisse;
         
         $this->articles = new ArrayCollection();
         $this->registrationEvents = new ArrayCollection();
