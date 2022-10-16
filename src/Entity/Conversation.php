@@ -15,7 +15,7 @@ class Conversation
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer")*
      */
     private $id;
 
@@ -25,20 +25,14 @@ class Conversation
     private $privateMessages;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="conversations")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity=Participation::class, mappedBy="conversation", orphanRemoval=true)
      */
-    private $initiate;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="participation")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $participate;
+    private $participations;
 
     public function __construct()
     {
         $this->privateMessages = new ArrayCollection();
+        $this->participations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -76,26 +70,32 @@ class Conversation
         return $this;
     }
 
-    public function getInitiate(): ?User
+    /**
+     * @return Collection<int, Participation>
+     */
+    public function getParticipations(): Collection
     {
-        return $this->initiate;
+        return $this->participations;
     }
 
-    public function setInitiate(?User $initiate): self
+    public function addParticipation(Participation $participation): self
     {
-        $this->initiate = $initiate;
+        if (!$this->participations->contains($participation)) {
+            $this->participations[] = $participation;
+            $participation->setConversation($this);
+        }
 
         return $this;
     }
 
-    public function getParticipate(): ?User
+    public function removeParticipation(Participation $participation): self
     {
-        return $this->participate;
-    }
-
-    public function setParticipate(?User $participate): self
-    {
-        $this->participate = $participate;
+        if ($this->participations->removeElement($participation)) {
+            // set the owning side to null (unless already changed)
+            if ($participation->getConversation() === $this) {
+                $participation->setConversation(null);
+            }
+        }
 
         return $this;
     }

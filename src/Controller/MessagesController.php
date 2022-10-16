@@ -2,30 +2,33 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\PrivateMessage;
 use App\Form\PrivateMessageType;
-use App\Repository\PrivateMessageRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MessagesController extends AbstractController
 {
     /**
-     * @Route("/messages", name="app_messages")
+     * @Route("/messages/{id}", name="app_messages")
      */
-    public function index(ManagerRegistry $doctrine, PrivateMessageRepository $repository): Response
+    public function index(ManagerRegistry $doctrine, User $users): Response
     {        
 
         // $messages = $repository -> messageRequette();
+
+        $users = $doctrine -> getRepository(User::class) -> findoneBy(['id' => $this -> getUser()]);
+     
 
         return $this->render('messages/index.html.twig', [
 
             'controller_name' => 'MessagesController',
 
-            // "messages" => $messages
+            "user" => $users
 
         ]);
     }

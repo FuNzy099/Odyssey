@@ -2,15 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -89,26 +90,37 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $avatar = "default-avatar.png";
 
     /**
-     * @ORM\OneToMany(targetEntity=Conversation::class, mappedBy="initiate")
+     * @ORM\OneToMany(targetEntity=PrivateMessage::class, mappedBy="user")
      */
-    private $initiator;
+    private $privateMessages;
 
     /**
-     * @ORM\OneToMany(targetEntity=Conversation::class, mappedBy="participate")
+     * @ORM\OneToMany(targetEntity=Participation::class, mappedBy="sender")
      */
-    private $participation;
+    private $senderParticipations;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Participation::class, mappedBy="recipient")
+     */
+    private $recipientParticipations;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Conversation::class)
+     */
+    private $userConversations;
 
     public function __construct()
     {
         // new DataTime permet lors de la création d'un compte utilisateur d'inscrire en base de donnée la date est l'heure de l'inscription
         $this -> registrationDate = new DateTime();
-        $this -> saucisse;
         
         $this->articles = new ArrayCollection();
         $this->registrationEvents = new ArrayCollection();
         $this->createEvents = new ArrayCollection();
-        $this->initiator = new ArrayCollection();
-        $this->participation = new ArrayCollection();
+        $this->privateMessages = new ArrayCollection();
+        $this->senderParticipations = new ArrayCollection();
+        $this->recipientParticipations = new ArrayCollection();
+        $this->userConversations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -347,31 +359,91 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
+   
     /**
-     * @return Collection<int, Conversation>
+     * @return Collection<int, PrivateMessage>
      */
-    public function getinitiator(): Collection
+    public function getPrivateMessages(): Collection
     {
-        return $this->initiator;
+        return $this->privateMessages;
     }
 
-    public function addConversation(Conversation $conversation): self
+    public function addPrivateMessage(PrivateMessage $privateMessage): self
     {
-        if (!$this->initiator->contains($conversation)) {
-            $this->initiator[] = $conversation;
-            $conversation->setInitiate($this);
+        if (!$this->privateMessages->contains($privateMessage)) {
+            $this->privateMessages[] = $privateMessage;
+            $privateMessage->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeConversation(Conversation $conversation): self
+    public function removePrivateMessage(PrivateMessage $privateMessage): self
     {
-        if ($this->initiator->removeElement($conversation)) {
+        if ($this->privateMessages->removeElement($privateMessage)) {
             // set the owning side to null (unless already changed)
-            if ($conversation->getInitiate() === $this) {
-                $conversation->setInitiate(null);
+            if ($privateMessage->getUser() === $this) {
+                $privateMessage->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Participation>
+     */
+    public function getSenderParticipations(): Collection
+    {
+        return $this->senderParticipations;
+    }
+
+    public function addSenderParticipations(Participation $participationSender): self
+    {
+        if (!$this->senderParticipations->contains($participationSender)) {
+            $this->senderParticipations[] = $participationSender;
+            $participationSender->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSenderParticipations(Participation $participationSender): self
+    {
+        if ($this->senderParticipations->removeElement($participationSender)) {
+            // set the owning side to null (unless already changed)
+            if ($participationSender->getSender() === $this) {
+                $participationSender->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Participation>
+     */
+    public function getRecipientParticipations(): Collection
+    {
+        return $this->recipientParticipations;
+    }
+
+    public function addRecipientParticipation(Participation $recipientParticipation): self
+    {
+        if (!$this->recipientParticipations->contains($recipientParticipation)) {
+            $this->recipientParticipations[] = $recipientParticipation;
+            $recipientParticipation->setRecipient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipientParticipation(Participation $recipientParticipation): self
+    {
+        if ($this->recipientParticipations->removeElement($recipientParticipation)) {
+            // set the owning side to null (unless already changed)
+            if ($recipientParticipation->getRecipient() === $this) {
+                $recipientParticipation->setRecipient(null);
             }
         }
 
@@ -381,29 +453,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Conversation>
      */
-    public function getParticipation(): Collection
+    public function getUserConversations(): Collection
     {
-        return $this->participation;
+        return $this->userConversations;
     }
 
-    public function addParticipation(Conversation $participation): self
+    public function addUserConversation(Conversation $userConversation): self
     {
-        if (!$this->participation->contains($participation)) {
-            $this->participation[] = $participation;
-            $participation->setParticipate($this);
+        if (!$this->userConversations->contains($userConversation)) {
+            $this->userConversations[] = $userConversation;
         }
 
         return $this;
     }
 
-    public function removeParticipation(Conversation $participation): self
+    public function removeUserConversation(Conversation $userConversation): self
     {
-        if ($this->participation->removeElement($participation)) {
-            // set the owning side to null (unless already changed)
-            if ($participation->getParticipate() === $this) {
-                $participation->setParticipate(null);
-            }
-        }
+        $this->userConversations->removeElement($userConversation);
 
         return $this;
     }

@@ -11,8 +11,30 @@
 {% endblock %}
 
 {% block body %}
+<div>
+    {# {% for message in app.user.userConversations %}
+        {{ dump(message) }}
+    {% endfor %}
+    #}
+
+    {# {% for choses in user.senderParticipations %}
+        {{ dump(choses) }}
+        {{ dump(choses.Sender) }}
+        {{ dump(choses.recipient) }}
+    {% endfor %} #}
+ 
+    {# {% for trucs in app.user.recipientParticipations %}
+        {{ dump(trucs) }}
+        {{ dump(trucs.Sender) }}
+        {{ dump(trucs.recipient) }}
+    {% endfor %}  #}
+
+</div>
+
 
     <main>
+        
+
 
         {# Section contenant la liste des utilisateur avec qui ont a echangé #}
         <section class="listUser1">
@@ -23,53 +45,37 @@
                     <h1>Messagerie</h1>
                     <i class="fa-regular fa-pen-to-square fa-xl"></i>
                 </div>
-
-                {# 
-                {% for truc in messages.sender.id %}
-
-                    {{ dump(truc) }}
-
-                    <div class="{{bold}} senderContainer">
-                        <a href="{{ path("app_read", {"id": message.id})}}" class="link">
-                            <figure class="senderAvatar">
-                                <img id="edit_profil_avatar_preview" src="{{ asset('img/avatars/' ~ message.sender.avatar) }}" class="avatar" alt="Image de profil de l'utilisateur !">
-                            </figure>
-
-                            <p class="senderPseudonyme">{{message.sender.pseudonyme}}</p>
-                            
-                            <p class="senderDate">
-                                {{message.creationDate|date("d M Y")}}
-                            </p>
-                        </a>
-                    </div>
-                
-                {% endfor %} 
-                #}
     
-                {% for message in app.user.received %}
+                {% for message in app.user.userConversations %}
+
+                {{ dump(message) }}
                 
-                    {% if message.isRead == 0 %}
+                    {# {% if message.isRead == 0 %}
                         {% set bold = "fw-bold" %}
                     {% else %}
                         {% set bold = "" %}
                     {% endif %}
-    
-                    
-                    
-                    <div class="{{bold}} senderContainer">
+     #}
+                    {# <div class=" senderContainer">
                         <a href="{{ path("app_read", {"id": message.id})}}" class="link">
                             <figure class="senderAvatar">
-                                <img id="edit_profil_avatar_preview" src="{{ asset('img/avatars/' ~ message.sender.avatar) }}" class="avatar" alt="Image de profil de l'utilisateur !">
+                                <img id="edit_profil_avatar_preview" src="{{ asset('img/avatars/' ~ message.user.avatar) }}" class="avatar" alt="Image de profil de l'utilisateur !">
                             </figure>
     
-                            <p class="senderPseudonyme">{{message.sender.pseudonyme}}</p>
+                            <p class="senderPseudonyme">{{message.user.pseudonyme}}</p>
                             
                             <p class="senderDate">
                                 {{message.creationDate|date("d M Y")}}
                             </p>
                         </a>
-                    </div>
+                    </div> #}
                 {% endfor %}
+{# 
+                {% for initiate in app.user.initiator %}
+
+                {{ dump(initiate) }}
+                    
+                {% endfor %} #}
     
                 <div class="col">
                     <a href="{{ path("send")}}" class="btn btn-primary">Envoyer un message</a>
@@ -83,7 +89,7 @@
         {# Section contenant le fil de discution un utilisateur en particulier #}
         <section class="discussion">
 
-            <div class="infoContainerDiscussion">
+            {# <div class="infoContainerDiscussion">
                 <h1>Conversation</h1>
             </div>
 
@@ -100,7 +106,7 @@
 
                     <p class="bubbleMe">{{message.message}}</p> <br>
             
-                {% endfor %}
+                {% endfor %} #}
 
 
 

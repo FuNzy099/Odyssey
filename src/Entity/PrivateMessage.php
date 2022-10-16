@@ -38,6 +38,12 @@ class PrivateMessage
      */
     private $conversation;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="privateMessages")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function __construct()
     {
         // Permet d'hydrater la date de creation d'un message privée automatiquement
@@ -93,6 +99,18 @@ class PrivateMessage
     public function setConversation(?Conversation $conversation): self
     {
         $this->conversation = $conversation;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
