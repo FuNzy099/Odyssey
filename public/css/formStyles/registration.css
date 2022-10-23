@@ -1,3 +1,88 @@
-footer{
-    bottom: 0 !important;
+body{
+    background-image: url('../../img/imgRegister.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
+
+.mainRegister{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    margin: 0 auto;
+    height: 887px;
+    max-width: none;
+}
+
+.containtRegistrationForm{
+    width: 40%;
+    margin: auto;
+    color: rgb(255, 255, 255);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 35px;
+    border-radius: 25px;
+}
+
+.containtRegistrationForm h1{
+    font-family: 'play', sans-serif;
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 2rem;
+}
+
+
+.containtRegistrationForm .pseudoMail{
+    display: flex;
+    justify-content: space-between;
+}
+
+.containtRegistrationForm .pseudoMail div{
+    width: 47%;
+}
+
+.containtRegistrationForm label{
+    margin-bottom: 0.5rem;
+    font-family:  'Roboto Slab', serif;
+    font-size: 1.2em;
+}
+
+.containtRegistrationForm input{
+    margin-bottom: 1.5rem;
+    font-family:  'Roboto Slab', serif;
+}
+
+.agreeTerms{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
+    font-size: 0.7em;
+}
+
+.agreeTerms input, .agreeTerms label{
+    margin-bottom: 0;
+}
+
+.agreeTerms input{
+    margin-right: 10px;
+}
+
+.agreeTerms div{
+
+    display: flex;
+    flex-direction: row-reverse;
+
+    justify-content: left;
+}
+
+.containtRegistrationForm .submitRegistration{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.submitRegistration button{
+    font-size: 1.3em;
+}
+

@@ -18,19 +18,13 @@ class Participation
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="ParticipationSender")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="participators")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $sender;
+    private $participator;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="recipientParticipations")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $recipient;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Conversation::class, inversedBy="participations")
+     * @ORM\ManyToOne(targetEntity=Conversation::class, inversedBy="participators")
      * @ORM\JoinColumn(nullable=false)
      */
     private $conversation;
@@ -40,26 +34,14 @@ class Participation
         return $this->id;
     }
 
-    public function getSender(): ?User
+    public function getParticipator(): ?User
     {
-        return $this->sender;
+        return $this->participator;
     }
 
-    public function setSender(?User $sender): self
+    public function setParticipator(?User $participator): self
     {
-        $this->sender = $sender;
-
-        return $this;
-    }
-
-    public function getRecipient(): ?User
-    {
-        return $this->recipient;
-    }
-
-    public function setRecipient(?User $recipient): self
-    {
-        $this->recipient = $recipient;
+        $this->participator = $participator;
 
         return $this;
     }

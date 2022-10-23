@@ -41,7 +41,7 @@ class Event
     private $endDate;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=255)
      */
     private $description;
 
@@ -258,5 +258,11 @@ class Event
         $nbSeatsAvailable = $nbSeatsTotal - $nbRegistered;
         return $nbSeatsAvailable;
       
+    }
+
+    public function nbRegistered()
+    {
+        $nbRegistered = count($this->users);
+        return $nbRegistered;
     }
 }

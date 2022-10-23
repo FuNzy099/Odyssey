@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Panel admin | {{app.user.pseudonyme}} | Edit {% endblock %}
+
+{% block stylesheets %}
+
+    <link href="{{ asset('css/layoutStyles/layout.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('css/adminStyles/admin.css') }}" type="text/css" rel="stylesheet" />
+
+{% endblock %}
+
+
+{% block body %}
+    
+
+<main class="mainEditUser">
+
+    <div class="containtEdit">
+
+        <h1>Majesté {{app.user.pseudonyme}}</h1>
+        
+        <p>Vous pouvez ici modifier le pseudonyme ainsi que le roles de l'utilisateur </p>
+        
+        {{ form_start(formAdminEditUser)}}
+        
+            <div class="pseudonyme">
+                {{form_row(formAdminEditUser.pseudonyme)}}
+            </div>
+        
+            <div class="roles">
+                {{form_row(formAdminEditUser.roles)}}
+            </div>
+        
+            <div class="submit">
+                {{ form_row(formAdminEditUser.submit) }}
+            </div>
+        
+        {{ form_end(formAdminEditUser) }}
+
+    </div>
+
+
+</main>
+
+
+{% endblock %}

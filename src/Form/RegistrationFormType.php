@@ -32,12 +32,8 @@ class RegistrationFormType extends AbstractType
                     'class' => "form-control"
                 ],
             ])
-            ->add('phoneNumber', TextType::class,[
-                "attr" => [
-                    'class' => "form-control"
-                ],
-            ])
             ->add('agreeTerms', CheckboxType::class, [
+                'label' => 'J\'accepte les conditions d\'utilisation',
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
@@ -59,7 +55,7 @@ class RegistrationFormType extends AbstractType
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
                 'first_options'  => [
-                    'label' => 'Mot de passe',
+                    'label' => 'Mot de passe *',
                     "attr" => [
                         'class' => "form-control"
                     ],
@@ -100,6 +96,7 @@ class RegistrationFormType extends AbstractType
             ])
 
             ->add('submit', SubmitType::class, [
+                'label' => 'Valider',
                 'attr' => ['class' => 'btn btn-primary submitProfil']
             ])
         ;

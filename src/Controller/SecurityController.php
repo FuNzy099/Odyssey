@@ -79,7 +79,6 @@ class SecurityController extends AbstractController
                 Ces variables sont là dans le but d'effectuer des conditions un peut plus tard dans la function
             */ 
             $actualPseudo = $user -> getPseudonyme();
-            $actualPhoneNumber = $user -> getPhoneNumber();
             $actualEmail = $user -> getEmail();
       
             // la function createForm() => permet de construire un formulaire qui ce repose sur le builder de EditProfilType qui lui même ce repose sur l'entity User
@@ -98,13 +97,6 @@ class SecurityController extends AbstractController
                         $checkPseudo => On effectue une requete DQL à l'aide du nouveau pseudo dans le but de voir si il est existant dans la base de donnée
                     */
                     $newPseudo = $form->get('pseudonyme')->getData();
-                    
-
-                    /*
-                        $newPhoneNumber   => On récupère le numéro de telephone saisi dans le formulaire
-                        $checkPhoneNumber => On effectue une requete DQL à l'aide du nouveau n° de tel dans le but de voir si il est existant dans la base de donnée
-                    */
-                    $newPhoneNumber = $form -> get('phoneNumber') -> getData();
                 
 
                     /*
@@ -166,45 +158,6 @@ class SecurityController extends AbstractController
 
                         }
                         
-                    }
-
-
-                    /*
-                        PARTIE CONCERNANT LA MODIFICATION DU NUMERO DE TEL
-                    
-                        On verifie si le nouveau numéro de telephone est different au numéro déjà enregistré
-                    */
-                    if($newPhoneNumber != $actualPhoneNumber){
-
-                        $checkPhoneNumber = $doctrine -> getRepository(User::class) -> findOneBy(['phoneNumber' => $newPhoneNumber], []);
-        
-                        // On verifie si le nouveau numéro de telephone n'est pas en base de donnée
-                        if (!isset($checkPhoneNumber)){
-        
-                            //  On passe par un manager pour récupérer depuis l'objet $doctrine notre getManager(), c'est grace à cette méthode qu'on à accès à persist() et flush()
-                            $entityManager = $doctrine->getManager();
-        
-                            // On persist() notre objet user, c'est l'équivalent de prepare() en PDO
-                            $entityManager->persist($user);
-        
-                            // On flush(), c'est l'équivalent de execute() en PDO, c'est dans cette étape flush() que notre insert into ce fait !
-                            $entityManager->flush();
-        
-                            // Si tout à fonctionner on affiche le message
-                            $this->addFlash('message', 'Profil mis à jour');
-        
-                            //  Redirection
-                            return $this->redirectToRoute('edit_profil');
-        
-                        // Sinon, si le numéro de telephone existe dans la base de donnée on affiche un message à l'utilisateur !
-                        } else {
-        
-                            $this->addFlash('warning', 'Une erreur est survenue !');
-        
-                            // Redirection
-                            return $this->redirectToRoute('edit_profil');
-                        }
-
                     }
 
 

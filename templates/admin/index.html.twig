@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Panel admin | {{app.user.pseudonyme}} {% endblock %}
+
+{% block stylesheets %}
+
+    <link href="{{ asset('css/layoutStyles/layout.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('css/adminStyles/admin.css') }}" type="text/css" rel="stylesheet" />
+
+{% endblock %}
+
+
+{% block body %}
+
+    <main class="mainAdmin">
+        <h1>Bonjour ô glorieux administrateur {{app.user.pseudonyme}}</h1>
+
+        <p>Ici vous retrouvez l'enssemble des informations du site web Space Odyssez !</p>
+
+        <h2>Informations générales </h2>
+
+        <table class="table border">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre d'évènements total (futur et passé)</th>
+                    <th scope="col">Nombre total d'utilisateurs inscrit </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ events | length }}</td>
+                    <td>{{ users | length }}</td>
+                </tr>
+            </tbody>
+
+        </table>
+    </main>
+{% endblock %}

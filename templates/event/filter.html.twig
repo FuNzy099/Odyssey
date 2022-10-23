@@ -6,33 +6,38 @@
 {% endblock %}
 
 
-{{ form_start(form) }}
+<div class="containtFilter">
 
+    <h1>Filtrer les évènements</h1>
 
-    {{form_row(form.q)}}
+    {{ form_start(form) }}
     
-    <div class="row">
-        <div class="col-md-6">
-            {{form_row(form.town)}}
+        {{form_row(form.q)}}
+        
+        <div class="row">
+            <div class="col-md-6">
+                {{form_row(form.town)}}
+            </div>
+            <div class="col-md-6">
+                {{form_row(form.zipCode)}}
+            </div>
         </div>
-        <div class="col-md-6">
-            {{form_row(form.zipCode)}}
+    
+    
+        <div class="row">
+            <div class="col-md-6">
+                {{form_row(form.startDate)}}
+            </div>
+            <div class="col-md-6">
+                {{form_row(form.endDate)}}
+            </div>
         </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-md-6">
-            {{form_row(form.startDate)}}
+    
+        <div class="btnFilter"> 
+            <button type="submit" class="btn btn-primary w-25 ">Filtrer</button>
+            <button type="submit" class="btn btn-secondary w-25"> <a href='{{ path('list_events')}}' class="resetFilter"> Rénitialiser le filtre </a> </button>
         </div>
-        <div class="col-md-6">
-            {{form_row(form.endDate)}}
-        </div>
-    </div>
+    
+    {{ form_end(form) }}
 
-    <div class="btnFilter"> 
-        <button type="submit" class="btn btn-primary w-25 ">Filtrer</button>
-        <button type="submit" class="btn btn-secondary w-25"> <a href='{{ path('list_events')}}' class="resetFilter"> Rénitialiser le filtre </a> </button>
-    </div>
-
-{{ form_end(form) }}
+</div>

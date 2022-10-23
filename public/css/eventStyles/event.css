@@ -1,11 +1,18 @@
+*{
+    font-family:  'Roboto Slab', serif;
+}
+
+
+body{
+    background-image: url('../../img/fondEventtruc.jpg');
+    background-repeat: no-repeat;
+    background-size: cover; 
+}
+
 main{
     min-height: 657px;
 }
 
-.card{
-    border: 1px solid black;
-    margin-bottom: 50px ;
-}
 
 .example-wrapper {
     margin: 1em auto;
@@ -19,6 +26,8 @@ main{
     padding: 2px 6px;
 }
 
+
+
 /* Message quand la recherche de l'utilisateur ne correspond à aucun évènement */
 .sendMessage{
     width: 50%;
@@ -28,7 +37,123 @@ main{
     font-size: large;
 }
 
+
+
+/* Barre de filtre */
+
+.containtFilter{
+    border-radius: 30px;
+    padding: 15px;
+    background-color: white;
+}
+
+.containtFilter h1{
+    font-family: 'play', sans-serif;
+    font-weight: bold;
+    font-size: 1.7em;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.containtFilter .row{
+    margin-top: 15px;
+}
+
+.btnFilter{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 2em;
+}
+
+.resetFilter{
+    color: white;
+    text-decoration: none;
+}
+
+.button a:hover{
+    color: white;
+}
+
+
+/* Evenement */
+
+.card{
+    padding:50px;
+    border-radius: 20px;
+    border: 1px solid black;
+    margin-bottom: 50px ;
+}
+
+.ContaintInfosGlobalEvent{
+    display: flex;
+    width: 95%;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.infosUser{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.infosUser p{
+    font-family: 'play', sans-serif;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-bottom: 0;
+}
+
+.infosEvent{
+    margin-left: 10%;
+    width: 80%;
+}
+
+.infosEvent h3{
+    font-family: 'play', sans-serif;
+    font-weight: bold;
+}
+
+.avatarUserCreator .avatar{
+    border: 5px solid white;
+    box-shadow: 0px 2px 5px black ;
+    border-radius: 10px;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.containtInfosAppointment{
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+}
+
+.containtInfosAppointment p{
+    margin-bottom: 3px;
+}
+
+
+
+/* Bouttons d'actions de l'évènement (modifier, supprimer, inscription et désinscription) */
+
+.buttonsEvent{
+    display: flex;
+    justify-content: space-around;
+    align-self: center;
+    width: 50%;
+}
+
+.buttonsEvent p{
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+
+
 /* Barre de pagination des évènement  */
+
 #navPagination{
     display: flex;
     flex-direction: row;
@@ -38,18 +163,3 @@ main{
     background-color: unset ;
 }
 
-.resetFilter{
-    color: white;
-    text-decoration: none;
-}
-
-.btnFilter{
-    text-align: center;
-    background-color: unset;
-    margin-top: 1em;
-    
-}
-
-.button a:hover{
-    color: white;
-}

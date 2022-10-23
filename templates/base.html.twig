@@ -36,7 +36,22 @@
                         <span class="pseudo">{{app.user.pseudonyme}}</span>
                     </div>
                     
+                    
                     <div class="groupButton">
+    
+                        {% if is_granted('ROLE_ADMIN') %}
+
+                            <div class="dropdown">
+                                <button class="dropbtn">Admin</button>
+                                <div class="dropdown-content">
+                                    <a href='{{ path('admin_home')}}' class="linkHeaderNav" id="deco">Acceuil</a>
+                                    <a href="{{ path('admin_users')}}" > Liste des utilisateurs </a>
+                                    <a href="#"> Liste des évènements </a>
+                                    <a href="#"> 3 </a>
+                                </div>
+                            </div>
+                        
+                        {% endif %}
 
                         <div class="dropdown">
                             <button class="dropbtn">Évènements</button>
@@ -104,7 +119,7 @@
                     {{ warning }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
                 </div>
-    
+
             {% endfor %}
             
         </div>
@@ -113,33 +128,72 @@
 
                                         {# PARTIE BODY #}
 
-        <main>
+      
             {% block body %}
                     
             {% endblock %}
-        </main>
+ 
 
 
                                         {# PARTIE FOOTER #}
 
-        <footer>
+        <footer class="normalFooter">
 
             <figure class="blockFigureFooter">
                 <a class="parentLogo" href="{{ path('app_home')}}">
-                    <img src="{{ asset('img/logo.png')}}" class="logoFooter" alt="Logo du site représentant Saturne incrusté du non du site web: 'Space Odyssey'">
+                    <img src="{{ asset('img/logoNoir.png')}}" class="logoFooter" alt="Logo du site représentant Saturne incrusté du non du site web: 'Space Odyssey'">
                 </a>
             </figure>
 
+            <div class="containtLinks">
+
+                <nav class="rules">
+
+                    <h3>Conditions</h3>
+    
+                    <div class="linkRules">
+                        <a href="#">CGU</a>
+                        <a href="#">Reglement</a>
+                        <a href="#">Nous contacter</a>
+                    </div>
+                </nav>
+    
+                <nav class="network">
+    
+                    <h3>Nos reseaux</h3>
+    
+                    <div class="linksNetwork">
+                        <a href="https://twitter.com/" target="_blank"><strong></strong>Twitter</strong></a>
+                        <a href="https://www.facebook.com/" target="_blank"><strong>Facebook</strong></a>
+                        <a href="https://www.instagram.com/" target="_blank"><strong>Instagram</strong></a>
+                        <a href="https://www.pinterest.fr/" target="_blank"><strong>Pinterest</strong></a>
+                    </div>
+                </nav>
+
+                <nav class="planSite">
+                    <h3>Liens du site</h3>
+
+                    <div class="linksSite">
+                        <a href="{{ path('app_home')}}">Acceuil</a>
+                        <a href="{{ path('list_events')}}">Liste des évènements</a>
+                        <a href="{{ path('add_event')}}">Créer un évènement</a>
+                        <a href="{{ path('app_login')}}">Connexion</a>
+                        <a href="{{ path('app_register')}}">Inscription</a>
+                    </div>
+                </nav>
+
+            </div>
+            
+            {# <p class="copyright"> © 2022 Tous droits réservés | Space Odyssey - Andre Kévin </p> #}
         </footer>
-
-
-
 
                                         {# PARTIE JAVASCRIPT #}                             
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
+        
+        
     </body>
 
 </html>

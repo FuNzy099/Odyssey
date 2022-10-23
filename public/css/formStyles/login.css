@@ -1,3 +1,57 @@
-footer{
-    bottom: 0 !important;
+body{
+    background-image: url('../../img/imgLogin.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
+
+.mainLogin{
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin: 0 auto;
+    height: 817px;
+    max-width: none;
+}
+
+.containtLoginForm{
+    width: 25%;
+    margin: auto;
+    color: rgb(255, 255, 255);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 35px;
+    border-radius: 25px;
+}
+
+.containtLoginForm h1{
+    font-family: 'play', sans-serif;
+    text-align: center;
+    font-size: 2.5em;
+}
+
+.containtLoginForm label{
+    margin-bottom: 0.5rem;
+    font-family:  'Roboto Slab', serif;
+}
+
+.containtLoginForm input{
+    margin-bottom: 2rem;
+    font-family:  'Roboto Slab', serif;
+}
+
+.buttonLogin{
+    display: flex;
+    width: 100%;
+    margin: auto;
+    justify-content: space-evenly;
+    text-align: center;
+}
+
+.buttonLogin a{
+    align-self: center;
+}
+
+/* footer{
+    bottom: 0 !important;
+} */

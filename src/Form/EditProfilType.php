@@ -24,10 +24,6 @@ class EditProfilType extends AbstractType
             ->add('pseudonyme', TextType::class,[
                 "attr" => ['class' => "form-control"],
             ])
-            ->add('phoneNumber', TextType::class,[
-                "attr" => ['class' => "form-control"],
-                'label' => 'Télèphone'
-            ])
             ->add('avatar', FileType::class, [
                 'attr' => ['class' => "form-control previewAvatar", 'accept' => 'image/*', 'onchange' => 'showPreview(event)' ],
                 'data_class' => null,
@@ -36,6 +32,7 @@ class EditProfilType extends AbstractType
 
             ])
             ->add('submit', SubmitType::class, [
+                'label' => 'Valider',
                 'attr' => ['class' => 'btn btn-primary submitProfil']
             ])
         ;

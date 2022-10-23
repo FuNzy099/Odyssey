@@ -1,0 +1,69 @@
+/* Main de la page index.html.twig dans admin */
+.mainAdmin{
+    text-align: center;
+    margin: auto;
+    width: 60%;
+    height: 644px;
+}
+
+/* Main de la page listUsers.html.twig dans admin */
+.mainAdminUsers{
+    text-align: center;
+    margin: auto;
+    width: 60%;
+    min-height: 500px;
+    margin-bottom: 5%;
+}
+
+/* Main de la page editUser.html.twig dans admin */
+.mainEditUser{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 667px;
+    margin: auto;
+    width: 40%;
+}
+.containtEdit{
+    border: solid 1px black;
+    border-radius: 30px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 3%;
+}
+
+
+/* Css concernant le bouton submit de la page editUser.html.twig dans admin */
+.mainEditUser .submit{
+    margin-top: 5%;
+    text-align: center;
+}
+
+
+
+
+/* Css commun à toutes les pages admin */
+
+.mainEditUser .roles, .mainEditUser .pseudonyme{
+    margin-top: 3%;
+}
+
+.roles #admin_edit_user_roles, .pseudonyme #admin_edit_user_pseudonyme {
+    margin-top: 1%;
+}
+
+
+.mainAdmin h1, .mainAdminUsers h1, .mainEditUser h1{
+    font-family: 'play', sans-serif;
+    font-weight: bold;
+    margin-top: 2%;
+}
+
+.mainAdmin p,  .mainAdminUsers p, .mainEditUser p{
+    margin: 2% 0;
+}
+
+.mainAdmin table, .mainAdminUsers table{
+    margin-top: 2% ;
+}
+

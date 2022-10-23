@@ -25,14 +25,25 @@ class Conversation
     private $privateMessages;
 
     /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $name = "titre conversation";
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="conversations")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $conversationCreator;
+
+    /**
      * @ORM\OneToMany(targetEntity=Participation::class, mappedBy="conversation", orphanRemoval=true)
      */
-    private $participations;
+    private $participators;
 
     public function __construct()
     {
         $this->privateMessages = new ArrayCollection();
-        $this->participations = new ArrayCollection();
+        $this->participators = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -70,30 +81,54 @@ class Conversation
         return $this;
     }
 
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getConversationCreator(): ?User
+    {
+        return $this->conversationCreator;
+    }
+
+    public function setConversationCreator(?User $conversationCreator): self
+    {
+        $this->conversationCreator = $conversationCreator;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Participation>
      */
-    public function getParticipations(): Collection
+    public function getParticipators(): Collection
     {
-        return $this->participations;
+        return $this->participators;
     }
 
-    public function addParticipation(Participation $participation): self
+    public function addParticipator(Participation $participator): self
     {
-        if (!$this->participations->contains($participation)) {
-            $this->participations[] = $participation;
-            $participation->setConversation($this);
+        if (!$this->participators->contains($participator)) {
+            $this->participators[] = $participator;
+            $participator->setConversation($this);
         }
 
         return $this;
     }
 
-    public function removeParticipation(Participation $participation): self
+    public function removeParticipator(Participation $participator): self
     {
-        if ($this->participations->removeElement($participation)) {
+        if ($this->participators->removeElement($participator)) {
             // set the owning side to null (unless already changed)
-            if ($participation->getConversation() === $this) {
-                $participation->setConversation(null);
+            if ($participator->getConversation() === $this) {
+                $participator->setConversation(null);
             }
         }
 

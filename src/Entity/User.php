@@ -35,7 +35,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private $roles = ["ROLE_USER"];
 
     /**
      * @var string The hashed password
@@ -80,11 +80,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $registrationEvents;
 
     /**
-     * @ORM\Column(type="string", length=14)
-     */
-    private $phoneNumber;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $avatar = "default-avatar.png";
@@ -95,19 +90,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $privateMessages;
 
     /**
-     * @ORM\OneToMany(targetEntity=Participation::class, mappedBy="sender")
+     * @ORM\OneToMany(targetEntity=Conversation::class, mappedBy="conversationCreator")
      */
-    private $senderParticipations;
+    private $conversations;
 
     /**
-     * @ORM\OneToMany(targetEntity=Participation::class, mappedBy="recipient")
+     * @ORM\OneToMany(targetEntity=Participation::class, mappedBy="participator")
      */
-    private $recipientParticipations;
+    private $participators;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Conversation::class)
-     */
-    private $userConversations;
 
     public function __construct()
     {
@@ -118,9 +109,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->registrationEvents = new ArrayCollection();
         $this->createEvents = new ArrayCollection();
         $this->privateMessages = new ArrayCollection();
-        $this->senderParticipations = new ArrayCollection();
-        $this->recipientParticipations = new ArrayCollection();
-        $this->userConversations = new ArrayCollection();
+        $this->conversations = new ArrayCollection();
+        $this->participators = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -336,18 +326,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPhoneNumber(): ?string
-    {
-        return $this->phoneNumber;
-    }
-
-    public function setPhoneNumber(string $phoneNumber): self
-    {
-        $this->phoneNumber = $phoneNumber;
-
-        return $this;
-    }
-
     public function getAvatar(): ?string
     {
         return $this->avatar;
@@ -391,85 +369,61 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Participation>
-     */
-    public function getSenderParticipations(): Collection
-    {
-        return $this->senderParticipations;
-    }
-
-    public function addSenderParticipations(Participation $participationSender): self
-    {
-        if (!$this->senderParticipations->contains($participationSender)) {
-            $this->senderParticipations[] = $participationSender;
-            $participationSender->setSender($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSenderParticipations(Participation $participationSender): self
-    {
-        if ($this->senderParticipations->removeElement($participationSender)) {
-            // set the owning side to null (unless already changed)
-            if ($participationSender->getSender() === $this) {
-                $participationSender->setSender(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Participation>
-     */
-    public function getRecipientParticipations(): Collection
-    {
-        return $this->recipientParticipations;
-    }
-
-    public function addRecipientParticipation(Participation $recipientParticipation): self
-    {
-        if (!$this->recipientParticipations->contains($recipientParticipation)) {
-            $this->recipientParticipations[] = $recipientParticipation;
-            $recipientParticipation->setRecipient($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRecipientParticipation(Participation $recipientParticipation): self
-    {
-        if ($this->recipientParticipations->removeElement($recipientParticipation)) {
-            // set the owning side to null (unless already changed)
-            if ($recipientParticipation->getRecipient() === $this) {
-                $recipientParticipation->setRecipient(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Conversation>
      */
-    public function getUserConversations(): Collection
+    public function getConversations(): Collection
     {
-        return $this->userConversations;
+        return $this->conversations;
     }
 
-    public function addUserConversation(Conversation $userConversation): self
+    public function addConversation(Conversation $conversation): self
     {
-        if (!$this->userConversations->contains($userConversation)) {
-            $this->userConversations[] = $userConversation;
+        if (!$this->conversations->contains($conversation)) {
+            $this->conversations[] = $conversation;
+            $conversation->setConversationCreator($this);
         }
 
         return $this;
     }
 
-    public function removeUserConversation(Conversation $userConversation): self
+    public function removeConversation(Conversation $conversation): self
     {
-        $this->userConversations->removeElement($userConversation);
+        if ($this->conversations->removeElement($conversation)) {
+            // set the owning side to null (unless already changed)
+            if ($conversation->getConversationCreator() === $this) {
+                $conversation->setConversationCreator(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Participation>
+     */
+    public function getParticipators(): Collection
+    {
+        return $this->participators;
+    }
+
+    public function addParticipator(Participation $participator): self
+    {
+        if (!$this->participators->contains($participator)) {
+            $this->participators[] = $participator;
+            $participator->setParticipator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipator(Participation $participator): self
+    {
+        if ($this->participators->removeElement($participator)) {
+            // set the owning side to null (unless already changed)
+            if ($participator->getParticipator() === $this) {
+                $participator->setParticipator(null);
+            }
+        }
 
         return $this;
     }
