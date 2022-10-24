@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Panel admin | {{app.user.pseudonyme}} | liste utilisateurs  {% endblock %}
+{% block title %} Panel admin | {{app.user.pseudonyme}} | liste des évènements  {% endblock %}
 
 {% block stylesheets %}
 
@@ -12,41 +12,64 @@
 
 {% block body %}
 
-    <main class="mainAdminUsers">
+<h1>Je suis dans la liste des évènements</h1>
 
-        <h1>Ma seignererie {{app.user.pseudonyme}}</h1>
+    <main class="mainAdminEvents">
 
-        <p>Vous retrouverez ici la liste complète des utilisateurs enregistré sur le site web</p>
+        <h1>Ma magnificence {{app.user.pseudonyme}}</h1>
 
-        <table class="table border">
+        <p>Vous retrouverez ici la liste complète des évènement enregistré sur le site web</p>
+
+        <table class="table table-striped border">
             <thead>
                 <tr>
-                    <th scope="col">pseudonyme</th>
-                    <th scope="col">Adresse E-mail </th>
-                    <th scope="col">Date d'inscription</th>
-                    <th scope="col">Rôle(s)</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col">Créateur</th>
+                    <th scope="col">Titre</th>
+                    <th scope="col">Date de création </th>
+                    <th scope="col">Date de début </th>
+                    <th scope="col">Date de fin</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Nombre de place</th>
+                    <th scope="col">Nombre d'inscrit</th>
+                    <th scope="col">Liste des utilisateurs inscrits</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
-                {% for user in users %}
+                {% for event in events %}
                     <tr>
-                        <td>{{ user.pseudonyme }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>{{ user.registrationDate|date('d/m/Y')}}</td>
+                        <td>{{ event.userCreator.pseudonyme }}</td>
+                        <td>{{ event.title }}</td>
+                        <td>{{ event.creationDate|date('d/m/Y')}}</td>
+                        <td>{{ event.startDate|date('d/m/Y')}}</td>
+                        <td>{{ event.endDate|date('d/m/Y')}}</td>
+                        <td>{{ event.description }}</td>
+                        <td>{{ event.maxPlaces }}</td>
+                        <td>{{ event.nbRegistered}}</td>
                         <td>
-                            {% for role in user.roles %}
-                                {% if role == 'ROLE_ADMIN' %}
-                                    <p class="text-danger">administrateur</p> 
-                                {% elseif role == 'ROLE_USER' %}
-                                    utilisateur
-                                {% endif %}
-                            {% endfor %}
-                        </td>
-                        <td>
-                            <a href="{{ path('admin_edit_user', {'id' : user.id}) }}">Editer</a>
+                            {% if event.users|length > 0  %}
 
-                            <a href dataIdUser="{{url('admin_delete_user',{id:user.id}) }}" data-bs-toggle="modal" data-bs-target="#exampleModal"  class="deleteBtn">Supprimer</a>
+                                {% for user in event.users %}   
+
+                                    <li> {{user.pseudonyme}} </li>      
+
+                                {% endfor %}
+
+                            {% else %}
+
+                                Aucun inscrit pour cet évènement
+
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <a href="{{ path('admin_edit_event', {'id' : event.id}) }}">Editer</a>
+                        </td>
+                        
+                        {# <td>
+                            <a href="{{ path('edit_user', {'id' : user.id}) }}">Editer</a>
+
+                            <a href dataIdUser="{{url('delete_user',{id:user.id}) }}" data-bs-toggle="modal" data-bs-target="#exampleModal"  class="deleteBtn">Supprimer</a>
                             
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -62,15 +85,14 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-danger" >
-                                                {# <a href="{{ path('delete_user', {'id': user.id}) }}" class="aWithoutStyle text-light" id="truc"name="deleteUserModal">Supprimer</a> #}
-                                                <a href dataIdUser="{{url('admin_delete_user',{id:user.id}) }}" data-bs-toggle="modal" data-bs-target="#exampleModal"  class="dropdown-item deleteBtn removeUser">Supprimer</a>
+                                                <a href dataIdUser="{{url('delete_user',{id:user.id}) }}" data-bs-toggle="modal" data-bs-target="#exampleModal"  class="dropdown-item deleteBtn removeUser">Supprimer</a>
                                             </button>
                                             <button type="button" class="btn btn-secondary">Fermer</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </td>
+                        </td> #}
                     </tr>
 
                 {% endfor %}

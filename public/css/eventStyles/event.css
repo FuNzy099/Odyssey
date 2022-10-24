@@ -112,6 +112,7 @@ main{
 .infosEvent h3{
     font-family: 'play', sans-serif;
     font-weight: bold;
+    color: black;
 }
 
 .avatarUserCreator .avatar{

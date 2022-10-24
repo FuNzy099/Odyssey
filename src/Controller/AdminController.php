@@ -5,12 +5,15 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Event;
 use App\Form\AdminEditUserType;
+use App\Form\AdminEditEventType;
+
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
+
 
 /**
  * @isGranted("ROLE_ADMIN")
@@ -58,6 +61,8 @@ class AdminController extends AbstractController
         ]);
     }
 
+                                                    // PARTIE CONCERNANT LES UTILISATEUR
+
     /**
      * @Route("/admin/users", name="admin_users")
      * 
@@ -78,7 +83,7 @@ class AdminController extends AbstractController
 
 
     /**
-     * @Route("/admin/users/edit/{id}", name="edit_user")
+     * @Route("/admin/users/edit/{id}", name="admin_edit_user")
      * 
      * Route permetant d'editer le profil d'un utilisateur (Pseudonyme et role)
      */
@@ -112,7 +117,7 @@ class AdminController extends AbstractController
 
 
     /**
-     * @Route("/admin/users/delete/{id}", name="delete_user")
+     * @Route("/admin/users/delete/{id}", name="admin_delete_user")
      * 
      * Route permetant de supprimer le profil d'un utilisateur
      */
@@ -122,8 +127,6 @@ class AdminController extends AbstractController
         $this -> denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $entityManager = $this -> doctrine -> getManager();
-
-        dump($entityManager);
 
         $entityManager -> remove($user);
         
@@ -136,5 +139,58 @@ class AdminController extends AbstractController
     }
 
 
+
+                                                        // PARTIE CONCERNANT LES UTILISATEURS
+
+   /**
+     * @Route("/admin/events", name="admin_events")
+     * 
+     * Route permetant d'afficher la liste des évènements enregistrés sur l'application
+     */
+    public function listEvents() : Response
+    {
+
+        $this -> denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $events = $this -> doctrine -> getRepository(Event::class) -> findBy([], ['creationDate' => 'DESC']);
+
+        return $this->render('admin/listEvents.html.twig', [
+            'events' => $events
+        ]);
+    }
+
+
+
+    /**
+     * @Route("/admin/events/edit/{id}", name="admin_edit_event")
+     * 
+     * Route permetant d'editer le profil d'un utilisateur (Pseudonyme et role)
+     */
+    public function editEvent(Request $request, Event $event) : Response
+    {
+
+        $this -> denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $form = $this -> createForm(AdminEditEventType::class, $event);
+
+        $form -> handleRequest($request);
+
+        if($form -> isSubmitted() && $form -> isValid()){
+
+            $entityManager = $this -> doctrine -> getManager();
+
+            $entityManager -> persist($event);
+
+            $entityManager -> flush();
+
+            $this -> addFlash('message', 'L\'évènement a bien été modifié !');
+
+            return $this -> redirectToRoute('admin_events');
+        }
+
+        return $this->render('admin/editEvent.html.twig', [
+            'formAdminEditEvent' => $form -> createView(),
+        ]);
+    }
 
 }

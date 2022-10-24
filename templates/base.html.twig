@@ -39,6 +39,7 @@
                     
                     <div class="groupButton">
     
+                        {# Navigation donnant accès au panel administrateur uniquement si le user en session possede le ROLE_ADMIN #}
                         {% if is_granted('ROLE_ADMIN') %}
 
                             <div class="dropdown">
@@ -46,7 +47,7 @@
                                 <div class="dropdown-content">
                                     <a href='{{ path('admin_home')}}' class="linkHeaderNav" id="deco">Acceuil</a>
                                     <a href="{{ path('admin_users')}}" > Liste des utilisateurs </a>
-                                    <a href="#"> Liste des évènements </a>
+                                    <a href="{{ path('admin_events')}}"> Liste des évènements </a>
                                     <a href="#"> 3 </a>
                                 </div>
                             </div>
@@ -77,7 +78,7 @@
                          
                     </div>
                     
-                {# sinon #}
+                {# sinon si le user n'est pas en session #}
                 {% else %}
 
                 <div class="groupInfos">

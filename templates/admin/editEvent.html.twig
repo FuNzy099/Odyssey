@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Panel admin | {{app.user.pseudonyme}} | Edit {% endblock %}
+
+{% block stylesheets %}
+
+    <link href="{{ asset('css/layoutStyles/layout.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('css/adminStyles/admin.css') }}" type="text/css" rel="stylesheet" />
+
+{% endblock %}
+
+
+{% block body %}
+    
+
+<main class="mainEditEvent">
+
+    <div class="containtEditUser">
+
+        <h1>Mon excellence {{app.user.pseudonyme}}</h1>
+        
+        <p>Vous pouvez ici modifier un évènement</p>
+        
+        {{ form_start(formAdminEditEvent)}}
+        
+        <div class="eventTitle">
+            {{form_row(formAdminEditEvent.title)}}
+        </div>
+
+        <div class="eventDescription">
+            {{form_row(formAdminEditEvent.description)}}
+        </div>
+
+        <div class="containtDate">
+        
+            <div class="eventStartDate">
+                {{form_row(formAdminEditEvent.startDate)}}
+            </div>
+
+            <div class="eventEndDate">
+                {{form_row(formAdminEditEvent.endDate)}}
+            </div>
+
+        </div>
+
+        <div class="submit">
+            {{ form_row(formAdminEditEvent.submit) }}
+        </div>
+
+        {{ form_end(formAdminEditEvent) }}
+
+
+    </div>
+
+
+</main>
+
+
+{% endblock %}
