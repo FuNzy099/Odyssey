@@ -35,6 +35,7 @@ class SearchType extends AbstractType
                     ],
                 'widget' => 'single_text'
             ])
+
             ->add('endDate', DateTimeType::class, [
                 'label' => 'Date de fin',
                 'required' => false,
@@ -50,6 +51,7 @@ class SearchType extends AbstractType
                 'label' => 'Ville',
                 'required' => false,
             ])
+            
             ->add('zipCode', TextType::class, [
                 "attr" => ['class' => "form-control"],
                 'label' => 'Code postal',

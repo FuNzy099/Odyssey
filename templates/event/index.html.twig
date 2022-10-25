@@ -11,128 +11,127 @@
 
 {% block body %}
 
-    <div class="example-wrapper">
+<main class="example-wrapper">
 
-        <h1>Je suis dans la liste des évènements ✅</h1>
+    <h1>Je suis dans la liste des évènements ✅</h1>
 
-        <div class="row filter-flash">
-            <div class="col-md-12">
-                {% include 'event/filter.html.twig' with {form: form} only %}     
-            </div>
-
-            {# Affichage d'un message d'erreur si le resultat de la recherche est vide #}
-            <div class="sendMessage">
-        
-                {% for warning in app.flashes('warningSearch') %}
-        
-                    <div class="alert alert-warning" role="alert">{{ warning }}</div>
-        
-                {% endfor %}
-                
-            </div>
+    <div class="row filter-flash">
+        <div class="col-md-12">
+            {% include 'event/filter.html.twig' with {form: form} only %}     
         </div>
 
-        
-        <div class="mesCartes">
+        {# Affichage d'un message d'erreur si le resultat de la recherche est vide #}
+        <div class="sendMessage">
+    
+            {% for warning in app.flashes('warningSearch') %}
+    
+                <div class="alert alert-warning" role="alert">{{ warning }}</div>
+    
+            {% endfor %}
+            
+        </div>
+    </div>
 
-            {% for event in events %}
+    
+    <div class="mesCartes">
 
-                {# div contenant l'ensemble des informations d'un évènement #}
-                <div class="card">
+        {% for event in events %}
 
-                    {# div contenant l'ensemble des infos global d'un évènement (Avatar du créateur, pseudonyme, titre et description) #}
-                    <div class="ContaintInfosGlobalEvent">
+            {# div contenant l'ensemble des informations d'un évènement #}
+            <div class="card">
 
-                        {# Infos du user, pseudonyme et avatar #}
-                        <div class="infosUser">
-                            <figure class="avatarUserCreator">
-                                <img id="edit_profil_avatar_preview" src="{{ asset('img/avatars/' ~ event.userCreator.avatar) }}" class="avatar" alt="Image de profil de l'utilisateur !">
-                            </figure>
-                            <p>{{event.userCreator.pseudonyme}}</p>
-                        </div>
+                {# div contenant l'ensemble des infos global d'un évènement (Avatar du créateur, pseudonyme, titre et description) #}
+                <div class="ContaintInfosGlobalEvent">
 
-                        {# Infos de l'évènement, titre et description #}
-                        <div class="infosEvent">
-                            <h3>{{event.title}}</h3>
-                            <p>{{event.description}}</p>
-                        </div>
-
+                    {# Infos du user, pseudonyme et avatar #}
+                    <div class="infosUser">
+                        <figure class="avatarUserCreator">
+                            <img id="edit_profil_avatar_preview" src="{{ asset('img/avatars/' ~ event.userCreator.avatar) }}" class="avatar" alt="Image de profil de l'utilisateur !">
+                        </figure>
+                        <p>{{event.userCreator.pseudonyme}}</p>
                     </div>
 
-                    {# div contenant les information suplementaire à l'évènement (lieu, adresse, nombre de place, nombre d'inscrit) #}
-                    <div class="containtInfosAppointment">
-
-                        {# Infos concernant le lieu et la date du rendez-vous #}
-                        <div class="appointment">
-                            <h4>Lieu du rendez-vous</h4>
-                            
-                        
-                            <p>Date : du {{ event.startDate|date('d/m/Y à H:i') }} <br> au {{ event.endDate|date('d/m/Y à H:i') }}</p>
-                            <p>Heure : de {{event.startDate|date('H:i')}} à {{event.endDate|date('H:i')}} </p>
-                            <p>Adresse : {{event.address}}</p>
-                            <p>Ville : {{event.town}}</p>
-                            <p>Code postal : {{event.zipCode}}</p>
-                        </div>
-
-                        {# Infos concernant le nombre de place dispo et le nombre d'inscrit #}
-                        <div class="nbPlacesEvent">
-                            <h4>Infos</h4>
-
-                            <p>Nombre de place disponible : {{ event.nbSeatsAvailable }} / {{ event.maxPlaces }}</p>
-                            <p>Nombre d'inscrit : {{event.nbRegistered}}</p>
-                        </div>
-
-                    </div>
-        
-                    {# Contient les bouttons d'action lié à un évènement (Inscription, désinscription, modification, suppression) #}
-                    <div class="buttonsEvent">
-
-                        {# Si il y a un user en session on lui offre la possibilité de s'inscrire et/ou de se désinscrire d'un évènement #}
-                        {% if app.user  %}         
-        
-                            {# Si le user en session ce trouve dans la liste des user participant à un événement il peut ce désinscrire  #}
-                            {% if app.user in event.users %}
-                        
-                                <a href="{{ path('unsub_event', {'id': event.id} )}}" class="btn btn-warning">Désinscription</a>
-        
-                            {# si l'id de l'user en session et == à l'id de l'utilisateur eyant créé l'évènement il peut modifier ou supprimer ce dernier #}
-                            {% elseif app.user.id == event.userCreator.id %}
-                        
-                                <a href="{{ path('edit_event', {'id': event.id} )}}" class="btn btn-primary">Modifier</a>
-                                <a href="{{ path('delete_event', {'id': event.id} )}}" class="btn btn-danger">Supprimer</a>
-                                
-                            {# Sinon, si le user en session n'est pas dans la liste des users participant à l'événement et qu'il n'est pas le createur il peut s'inscrire #}
-        
-                            {% elseif event.users|length == event.maxPlaces %}
-        
-                                <p class="text-danger">L'évènement est complet</p> 
-        
-                            {% else %}
-        
-                                <a href="{{ path('registration_event', {'id': event.id} )}}" class="btn btn-primary">Inscription</a>  
-                                            
-                            {% endif %}
-        
-                        {# Sinon si le user n'est pas en session on le renvoie au formulaire de connection au site #}
-                        {% else %}
-        
-                            <a href="{{ path('app_login')}}"> Connectez-vous</a>
-        
-                        {% endif %}
-
+                    {# Infos de l'évènement, titre et description #}
+                    <div class="infosEvent">
+                        <h3>{{event.title}}</h3>
+                        <p>{{event.description}}</p>
                     </div>
 
                 </div>
 
-            {% endfor %}
-                
-        </div>
+                {# div contenant les information suplementaire à l'évènement (lieu, adresse, nombre de place, nombre d'inscrit) #}
+                <div class="containtInfosAppointment">
 
-        {# Pagination #}
-        <div id="navPagination">
-            {{ knp_pagination_render(events) }}
-        </div>
-        
+                    {# Infos concernant le lieu et la date du rendez-vous #}
+                    <div class="appointment">
+                        <h4>Lieu du rendez-vous</h4>
+                        
+                    
+                        <p>Date : du {{ event.startDate|date('d/m/Y à H:i') }} <br> au {{ event.endDate|date('d/m/Y à H:i') }}</p>
+                        <p>Heure : de {{event.startDate|date('H:i')}} à {{event.endDate|date('H:i')}} </p>
+                        <p>Adresse : {{event.address}}</p>
+                        <p>Ville : {{event.town}}</p>
+                        <p>Code postal : {{event.zipCode}}</p>
+                    </div>
 
+                    {# Infos concernant le nombre de place dispo et le nombre d'inscrit #}
+                    <div class="nbPlacesEvent">
+                        <h4>Infos</h4>
+
+                        <p>Nombre de place disponible : {{ event.nbSeatsAvailable }} / {{ event.maxPlaces }}</p>
+                        <p>Nombre d'inscrit : {{event.nbRegistered}}</p>
+                    </div>
+
+                </div>
+    
+                {# Contient les bouttons d'action lié à un évènement (Inscription, désinscription, modification, suppression) #}
+                <div class="buttonsEvent">
+
+                    {# Si il y a un user en session on lui offre la possibilité de s'inscrire et/ou de se désinscrire d'un évènement #}
+                    {% if app.user  %}         
+    
+                        {# Si le user en session ce trouve dans la liste des user participant à un événement il peut ce désinscrire  #}
+                        {% if app.user in event.users %}
+                    
+                            <a href="{{ path('unsub_event', {'id': event.id} )}}" class="btn btn-warning">Désinscription</a>
+    
+                        {# si l'id de l'user en session et == à l'id de l'utilisateur eyant créé l'évènement il peut modifier ou supprimer ce dernier #}
+                        {% elseif app.user.id == event.userCreator.id %}
+                    
+                            <a href="{{ path('edit_event', {'id': event.id} )}}" class="btn btn-primary">Modifier</a>
+                            <a href="{{ path('delete_event', {'id': event.id} )}}" class="btn btn-danger">Supprimer</a>
+                            
+                        {# Sinon, si le user en session n'est pas dans la liste des users participant à l'événement et qu'il n'est pas le createur il peut s'inscrire #}
+    
+                        {% elseif event.users|length == event.maxPlaces %}
+    
+                            <p class="text-danger">L'évènement est complet</p> 
+    
+                        {% else %}
+    
+                            <a href="{{ path('registration_event', {'id': event.id} )}}" class="btn btn-primary">Inscription</a>  
+                                        
+                        {% endif %}
+    
+                    {# Sinon si le user n'est pas en session on le renvoie au formulaire de connection au site #}
+                    {% else %}
+    
+                        <a href="{{ path('app_login')}}"> Connectez-vous</a>
+    
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+            
     </div>
+
+    {# Pagination #}
+    <div id="navPagination">
+        {{ knp_pagination_render(events) }}
+    </div>
+
+</main>
 {% endblock %}

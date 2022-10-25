@@ -19,7 +19,7 @@ body{
     margin: 0 auto;
     border-radius: 50px;
     padding: 3%;
-    height: 767px;
+    min-height: 90vh;
     max-width: 1280px;
 }
 

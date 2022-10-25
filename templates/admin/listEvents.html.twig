@@ -12,8 +12,6 @@
 
 {% block body %}
 
-<h1>Je suis dans la liste des évènements</h1>
-
     <main class="mainAdminEvents">
 
         <h1>Ma magnificence {{app.user.pseudonyme}}</h1>
@@ -57,22 +55,18 @@
 
                             {% else %}
 
-                                Aucun inscrit pour cet évènement
+                                Aucun inscrit
 
                             {% endif %}
                         </td>
 
                         <td>
                             <a href="{{ path('admin_edit_event', {'id' : event.id}) }}">Editer</a>
-                        </td>
-                        
-                        {# <td>
-                            <a href="{{ path('edit_user', {'id' : user.id}) }}">Editer</a>
 
-                            <a href dataIdUser="{{url('delete_user',{id:user.id}) }}" data-bs-toggle="modal" data-bs-target="#exampleModal"  class="deleteBtn">Supprimer</a>
-                            
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <a href dataIdUser="{{url('admin_delete_event',{id:event.id}) }}" data-bs-toggle="modal" data-bs-target="#exampleModal"  class="deleteBtn">Supprimer</a>
+
+                             <!-- Modal -->
+                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -80,19 +74,20 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            Êtes vous certain de vouloir supprimer le compte ? <br>
-                                            La suppression du compte et définitive
+                                            Êtes vous certain de vouloir supprimer cet évènement ? <br>
+                                            La suppression de l'évènement est définitive
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-danger" >
-                                                <a href dataIdUser="{{url('delete_user',{id:user.id}) }}" data-bs-toggle="modal" data-bs-target="#exampleModal"  class="dropdown-item deleteBtn removeUser">Supprimer</a>
+                                                {# <a href="{{ path('delete_user', {'id': user.id}) }}" class="aWithoutStyle text-light" id="truc"name="deleteUserModal">Supprimer</a> #}
+                                                <a href dataIdUser="{{url('admin_delete_event',{id:event.id}) }}" data-bs-toggle="modal" data-bs-target="#exampleModal"  class="dropdown-item deleteBtn removeUser">Supprimer</a>
                                             </button>
                                             <button type="button" class="btn btn-secondary">Fermer</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </td> #}
+                        </td>
                     </tr>
 
                 {% endfor %}
@@ -115,7 +110,7 @@
         crossorigin="anonymous">
     </script>
 
-    <script src="{{ asset('js/deleteModal.js')}}"></script>
+    <script src="{{ asset('js/deleteModal/deleteModalEvent.js')}}"></script>
     {{ encore_entry_script_tags('app') }}
     <!-- JavaScript Bundle with Popper -->
 

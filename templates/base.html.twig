@@ -48,7 +48,6 @@
                                     <a href='{{ path('admin_home')}}' class="linkHeaderNav" id="deco">Acceuil</a>
                                     <a href="{{ path('admin_users')}}" > Liste des utilisateurs </a>
                                     <a href="{{ path('admin_events')}}"> Liste des évènements </a>
-                                    <a href="#"> 3 </a>
                                 </div>
                             </div>
                         
@@ -130,10 +129,12 @@
                                         {# PARTIE BODY #}
 
       
-            {% block body %}
-                    
-            {% endblock %}
- 
+        {% block body %}
+
+
+        
+        {% endblock %}
+
 
 
                                         {# PARTIE FOOTER #}

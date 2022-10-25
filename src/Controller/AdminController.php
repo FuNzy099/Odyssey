@@ -6,7 +6,6 @@ use App\Entity\User;
 use App\Entity\Event;
 use App\Form\AdminEditUserType;
 use App\Form\AdminEditEventType;
-
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -155,7 +154,7 @@ class AdminController extends AbstractController
         $events = $this -> doctrine -> getRepository(Event::class) -> findBy([], ['creationDate' => 'DESC']);
 
         return $this->render('admin/listEvents.html.twig', [
-            'events' => $events
+            'events' => $events,   
         ]);
     }
 
@@ -185,7 +184,7 @@ class AdminController extends AbstractController
 
             $this -> addFlash('message', 'L\'évènement a bien été modifié !');
 
-            return $this -> redirectToRoute('admin_events');
+            return $this -> redirectToRoute('admin_edit_events');
         }
 
         return $this->render('admin/editEvent.html.twig', [
@@ -193,4 +192,27 @@ class AdminController extends AbstractController
         ]);
     }
 
+
+
+    /**
+     * @Route("/admin/events/delete/{id}", name="admin_delete_event")
+     * 
+     * Route permetant de supprimer un évènement
+     */    
+    public function deleteEvent(Event $event)
+    {
+        $this -> denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $entityManager = $this -> doctrine -> getManager();
+
+        $entityManager -> remove($event);
+
+        $entityManager -> flush();
+
+        
+        $this -> addFlash('message', 'L\'évènement a bien été supprimé !');
+        
+
+        return $this -> redirectToRoute('admin_events');
+    }
 }
