@@ -12,8 +12,10 @@
 
     {{ form_start(form) }}
     
+        {# Champ du filtre concernant la saisi "libre" #}
         {{form_row(form.q)}}
         
+        {# Champs du filtre concernant la ville et le code postal #}
         <div class="row">
             <div class="col-md-6">
                 {{form_row(form.town)}}
@@ -22,8 +24,8 @@
                 {{form_row(form.zipCode)}}
             </div>
         </div>
-    
-    
+
+        {# Champs du filtre concernant la date de début et de fin #}
         <div class="row">
             <div class="col-md-6">
                 {{form_row(form.startDate)}}
@@ -32,7 +34,8 @@
                 {{form_row(form.endDate)}}
             </div>
         </div>
-    
+        
+        {# Champs concernant les bouttons #}
         <div class="btnFilter"> 
             <button type="submit" class="btn btn-primary w-25 ">Filtrer</button>
             <button type="submit" class="btn btn-secondary w-25"> <a href='{{ path('list_events')}}' class="resetFilter"> Rénitialiser le filtre </a> </button>
