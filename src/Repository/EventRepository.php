@@ -155,7 +155,7 @@ class EventRepository extends ServiceEntityRepository
      * @return PaginationInterface
      */
     public function adminFindSearch(SearchAdmin $search): PaginationInterface
-    {
+    {     
         $query = $this 
             ->createQueryBuilder('event');
             $query 
@@ -164,12 +164,12 @@ class EventRepository extends ServiceEntityRepository
                 ->leftJoin('e.userCreator', 'u');
                 // ->orderBy('event.startDate', 'DESC')
 
-                // $em = $this->getEntityManager();
-                // $sub = $em->createQueryBuilder();
-                // $sub->select('user')
-                // ->from('App\Entity\User', 'user')
-                // ->where($sub->expr()->notIn('user.id', $query->getDQL()))
-                // ->setParameter('id', $search);
+                $em = $this->getEntityManager();
+                $sub = $em->createQueryBuilder();
+                $sub->select('user')
+                ->from('App\Entity\User', 'user')
+                ->where($sub->expr()->notIn('user.id', $query->getDQL()))
+                ->setParameter('id', $search);
     
             if(!empty($search -> userCreator)){   
                 
@@ -179,10 +179,7 @@ class EventRepository extends ServiceEntityRepository
                     ->setParameter('userCreator', "%{$search->userCreator}%");
                 
             }
-            
-            
-            // dd($query->getQuery()->getResult());
-            
+                 
             if(!empty($query -> getQuery() -> getResult())){
         
                 // On récupère la requête 
@@ -206,21 +203,6 @@ class EventRepository extends ServiceEntityRepository
          
             }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

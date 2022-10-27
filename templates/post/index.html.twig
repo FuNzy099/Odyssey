@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Evènement | Commentaires  {% endblock %}
+
+{% block stylesheets %}
+
+    <link href="{{ asset('css/layoutStyles/layout.css') }}" type="text/css" rel="stylesheet" />
+    {# <link href="{{ asset('css/adminStyles/admin.css') }}" type="text/css" rel="stylesheet" /> #}
+
+{% endblock %}
+
+{% block body %}
+    {# <h1>Conversation de l'évènement de {{events.userCreator.pseudonyme}}</h1> #}
+
+    {% for event in events %}
+        
+        {# {{ dump(event.userCreator.pseudonyme) }} #}
+        {# {{ dump(event) }} #}
+        
+    {% endfor %}
+
+{% endblock %}

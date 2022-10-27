@@ -94,6 +94,7 @@
                         {% if app.user in event.users %}
                     
                             <a href="{{ path('unsub_event', {'id': event.id} )}}" class="btn btn-warning">Désinscription</a>
+                            <a href="{{ path('app_post', {'id': event.id} )}}" class="btn btn-primary">Conversation</a>
     
                         {# si l'id de l'user en session et == à l'id de l'utilisateur eyant créé l'évènement il peut modifier ou supprimer ce dernier #}
                         {% elseif app.user.id == event.userCreator.id %}
@@ -116,7 +117,7 @@
                     {# Sinon si le user n'est pas en session on le renvoie au formulaire de connection au site #}
                     {% else %}
     
-                        <a href="{{ path('app_login')}}"> Connectez-vous</a>
+                        <a href="{{ path('app_login')}}" class="btn btn-success"> Connectez-vous</a>
     
                     {% endif %}
 

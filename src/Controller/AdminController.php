@@ -183,6 +183,14 @@ class AdminController extends AbstractController
         */
         $events = $repository -> adminFindSearch($data);
 
+        
+        // ! A supprimer dès que le filtre admin fonctionne
+        // if($form -> isSubmitted() && $form -> isValid()){
+        //     $checkPseudo = $form -> get('userCreator')->getData();
+        //     $checkPseudo = $this -> doctrine -> getRepository(User::class) -> findOneBy(['pseudonyme' => $checkPseudo], []);
+        //     dd($checkPseudo);
+        // }
+
 
         return $this->render('admin/listEvents.html.twig', [
             'events' => $events,   
