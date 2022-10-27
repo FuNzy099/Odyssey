@@ -85,19 +85,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $avatar = "default-avatar.png";
 
     /**
-     * @ORM\OneToMany(targetEntity=PrivateMessage::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=PrivateMessage::class, mappedBy="sender", orphanRemoval=true)
      */
-    private $privateMessages;
+    private $send;
 
     /**
-     * @ORM\OneToMany(targetEntity=Conversation::class, mappedBy="conversationCreator")
+     * @ORM\OneToMany(targetEntity=PrivateMessage::class, mappedBy="recipient", orphanRemoval=true)
      */
-    private $conversations;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Participation::class, mappedBy="participator")
-     */
-    private $participators;
+    private $received;
 
 
     public function __construct()
@@ -108,9 +103,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->articles = new ArrayCollection();
         $this->registrationEvents = new ArrayCollection();
         $this->createEvents = new ArrayCollection();
-        $this->privateMessages = new ArrayCollection();
-        $this->conversations = new ArrayCollection();
-        $this->participators = new ArrayCollection();
+        $this->send = new ArrayCollection();
+        $this->received = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -337,31 +331,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-   
+
     /**
      * @return Collection<int, PrivateMessage>
      */
-    public function getPrivateMessages(): Collection
+    public function getSend(): Collection
     {
-        return $this->privateMessages;
+        return $this->send;
     }
 
-    public function addPrivateMessage(PrivateMessage $privateMessage): self
+    public function addSend(PrivateMessage $send): self
     {
-        if (!$this->privateMessages->contains($privateMessage)) {
-            $this->privateMessages[] = $privateMessage;
-            $privateMessage->setUser($this);
+        if (!$this->send->contains($send)) {
+            $this->send[] = $send;
+            $send->setSender($this);
         }
 
         return $this;
     }
 
-    public function removePrivateMessage(PrivateMessage $privateMessage): self
+    public function removeSend(PrivateMessage $send): self
     {
-        if ($this->privateMessages->removeElement($privateMessage)) {
+        if ($this->send->removeElement($send)) {
             // set the owning side to null (unless already changed)
-            if ($privateMessage->getUser() === $this) {
-                $privateMessage->setUser(null);
+            if ($send->getSender() === $this) {
+                $send->setSender(null);
             }
         }
 
@@ -369,59 +363,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Conversation>
+     * @return Collection<int, PrivateMessage>
      */
-    public function getConversations(): Collection
+    public function getReceived(): Collection
     {
-        return $this->conversations;
+        return $this->received;
     }
 
-    public function addConversation(Conversation $conversation): self
+    public function addReceived(PrivateMessage $received): self
     {
-        if (!$this->conversations->contains($conversation)) {
-            $this->conversations[] = $conversation;
-            $conversation->setConversationCreator($this);
+        if (!$this->received->contains($received)) {
+            $this->received[] = $received;
+            $received->setRecipient($this);
         }
 
         return $this;
     }
 
-    public function removeConversation(Conversation $conversation): self
+    public function removeReceived(PrivateMessage $received): self
     {
-        if ($this->conversations->removeElement($conversation)) {
+        if ($this->received->removeElement($received)) {
             // set the owning side to null (unless already changed)
-            if ($conversation->getConversationCreator() === $this) {
-                $conversation->setConversationCreator(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Participation>
-     */
-    public function getParticipators(): Collection
-    {
-        return $this->participators;
-    }
-
-    public function addParticipator(Participation $participator): self
-    {
-        if (!$this->participators->contains($participator)) {
-            $this->participators[] = $participator;
-            $participator->setParticipator($this);
-        }
-
-        return $this;
-    }
-
-    public function removeParticipator(Participation $participator): self
-    {
-        if ($this->participators->removeElement($participator)) {
-            // set the owning side to null (unless already changed)
-            if ($participator->getParticipator() === $this) {
-                $participator->setParticipator(null);
+            if ($received->getRecipient() === $this) {
+                $received->setRecipient(null);
             }
         }
 

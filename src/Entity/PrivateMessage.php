@@ -34,15 +34,16 @@ class PrivateMessage
     private $isRead = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Conversation::class, inversedBy="privateMessages")
-     */
-    private $conversation;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="privateMessages")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="send")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private $sender;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="received")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $recipient;
 
     public function __construct()
     {
@@ -91,26 +92,26 @@ class PrivateMessage
         return $this;
     }
 
-    public function getConversation(): ?Conversation
+    public function getSender(): ?User
     {
-        return $this->conversation;
+        return $this->sender;
     }
 
-    public function setConversation(?Conversation $conversation): self
+    public function setSender(?User $sender): self
     {
-        $this->conversation = $conversation;
+        $this->sender = $sender;
 
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getRecipient(): ?User
     {
-        return $this->user;
+        return $this->recipient;
     }
 
-    public function setUser(?User $user): self
+    public function setRecipient(?User $recipient): self
     {
-        $this->user = $user;
+        $this->recipient = $recipient;
 
         return $this;
     }

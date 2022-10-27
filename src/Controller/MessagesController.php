@@ -10,31 +10,68 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * @isGranted("ROLE_USER")
+ * 
+ */
 class MessagesController extends AbstractController
 {
     /**
-     * @Route("/messages/{id}", name="app_messages")
+     * @Route("/mailbox", name="app_mailbox")
+     * 
+     * Route de la boite de réception
      */
-    public function index(ManagerRegistry $doctrine, User $users): Response
-    {        
+    public function mailBox(ManagerRegistry $doctrine): Response
+    {
 
-        // $messages = $repository -> messageRequette();
+        $received = $doctrine->getRepository(PrivateMessage::class)->findBy(["recipient" => $this->getUser()], ['creationDate' => 'DESC']);
 
-        $users = $doctrine -> getRepository(User::class) -> findoneBy(['id' => $this -> getUser()]);
-     
+        return $this->render('messages/mailbox.html.twig', [
 
-        return $this->render('messages/index.html.twig', [
-
-            'controller_name' => 'MessagesController',
-
-            "user" => $users
+            'received' => $received,
 
         ]);
     }
 
     /**
-     * @Route("/envoyer", name="send")
+     * @Route("/outbox", name="app_outbox")
+     * 
+     * Route de la boite d'envoie'
+     */
+    public function outBox(ManagerRegistry $doctrine): Response
+    {
+        $sender = $doctrine->getRepository(PrivateMessage::class)->findBy(["sender" => $this->getUser()], ['creationDate' => 'DESC']);
+        return $this->render('messages/outbox.html.twig', [
+            'sender' => $sender,
+        ]);
+    }
+
+    /**
+     * @Route("/mailbox/message/{id}", name="app_read")
+     * 
+     * Route pour lire le message
+     */
+    public function read(PrivateMessage $message, ManagerRegistry $doctrine): Response
+    {
+        // Etant donnée que le message est ouvert on initialise sont statut à true
+        $message -> setIsRead(true);
+
+        $entityManager = $doctrine -> getManager();
+
+        $entityManager -> persist($message);
+
+        $entityManager -> flush(); 
+
+        return $this->render('messages/read.html.twig', compact('message'));
+    }
+
+
+    /**
+     * @Route("/envoyer", name="app_send")
+     * 
+     * Route pour envoyer un message
      */
     public function send(Request $request, ManagerRegistry $doctrine): Response
     {
@@ -71,32 +108,16 @@ class MessagesController extends AbstractController
         
     }
 
-
-
     /**
-     * @Route("/reception", name="app_received")
+     * @Route("/mailbox/delete/{id}", name="delete")
      */
-    public function received(): Response
+    public function delete(ManagerRegistry $doctrine, PrivateMessage $message): Response
     {
-        return $this->render('messages/received.html.twig');
-    }
+        $entityManager = $doctrine->getManager();
+        $entityManager->remove($message);
+        $entityManager->flush();
+        $this->addFlash("message", "Message supprimé.");
 
-
-
-    /**
-     * @Route("/reception/message/{id}", name="app_read")
-     */
-    public function read(PrivateMessage $message, ManagerRegistry $doctrine): Response
-    {
-        // Etant donnée que le message est ouvert on initialise sont statut à true
-        $message -> setIsRead(true);
-
-        $entityManager = $doctrine -> getManager();
-
-        $entityManager -> persist($message);
-
-        $entityManager -> flush(); 
-
-        return $this->render('messages/read.html.twig', compact('message'));
+        return $this->redirectToRoute("app_mailbox");
     }
 }

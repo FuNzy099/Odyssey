@@ -15,15 +15,17 @@
         <div class="col-12">
             <h1>Messagerie</h1>
             <h2>Boite de réception</h2>
+            <a href="{{ path('app_send')}}" class="btn btn-secondary">Envoyez un message</a>
+            <a href="{{ path('app_outbox')}}" class="btn btn-primary">Messages envoyés</a>
             <p>Vous avez reçu : {{app.user.received|length}} messages</p>
         </div>  
 
         <div class="col-3">De</div>
-        <div class="col-3">Sujet</div>
+        <div class="col-3">Message</div>
         <div class="col-3">Date</div>
         <div class="col-3">Actions</div>
 
-        {% for message in app.user.received %}
+        {% for message in received %}
             {% if message.isRead == 0 %}
                 {% set bold = "fw-bold" %}
             {% else %}
@@ -31,17 +33,15 @@
             {% endif %}
             <div class="col-3 {{bold}}">{{message.sender.pseudonyme}}</div>
             <div class="col-3 {{bold}}">
-                <a href="{{ path("app_read", {"id": message.id})}}">
-                    {{message.title}}
+                <a href="{{ path("app_read", {'id': message.id})}}">
+                    {{message.message}}
                 </a>
             </div>
-            <div class="col-3 {{bold}}">{{message.creationDate|date}}</div>
-            <div class="col-3 {{bold}}"></div>
+            <div class="col-3 {{bold}}">{{message.creationDate|date('d-m-Y H:i')}}</div>
+            <div class="col-3 {{bold}}">
+                <a href="{{ path('delete', {'id': message.id })}}">Supprimer</a>
+            </div>
         {% endfor %}
-
-        <div class="col">
-            <a href="{{ path("send")}}" class="btn btn-primary">Envoyer un message</a>
-        </div>
     </div>
   </section>
 

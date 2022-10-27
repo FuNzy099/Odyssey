@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Messagerie | Boite d'envoie{% endblock %}
+
+{% block stylesheets %}
+
+    <link href="{{ asset('css/layoutStyles/layout.css') }}" type="text/css" rel="stylesheet" />
+
+{% endblock %}
+
+{% block body %}
+
+<br>
+
+
+
+<section class="container">
+		<div class="row">
+			<div class="col-12">
+				<h2>Messages envoyés</h2>
+				<p>Vous avez envoyé: {{ app.user.send|length }} messages</p>
+				<a href="{{ path('app_send')}}" class="btn btn-secondary">Envoyez un message</a>
+				<a href="{{ path('app_mailbox')}}" class="btn btn-primary">Boite de réception</a>
+			</div>
+
+			<div class="col-3">A</div>
+			<div class="col-3">Message</div>
+			<div class="col-3">Date</div>
+			<div class="col-3">Actions</div>
+
+			{% for message in sender %}
+			    {% if message.isRead == 0 %}
+                	{% set bold = "fw-bold" %}
+            	{% else %}
+                	{% set bold = "" %}
+            	{% endif %}
+				<div class="col-3 {{bold}}">{{ message.recipient.pseudonyme }}</div>
+				<div class="col-3 {{bold}}">
+					<a href="{{ path("app_read", {"id": message.id})}}">{{message.message}}</a>
+				</div>
+				<div class="col-3 {{bold}}">{{ message.creationDate|date }}</div>
+				<div class="col-3">
+                    <a href="#">Supprimer</a>
+				</div>
+			{% endfor %}
+		</div>
+</section>
+
+
+{% endblock %}
