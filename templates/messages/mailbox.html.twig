@@ -10,6 +10,16 @@
 
 {% block body %}
 
+    {# {% for user in user %}
+        
+        {% if  app.user.id == user.recipient.id %}
+
+        {{ dump(user) }}
+
+        {% endif %}
+            
+    {% endfor %} #}
+    
   <section class="container">
     <div class="row">
         <div class="col-12">
@@ -25,25 +35,35 @@
         <div class="col-3">Date</div>
         <div class="col-3">Actions</div>
 
+
         {% for message in received %}
-            {% if message.isRead == 0 %}
-                {% set bold = "fw-bold" %}
-            {% else %}
-                {% set bold = "" %}
-            {% endif %}
-            <div class="col-3 {{bold}}">{{message.sender.pseudonyme}}</div>
-            <div class="col-3 {{bold}}">
-                <a href="{{ path("app_read", {'id': message.id})}}">
-                    {{message.message}}
-                </a>
-            </div>
-            <div class="col-3 {{bold}}">{{message.creationDate|date('d-m-Y H:i')}}</div>
-            <div class="col-3 {{bold}}">
-                <a href="{{ path('delete', {'id': message.id })}}">Supprimer</a>
-            </div>
+
+            {# {% if  app.user.id == message.recipient.id %} #}
+
+            {# {{ dump(app.user) }} #}
+
+                {% if message.isRead == 0 %}
+                    {% set bold = "fw-bold" %}
+                {% else %}
+                    {% set bold = "" %}
+                {% endif %}
+                <div class="col-3 {{bold}}">{{message.sender.pseudonyme}}</div>
+                <div class="col-3 {{bold}}">
+                    <a href="{{ path("app_read", {'id': message.id})}}">
+                        {{message.message}}
+                    </a>
+                </div>
+                <div class="col-3 {{bold}}">{{message.creationDate|date('d-m-Y H:i')}}</div>
+                <div class="col-3 {{bold}}">
+                    <a href="{{ path('delete', {'id': message.id })}}">Supprimer</a>
+                </div>
+
+            {# {% endif %}
+             #}
         {% endfor %}
     </div>
   </section>
+
 
 {% endblock %}
 

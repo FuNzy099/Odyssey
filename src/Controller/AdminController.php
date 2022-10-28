@@ -181,7 +181,7 @@ class AdminController extends AbstractController
             La méthode findSearch() ce trouve dans le repository de Event,
             il permettra de récupérer les évènements en lien avec une recherche, pour ce faire on lui injecte en paramètre $data qui represente les données d'une recherche
         */
-        $events = $repository -> adminFindSearch($data);
+        // $events = $repository -> adminFindSearch($data);
 
         
         // ! A supprimer dès que le filtre admin fonctionne

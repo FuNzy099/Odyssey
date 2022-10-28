@@ -26,11 +26,14 @@ class MessagesController extends AbstractController
     public function mailBox(ManagerRegistry $doctrine): Response
     {
 
+        $user = $doctrine->getRepository(PrivateMessage::class)->findAll();
         $received = $doctrine->getRepository(PrivateMessage::class)->findBy(["recipient" => $this->getUser()], ['creationDate' => 'DESC']);
 
         return $this->render('messages/mailbox.html.twig', [
 
             'received' => $received,
+
+            'user' => $user,
 
         ]);
     }
@@ -53,18 +56,28 @@ class MessagesController extends AbstractController
      * 
      * Route pour lire le message
      */
-    public function read(PrivateMessage $message, ManagerRegistry $doctrine): Response
+    public function read(PrivateMessage $message, ManagerRegistry $doctrine, Request $request): Response
     {
-        // Etant donnée que le message est ouvert on initialise sont statut à true
-        $message -> setIsRead(true);
 
-        $entityManager = $doctrine -> getManager();
+        $user = $this -> getUser();
 
-        $entityManager -> persist($message);
+        if($message -> getRecipient() -> getId() == $user -> getId()){
+    
+            // Etant donnée que le message est ouvert on initialise sont statut à true
+            $message -> setIsRead(true);
+    
+            $entityManager = $doctrine -> getManager();
+    
+            $entityManager -> persist($message);
+    
+            $entityManager -> flush(); 
+    
+            return $this->render('messages/read.html.twig', compact('message'));
+            
+        } else {
+            return $this->redirectToRoute('app_mailbox');
+        }
 
-        $entityManager -> flush(); 
-
-        return $this->render('messages/read.html.twig', compact('message'));
     }
 
 
