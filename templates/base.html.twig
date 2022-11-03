@@ -68,6 +68,7 @@
                             <div class="dropdown-content">
                                 <a href='{{ path('edit_profil')}}' >Modifier le profil</a>
                                 <a href="{{ path('edit_password')}}"> Modifier mot de passe</a>
+                                <a href="{{ path('show_history')}}"> Historique de vos participations</a>
                                 <a href='{{ path('app_mailbox')}}' class="linkHeaderNav">Messages</a>
                             </div>
                         </div>
@@ -129,11 +130,11 @@
                                         {# PARTIE BODY #}
 
       
-        {% block body %}
+        <div class="containGeneralInBase">
+            {% block body %}
 
-
-        
-        {% endblock %}
+            {% endblock %}
+        </div>
 
 
 
@@ -193,6 +194,7 @@
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
+            <script src="https://kit.fontawesome.com/7d0ef989cc.js" crossorigin="anonymous"></script>
         {% endblock %}
         
         

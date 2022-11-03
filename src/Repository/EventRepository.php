@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Event;
 use App\Data\SearchData;
 use App\Data\SearchAdmin;
+use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -61,12 +62,16 @@ class EventRepository extends ServiceEntityRepository
      * 
      * @return PaginationInterface
      */
-    public function findSearch(SearchData $search): PaginationInterface
+    public function findSearchActualEvents(SearchData $search): PaginationInterface
     {
+        $now = new DateTime();
+
+
         $query = $this 
             ->createQueryBuilder('event')
-            ->select('event')
-            ->orderBy('event.startDate', 'DESC');
+            ->andWhere('event.startDate >= :val')
+            ->setParameter('val', $now -> format('Y-m-d H:i'))
+            ->orderBy('event.startDate', 'ASC');
           
             
             // Condition permettant à l'utilisateur de filtrer les évènements par mot clef 
@@ -149,6 +154,20 @@ class EventRepository extends ServiceEntityRepository
             }
     }
 
+
+
+    public function pastEvent()
+    {
+        $now = new DateTime();
+
+        return $this ->createQueryBuilder('event')
+                     ->andWhere('event.startDate < :val')
+                     ->setParameter('val', $now->format('Y-m-d'))
+                     ->orderBy('event.creationDate', 'ASC')
+                     ->getQuery()
+                     ->getResult();
+    }
+
     /**
      * Permets de récupèrer les evenements en lien avec une recherche
      * 
@@ -204,6 +223,30 @@ class EventRepository extends ServiceEntityRepository
             }
     }
 
+
+    // ! Code mort à supprimer si j'ai pas de problème avec les nouveaux parametres du filre
+    // /**
+    //  * Permets d'afficher uniquement les évènements à venir
+    //  * 
+    //  * @return PaginationInterface
+    //  */
+    // public function actualEvent(SearchData $search): PaginationInterface
+    // {
+    //     $now = new DateTime();
+
+    //     $query = $this -> createQueryBuilder('event')
+    //         ->andWhere('event.startDate >= :val')
+    //         ->setParameter('val', $now -> format('Y-m-d H:i'))
+    //         ->orderBy('event.startDate', 'ASC');
+
+    //         return $this->paginator->paginate(
+    //             $query,
+    //             $search -> page,
+    //             5
+    //         );
+    // }
+   
+  
 
 
     //    /**

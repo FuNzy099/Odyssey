@@ -37,7 +37,7 @@ class MessagesController extends AbstractController
 
         ]);
     }
-
+ 
     /**
      * @Route("/outbox", name="app_outbox")
      * 

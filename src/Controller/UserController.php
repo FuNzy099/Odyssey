@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Event;
+use App\Repository\EventRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -128,7 +129,8 @@ class UserController extends AbstractController
     }
 
 
-   /**
+
+    /**
      * @Route("/events/organization/user/{id}", name="show_organization_list")
      */
     public function organizationList(ManagerRegistry $doctrine, User $users): Response
@@ -142,6 +144,23 @@ class UserController extends AbstractController
             'users' => $users,
 
             'events' => $events
+            
+        ]);
+
+    }
+
+
+
+    /**
+     * @Route("/events/history/user", name="show_history")
+     */
+    public function history(EventRepository $repository): Response
+    {
+        $eventsUser = $repository -> pastEvent();
+
+        return $this -> render('user/history.html.twig',[            
+
+            'eventsUser' => $eventsUser
             
         ]);
 

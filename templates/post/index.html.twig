@@ -5,18 +5,90 @@
 {% block stylesheets %}
 
     <link href="{{ asset('css/layoutStyles/layout.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('css/postStyles/postActualEvent.css') }}" type="text/css" rel="stylesheet" />
     {# <link href="{{ asset('css/adminStyles/admin.css') }}" type="text/css" rel="stylesheet" /> #}
 
 {% endblock %}
 
 {% block body %}
-    {# <h1>Conversation de l'évènement de {{events.userCreator.pseudonyme}}</h1> #}
 
-    {% for event in events %}
+    <main class="mainPost">
+
+        <div class="wrapper">
+            <div class="card text-center">
+                <div class="card-body">
+                    <section class="global">
+                        <h2>Evènement</h2>
+                        <p>
+                            {{event.userCreator.pseudonyme}}
+                        </p>
+                        <p>{{event.title}}</p>
+                        <p class="description">
+                            {{event.description}}
+                        </p>
+                    </section>
+
+                    <section class="infos">
+                        <h2>Détail</h2>
+                        <div class="date">
+                            <p><i class="fa-solid fa-calendar-days"></i>{{event.startDate|date('d-m-Y H:i')}}</p>
+                            <p><i class="fa-solid fa-calendar-days"></i>{{event.endDate|date('d-m-Y H:i')}}</p>
+                        </div>
+                        <div class="place">
+                            {# <i class="fa-solid fa-map-location-dot"></i> #}
+                            <p>{{event.address}}</p>
+                            <p>{{event.zipCode}} </p>
+                            <p>{{event.town}}</p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <section class="participants">
+                    <h3>Liste des participants</h3>
+                    <p class="users">
+                        {% for user in event.users %}
+                            <a href="#">{{ user.pseudonyme }}</a>
+                            <br>
+                        {% endfor %}                
+                    </p>
+                </section>
+            </div>
+        </div>
+
+
+        <div class="comment">
+            {{ form_start( formComment ) }}
+            {{ form_end( formComment ) }}
+        </div>
+
+        {% for post in event.posts %}
         
-        {# {{ dump(event.userCreator.pseudonyme) }} #}
-        {# {{ dump(event) }} #}
+            <div class="card cardPost">
+                <!-- Comment Row -->
+                <div class="d-flex flex-row comment-row m-t-0">
+                    <div class="avatar-container">
+                            <img src="{{ asset('img/avatars/' ~ post.user.avatar) }}" alt="Photo de profil de l'utilisateur" width="50" >
+                    </div>
+                    <div class="comment-text">
+                        <h5 class="card-title">  <p>{{post.user.pseudonyme}}</p></h5>
+                        <span class="m-b-15 d-block">{{post.text}}</span>
+                            <div class="comment-footer"> 
+
+                                {% if app.user == post.user or is_granted('ROLE_ADMIN') == true  %}
+                                    <a href="#">Supprimer</a>
+                                    <a href="#">Modifier</a>
+                                {% endif %}
+
+                                <span class="text-muted float-right">{{post.creationDate|date('Y-m-d')}}</span>
+
+                            </div>
+                    </div>
+                </div>
+            </div>
         
-    {% endfor %}
+        {% endfor %}
+        
+    </main>
 
 {% endblock %}

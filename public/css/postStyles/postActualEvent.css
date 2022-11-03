@@ -1,0 +1,86 @@
+/* Main de la page index.html.twig dans admin */
+.mainPost{
+    text-align: center;
+    width: 100%;
+    /* margin: 40px auto; */
+    /* width: 60%;
+    height: 70vh; */
+}
+
+.wrapper{
+    /* width: 100%; */
+    width: 70%;
+    margin: 40px auto;
+}
+
+.wrapper .card-body{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.global{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}
+
+.global .description{
+    text-align: justify;    
+}
+
+.infos{
+    width: 40%;
+}
+
+.infos .date{
+    margin-bottom: 10px;
+}
+
+
+.infos p, .global p{
+    margin-bottom: 0;
+}
+
+.infos p i{
+    margin-right: 10px;
+}
+
+.participants h3{
+    color: black;
+    font-size: 1.5em;
+    margin-top: 10px;
+}
+
+.participants .users{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 70%;
+    margin: auto;
+    margin-bottom: 16px;
+}
+
+.users a{
+    margin-left: 10px;
+}
+
+textarea{
+    width: 70%;
+}
+
+.avatar-container{
+    padding: 0.5rem !important;
+}
+
+.avatar-container img{
+    object-fit: cover;
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    margin-top: 10%;
+}
+
+.cardPost{
+    width: 70%;
+    margin: auto;
+}

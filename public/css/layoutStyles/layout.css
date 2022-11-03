@@ -31,6 +31,11 @@ img {
     margin: 0 auto 5%;
 }   
 
+.containGeneralInBase{
+    display: flex;
+    min-height: 71.2vh;
+}
+
 
 
 

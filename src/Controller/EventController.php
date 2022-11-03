@@ -53,15 +53,16 @@ class EventController extends AbstractController
         $form -> handleRequest($request);
   
         /*
-            La méthode findSearch() ce trouve dans le repository de Event,
+            La méthode findSearchActualEvents() ce trouve dans le repository de Event,
             il permettra de récupérer les évènements en lien avec une recherche, pour ce faire on lui injecte en paramètre $data qui represente les données d'une recherche
         */
-        $events = $repository -> findSearch($data);
+        $ActualEvents = $repository -> findSearchActualEvents($data);
 
         return $this->render('event/index.html.twig', [
             'user' => $user,
             'form' => $form -> createView(),    // Permet de créer le formulaire dans la vue
-            'events' => $events,
+            // 'events' => $events,             // Permet de récuperer l'enssemble des évènements (future et passé)
+            'actualEvents' => $ActualEvents,    // Permet de récuperer l'enssemble des évènementd (future évènement inferieure à la date et heure du début)
         ]);
     }
 
