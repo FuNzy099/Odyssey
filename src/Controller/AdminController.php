@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Post;
 use App\Entity\User;
 use App\Entity\Event;
 use App\Data\SearchAdmin;
 use App\Form\SearchAdminType;
 use App\Form\AdminEditUserType;
 use App\Form\AdminEditEventType;
+use App\Repository\PostRepository;
+use App\Repository\UserRepository;
 use App\Repository\EventRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,6 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
 
 
 /**
@@ -119,16 +124,34 @@ class AdminController extends AbstractController
 
 
     /**
-     * @Route("/admin/users/delete/{id}", name="admin_delete_user")
+     * @Route("/admin/users/delete/{idUser}", name="admin_delete_user")
+     * @ParamConverter("user", options={"mapping": {"idUser":"id"}})
      * 
      * Route permetant de supprimer le profil d'un utilisateur
      */
-    public function deleteUser(User $user)
+    public function deleteUser(User $user, UserRepository $ur, Request $request , PostRepository $pr , EventRepository $ev )
     {
+     
+        $entityManager = $this -> doctrine -> getManager();
+        $posts = $pr->showPost($user-> getId());
+        foreach($posts as $post){
+        
+            $post->setUser(null);
+            $entityManager -> persist($post);
+            $entityManager -> flush();
+      
+       }
 
+        $events = $ev->showEvent($user -> getId());
+        foreach($events as $event){
+            
+            $event->setUserCreator(null);
+            $entityManager -> persist($event);
+            $entityManager -> flush();
+    
+        }
         $this -> denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $entityManager = $this -> doctrine -> getManager();
 
         $entityManager -> remove($user);
         
@@ -139,7 +162,6 @@ class AdminController extends AbstractController
 
         return $this -> redirectToRoute('admin_users');
     }
-
 
 
                                                         // PARTIE CONCERNANT LES UTILISATEURS

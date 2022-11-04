@@ -45,8 +45,9 @@
                         </td>
                         <td>
                             <a href="{{ path('admin_edit_user', {'id' : user.id}) }}">Editer</a>
+                        
 
-                            <a href dataIdUser="{{url('admin_delete_user',{id:user.id}) }}" data-bs-toggle="modal" data-bs-target="#exampleModal"  class="deleteBtn">Supprimer</a>
+                            <a href dataIdUser="{{url('admin_delete_user',{'idUser':user.id}) }}" data-bs-toggle="modal" data-bs-target="#exampleModal"  class="deleteBtn">Supprimer</a>
                             
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -63,7 +64,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-danger" >
                                                 {# <a href="{{ path('delete_user', {'id': user.id}) }}" class="aWithoutStyle text-light" id="truc"name="deleteUserModal">Supprimer</a> #}
-                                                <a href dataIdUser="{{url('admin_delete_user',{id:user.id}) }}" data-bs-toggle="modal" data-bs-target="#exampleModal"  class="dropdown-item deleteBtn removeUser">Supprimer</a>
+                                                <a href dataIdUser="{{url('admin_delete_user',{'idUser':user.id}) }}" data-bs-toggle="modal" data-bs-target="#exampleModal"  class="dropdown-item deleteBtn removeUser">Supprimer</a>
                                             </button>
                                             <button type="button" class="btn btn-secondary">Fermer</button>
                                         </div>
@@ -93,7 +94,7 @@
         crossorigin="anonymous">
     </script>
 
-    <script src="{{ asset('js/deleteModalUser.js')}}"></script>
+    <script src="{{ asset('js/deleteModal/deleteModalUser.js')}}"></script>
     {{ encore_entry_script_tags('app') }}
     <!-- JavaScript Bundle with Popper -->
 

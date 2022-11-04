@@ -2,15 +2,17 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Post;
 use App\Entity\Event;
+use App\Form\EditPostType;
 use App\Form\CommentEventType;
-use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class PostController extends AbstractController
 {
@@ -19,7 +21,7 @@ class PostController extends AbstractController
      */
     public function index(ManagerRegistry $doctrine, Post $post = null, Request $request, Event $event): Response
     {
-      
+       
         $form = $this -> createForm(CommentEventType::class, $post);
 
         $form -> handleRequest($request);
@@ -61,6 +63,39 @@ class PostController extends AbstractController
             'controller_name' => 'PostController',
             'event' => $event,
             'formComment' => $form -> createView()
+ 
+        ]);
+    }
+
+    
+    /**
+     * @Route("/post/{id}/edit", name="edit_post")
+     */
+    public function edit(ManagerRegistry $doctrine, Post $post = null, Request $request): Response
+    {
+        if ($this -> getUser() && $this -> getUser() == $post -> getUser() ) {
+
+            $form = $this->createForm(CommentEventType::class, $post);
+
+            $form -> handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager = $doctrine -> getManager();
+
+                $entityManager -> persist($post);
+
+                $entityManager -> flush();
+
+                $this -> addFlash('message', 'Le message a bien été modifier !');
+
+                // return $this -> redirectToRoute('app_post');
+                
+            }
+
+        }
+
+        return $this->render('post/edit.html.twig', [
+            'editPost' => $form->createView(),
         ]);
     }
 

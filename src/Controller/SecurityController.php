@@ -220,7 +220,6 @@ class SecurityController extends AbstractController
 
                             // Condition dans l'optique de définir un poid maximum autorisé pour l'avatar, ici à l'occurrence 2Mo max !
                             if($newAvatar -> getSize() <= 2000000){
-                                
                                 /*
                                     On hache et applique une iniqid au fichier
 

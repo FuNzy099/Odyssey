@@ -68,21 +68,34 @@
                 <!-- Comment Row -->
                 <div class="d-flex flex-row comment-row m-t-0">
                     <div class="avatar-container">
+                        {% if post.user != null %}
+                            
                             <img src="{{ asset('img/avatars/' ~ post.user.avatar) }}" alt="Photo de profil de l'utilisateur" width="50" >
+                            <h5 class="card-title">  <p>{{post.user.pseudonyme}}</p></h5>
+
+                        {% else %}
+
+                            <img src="{{ asset('img/avatars/default-avatar.png') }}" alt="Photo de profil de l'utilisateur" width="50" >
+                            <h5 class="card-title">  <p>Profil supprimé</p></h5>
+                        {% endif %}
+                  
                     </div>
-                    <div class="comment-text">
-                        <h5 class="card-title">  <p>{{post.user.pseudonyme}}</p></h5>
-                        <span class="m-b-15 d-block">{{post.text}}</span>
-                            <div class="comment-footer"> 
 
-                                {% if app.user == post.user or is_granted('ROLE_ADMIN') == true  %}
-                                    <a href="#">Supprimer</a>
-                                    <a href="#">Modifier</a>
-                                {% endif %}
+                    
+                    <div class="containtPost">
+                        <p class="text-muted float-right creationDate">{{post.creationDate|date('d-m-Y H:i')}} à {{post.creationDate|date('H:i')}}</p>
+                        <div class="comment-text">
+                            <span class="m-b-15 d-block">{{post.text}}</span>
+                        </div>
 
-                                <span class="text-muted float-right">{{post.creationDate|date('Y-m-d')}}</span>
+                        <div class="comment-footer"> 
+                            {% if app.user == post.user or is_granted('ROLE_ADMIN') == true  %}
+                                <a href="#">Supprimer</a>
+                                <a href="{{ path('edit_post', {'id': post.id} )}}">Modifier</a>
+             
+                            {% endif %}
 
-                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

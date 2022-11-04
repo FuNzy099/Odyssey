@@ -67,7 +67,7 @@ class Event
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="createEvents")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $userCreator;
 

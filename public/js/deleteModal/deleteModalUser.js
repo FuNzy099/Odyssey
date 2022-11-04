@@ -36,7 +36,8 @@ $(document).ready(function () {
                             https://www.w3schools.com/jquery/html_attr.asp
         */
         let idUser = $(this).attr('dataIdUser');
-        // la classe removeUser ce situe dans le bouton contenant le lien(a) au sein de la modal dans le fichier listUsers.html.twig
+
+        console.log(idUser)       // la classe removeUser ce situe dans le bouton contenant le lien(a) au sein de la modal dans le fichier listUsers.html.twig
         $('.removeUser').attr('dataIdUser', idUser);
     });
 

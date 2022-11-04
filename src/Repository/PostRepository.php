@@ -39,6 +39,22 @@ class PostRepository extends ServiceEntityRepository
         }
     }
 
+    public function showPost($id){
+
+        return   $this->createQueryBuilder('r')
+
+        ->select('r')
+
+        ->andWhere('r.user = :id')
+
+        ->setParameter('id', $id)
+
+        ->getQuery()
+
+        ->getResult();    
+
+    }
+
 //    /**
 //     * @return Post[] Returns an array of Post objects
 //     */
