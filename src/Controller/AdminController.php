@@ -178,45 +178,9 @@ class AdminController extends AbstractController
 
         $events = $this -> doctrine -> getRepository(Event::class) -> findBy([], ['creationDate' => 'DESC']);
         $user = $this->doctrine -> getRepository(User::class) -> findAll();
-        $data = new SearchAdmin;
-
-        /*
-           Permet de définir au niveau de data la page dans la liste des évènements (pagination du bundle snk_paginator),
-           Pour ce faire on récupère dans la request le numéro de la page dans l'url, si la valeur de page n'est pas definit on lui attribut 1 par defaut
-        */ 
-        $data -> page = $request -> get('page', 1);
-
-        /*
-            On déclare $form dans le but de créer notre formulaire à l'aide de la methode createForm()
-
-            1er argument : On créer le formulaire à l'aide de la classe SearchType dans le namespace Form
-            2eme argument : Permet d'hydrater notre objet $data avec les données saisi dans le formulaire
-
-            Definition hydrater : C'est un terme précis pour dire que le formulaire vas remplir les attributs de l'objet avec les valeurs entrées pas l'uilisateur
-        */
-        $form = $this -> createForm(SearchAdminType::class, $data);
-
-        // handleRequest permet de récupèrer et d'analyser les données saisis dans le formulaire
-        $form -> handleRequest($request);
-  
-        /*
-            La méthode findSearch() ce trouve dans le repository de Event,
-            il permettra de récupérer les évènements en lien avec une recherche, pour ce faire on lui injecte en paramètre $data qui represente les données d'une recherche
-        */
-        // $events = $repository -> adminFindSearch($data);
-
-        
-        // ! A supprimer dès que le filtre admin fonctionne
-        // if($form -> isSubmitted() && $form -> isValid()){
-        //     $checkPseudo = $form -> get('userCreator')->getData();
-        //     $checkPseudo = $this -> doctrine -> getRepository(User::class) -> findOneBy(['pseudonyme' => $checkPseudo], []);
-        //     dd($checkPseudo);
-        // }
-
 
         return $this->render('admin/listEvents.html.twig', [
             'events' => $events,   
-            'form' => $form -> createView(),
             "user" => $user,
         ]);
     }

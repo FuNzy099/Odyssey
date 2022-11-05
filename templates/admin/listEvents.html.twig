@@ -18,25 +18,6 @@
 
         <p>Vous retrouverez ici la liste complète des évènement enregistré sur le site web</p>
 
-        
-    <div class="row filter-flash">
-        <div class="col-md-12">
-            {% include 'admin/filterAdmin.html.twig' with {form: form} only %}     
-        </div>
-
-        {# Affichage d'un message d'erreur si le resultat de la recherche est vide #}
-        {# <div class="sendMessage">
-    
-            {% for warning in app.flashes('warningSearch') %}
-    
-                <div class="alert alert-warning" role="alert">{{ warning }}</div>
-    
-            {% endfor %}
-            
-        </div> #}
-    </div>
-
-
         <table class="table table-striped border">
             <thead>
                 <tr>

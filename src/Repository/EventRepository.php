@@ -168,61 +168,7 @@ class EventRepository extends ServiceEntityRepository
                      ->getResult();
     }
 
-    /**
-     * Permets de récupèrer les evenements en lien avec une recherche
-     * 
-     * @return PaginationInterface
-     */
-    public function adminFindSearch(SearchAdmin $search): PaginationInterface
-    {     
-        $query = $this 
-            ->createQueryBuilder('event');
-            $query 
-                ->select('e')
-                ->from('App\Entity\Event', 'e')
-                ->leftJoin('e.userCreator', 'u');
-                // ->orderBy('event.startDate', 'DESC')
-
-                $em = $this->getEntityManager();
-                $sub = $em->createQueryBuilder();
-                $sub->select('user')
-                ->from('App\Entity\User', 'user')
-                ->where($sub->expr()->notIn('user.id', $query->getDQL()))
-                ->setParameter('id', $search);
     
-            if(!empty($search -> userCreator)){   
-                
-                $query = $query
-                    ->where('u.pseudonyme = :userCreator')
-                    ->andWhere('u.pseudonyme LIKE :userCreator')
-                    ->setParameter('userCreator', "%{$search->userCreator}%");
-                
-            }
-                 
-            if(!empty($query -> getQuery() -> getResult())){
-        
-                // On récupère la requête 
-                $query = $query -> getQuery() ;
-                // dd($query);
-
-                //  On passe la requête au paginator
-                return $this -> paginator -> paginate(
-                    $query,             // 1er parametre: la reqûete
-                    $search -> page,    // 2eme parametre: le numéro de la page (page fait référence à la propriété public dans la class SearchData)
-                    10                  // 3eme parametre: le nombre d'item par page
-                );
-                
-            }else{ 
-               
-                $this->flash->add('warningSearch', 'Aucun resultats ne correspond avec votre recherche !');
-
-                return $this -> paginator -> paginate(
-                    $query,     // 1er parametre: la reqûete
-                );
-         
-            }
-    }
-
     public function showEvent($id){
 
         return   $this->createQueryBuilder('r')
