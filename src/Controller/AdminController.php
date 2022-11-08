@@ -68,7 +68,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-                                                    // PARTIE CONCERNANT LES UTILISATEUR
+                                                    // PARTIE CONCERNANT LES UTILISATEURS
 
     /**
      * @Route("/admin/users", name="admin_users")
@@ -129,11 +129,15 @@ class AdminController extends AbstractController
      * 
      * Route permetant de supprimer le profil d'un utilisateur
      */
-    public function deleteUser(User $user, UserRepository $ur, Request $request , PostRepository $pr , EventRepository $ev )
+    public function deleteUser(User $user, Request $request, PostRepository $pr)
     {
+        $this -> denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
      
         $entityManager = $this -> doctrine -> getManager();
-        $posts = $pr->showPost($user-> getId());
+
+        $posts = $pr->findBy(['user' => $user -> getId()]);
+
+        // Permet de set à null le champ user pour chaque post lorsqu'un utilisateur est supprimé 
         foreach($posts as $post){
         
             $post->setUser(null);
@@ -142,25 +146,13 @@ class AdminController extends AbstractController
       
        }
 
-        $events = $ev->showEvent($user -> getId());
-        foreach($events as $event){
-            
-            $event->setUserCreator(null);
-            $entityManager -> persist($event);
-            $entityManager -> flush();
-    
-        }
-        $this -> denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
-
         $entityManager -> remove($user);
         
         $entityManager -> flush();
 
-        $this -> addFlash('message', 'Le profil de l\'utilisateur a bien été supprimé !');
-        
+        // $this -> addFlash('message', 'Le profil de l\'utilisateur a bien été supprimé !');
 
-        return $this -> redirectToRoute('admin_users');
+        return $this->redirectToRoute('admin_users');
     }
 
 
@@ -235,10 +227,8 @@ class AdminController extends AbstractController
         $entityManager -> remove($event);
 
         $entityManager -> flush();
-
         
-        $this -> addFlash('message', 'L\'évènement a bien été supprimé !');
-        
+        // $this -> addFlash('message', 'L\'évènement a bien été supprimé !');
 
         return $this -> redirectToRoute('admin_events');
     }

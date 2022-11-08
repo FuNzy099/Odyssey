@@ -9,6 +9,8 @@
 .mainHome{
     background-image: url(../../img/wallhaven.jpg);
     background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }  
 
 .wrapperHome{

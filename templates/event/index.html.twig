@@ -51,13 +51,24 @@
                     {# div contenant l'ensemble des infos global d'un évènement (Avatar du créateur, pseudonyme, titre et description) #}
                     <div class="ContaintInfosGlobalEvent">
 
-                        {# Infos du user, pseudonyme et avatar #}
+                        {% if actualEvent.userCreator != null %}
+                            
                         <div class="infosUser">
                             <figure class="avatarUserCreator">
                                 <img id="edit_profil_avatar_preview" src="{{ asset('img/avatars/' ~ actualEvent.userCreator.avatar) }}" class="avatar" alt="Image de profil de l'utilisateur !">
                             </figure>
                             <p>{{actualEvent.userCreator.pseudonyme}}</p>
                         </div>
+
+                        {% else %}
+                        <div class="infosUser">
+                            <figure class="avatarUserCreator">
+                                <img id="edit_profil_avatar_preview" src="{{ asset('img/avatars/default-avatar.png') }}" class="avatar" alt="Image de profil de l'utilisateur !">
+                            </figure>
+                            <p>Profil supprimé</p>
+                        </div>
+                        {% endif %}
+                        {# Infos du user, pseudonyme et avatar #}
 
                         {# Infos de l'évènement, titre et description #}
                         <div class="infosEvent">

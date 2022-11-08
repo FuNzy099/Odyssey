@@ -77,7 +77,7 @@ class Event
     private $users;
 
     /**
-     * @ORM\OneToMany(targetEntity=Post::class, mappedBy="event")
+     * @ORM\OneToMany(targetEntity=Post::class, mappedBy="event", orphanRemoval=true)
      */
     private $posts;
 

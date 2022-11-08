@@ -169,21 +169,21 @@ class EventRepository extends ServiceEntityRepository
     }
     
     
-    public function showEvent($id){
+    // public function showEvent($id){
 
-        return   $this->createQueryBuilder('r')
+    //     return   $this->createQueryBuilder('r')
 
-        ->select('r')
+    //     ->select('r')
 
-        ->andWhere('r.userCreator = :id')
+    //     ->andWhere('r.userCreator = :id')
 
-        ->setParameter('id', $id)
+    //     ->setParameter('id', $id)
 
-        ->getQuery()
+    //     ->getQuery()
 
-        ->getResult();    
+    //     ->getResult();    
 
-    }
+    // }
 
 
     // ! Code mort à supprimer si j'ai pas de problème avec les nouveaux parametres du filre

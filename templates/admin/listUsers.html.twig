@@ -13,7 +13,13 @@
 
 {% block body %}
 
-    <main class="mainAdminUsers">
+<main class="mainAdminUsers">
+     
+       <div class="messageFlash">
+               
+            {% include 'flash.html.twig'  %}     
+        
+        </div> 
 
         <h1>Ma seignererie {{app.user.pseudonyme}}</h1>
 

@@ -67,12 +67,22 @@
                                     <div class="ContaintInfosGlobalEvent">
 
                                         {# Infos du user, pseudonyme et avatar #}
-                                        <div class="infosUser">
-                                            <figure class="avatarUserCreator">
-                                                <img id="edit_profil_avatar_preview" src="{{ asset('img/avatars/' ~ registrationEvent.userCreator.avatar) }}" class="avatar" alt="Image de profil de l'utilisateur !">
-                                            </figure>
-                                            <p>{{registrationEvent.userCreator.pseudonyme}}</p>
-                                        </div>
+                                        {% if registrationEvent.userCreator != null %}
+
+                                            <div class="infosUser">
+                                                <figure class="avatarUserCreator">
+                                                    <img id="edit_profil_avatar_preview" src="{{ asset('img/avatars/' ~ registrationEvent.userCreator.avatar) }}" class="avatar" alt="Image de profil de l'utilisateur !">
+                                                </figure>
+                                                <p>{{registrationEvent.userCreator.pseudonyme}}</p>
+                                            </div>
+                                        {% else %}
+                                            <div class="infosUser">
+                                                <figure class="avatarUserCreator">
+                                                    <img id="edit_profil_avatar_preview" src="{{ asset('img/avatars/default-avatar.png') }}" class="avatar" alt="Image de profil de l'utilisateur !">
+                                                </figure>
+                                                <p>profil supprimé</p>
+                                            </div>
+                                        {% endif %}
 
                                         {# Infos de l'évènement, titre et description #}
                                         <div class="infosEvent">
