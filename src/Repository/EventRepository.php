@@ -167,7 +167,7 @@ class EventRepository extends ServiceEntityRepository
                      ->getQuery()
                      ->getResult();
     }
-
+    
     
     public function showEvent($id){
 

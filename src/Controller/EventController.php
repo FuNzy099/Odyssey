@@ -102,6 +102,8 @@ class EventController extends AbstractController
             // On flush, c'est l'équivalent de notre execute() en PDO, c'est dans cette étape flush() que notre insert into ce fait
             $entityManager->flush();
 
+            $this -> addFlash('message', 'Votre évènements a bien été crée !');
+
             // Redirection vers la list des évènements 
             return $this->redirectToRoute('list_events');
         }

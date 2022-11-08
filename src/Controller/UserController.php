@@ -5,7 +5,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Event;
+use App\Data\SearchData;
 use App\Repository\EventRepository;
+use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -112,17 +114,17 @@ class UserController extends AbstractController
     /**
      * @Route("/events/registration/user/{id}", name="show_registration_list")
      */
-    public function registrationList(ManagerRegistry $doctrine, User $users): Response
+    public function registrationList(ManagerRegistry $doctrine, User $users, EventRepository $repository): Response
     {
         $users = $doctrine -> getRepository(User::class) -> findby(['id' => $this -> getUser()], []);
 
-        $events = $doctrine -> getRepository(Event::class) -> findAll();
+        $now = new DateTime();
 
         return $this -> render('user/registrationList.html.twig',[
 
             'users' => $users,
 
-            'events' => $events
+            'now' => $now,
             
         ]);
 
@@ -143,8 +145,8 @@ class UserController extends AbstractController
 
             'users' => $users,
 
-            'events' => $events
-            
+            'events' => $events,
+
         ]);
 
     }

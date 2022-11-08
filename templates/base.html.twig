@@ -101,29 +101,7 @@
 
 
 
-                                        {# PARTIE POR AFFICHER LES FLASHES #}
 
-        <div class="sendMessage">
-
-            {% for message in app.flashes('message') %}
-            
-                <div class="alert alert-success" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
-                </div>
-            
-            {% endfor %}
-    
-            {% for warning in app.flashes('warning') %}
-    
-                <div class="alert alert-warning" role="alert">
-                    {{ warning }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
-                </div>
-
-            {% endfor %}
-            
-        </div>
 
 
 
@@ -131,9 +109,35 @@
 
       
         <div class="containGeneralInBase">
+
+            {# PARTIE POR AFFICHER LES FLASHES #}
+            {# <div class="sendMessage">
+
+                {% for message in app.flashes('message') %}
+                
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                    </div>
+                
+                {% endfor %}
+        
+                {% for warning in app.flashes('warning') %}
+        
+                    <div class="alert alert-warning" role="alert">
+                        {{ warning }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                    </div>
+
+                {% endfor %}
+                
+            </div> #}
+
+            
             {% block body %}
 
             {% endblock %}
+            
         </div>
 
 

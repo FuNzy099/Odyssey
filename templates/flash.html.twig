@@ -1,0 +1,31 @@
+{% block stylesheets %}
+
+    <link href="{{ asset('css/layoutStyles/layout.css') }}" type="text/css" rel="stylesheet" />
+    {# <link href="{{ asset('css/eventStyles/event.css') }}" type="text/css" rel="stylesheet" /> #}
+    <link href="{{ asset('css/global.css') }}" type="text/css" rel="stylesheet" />
+
+{% endblock %}
+
+
+<div class="messageFlash">
+
+    {% for message in app.flashes('message') %}
+                    
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+        </div>
+
+    {% endfor %}
+
+    {% for warning in app.flashes('warning') %}
+
+        <div class="alert alert-warning" role="alert">
+            {{ warning }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+        </div>
+
+    {% endfor %}
+
+
+</div>

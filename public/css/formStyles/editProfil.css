@@ -23,15 +23,27 @@ body{
     max-width: 1280px;
 }
 
+.messageFlash{
+    text-align: center;
+    margin: 0 auto;
+    width: 55%;
+
+}
+
 form{
     display: flex;
     flex-direction: column;
     width: 65%;
 }
 
+.editProfilMain{
+    display: flex;
+    flex-direction: column;
+}
+
 .editProfilMain form{
     width: 60%;
-    margin: auto;
+    margin: 30px auto;
     color: rgb(255, 255, 255);
     background: rgba(0, 0, 0, 0.8);
     padding: 35px;

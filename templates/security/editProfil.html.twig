@@ -13,6 +13,13 @@
 {% block body %}
 
 <main class="editProfilMain">
+
+    {# Permet d'afficher les messages flash #}
+    <div class="messageFlash">
+       
+        {% include 'flash.html.twig'  %}     
+
+    </div>
     
     {{ form_start(formEditProfil) }}
     <div class="containt">
