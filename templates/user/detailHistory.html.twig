@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Evènement | Commentaires  {% endblock %}
+
+{% block stylesheets %}
+
+    <link href="{{ asset('css/layoutStyles/layout.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('css/postStyles/postActualEvent.css') }}" type="text/css" rel="stylesheet" />
+    {# <link href="{{ asset('css/adminStyles/admin.css') }}" type="text/css" rel="stylesheet" /> #}
+
+{% endblock %}
+
+{% block body %}
+
+    <main class="mainPost">
+        <h1>Bonjour</h1>
+
+        {% for user in users %}
+
+            {% if user.registrationEvents is empty %}
+        
+                <p> Vous n'avez participé à aucun évènement </p>
+
+            {% endif %}
+
+        {% endfor %}
+
+        <div class="wrapper">
+            <div class="card text-center">
+                <div class="card-body">
+                    <section class="global">
+                        <h2>Evènement</h2>
+                        <p>
+                            {{event.userCreator.pseudonyme}}
+                        </p>
+                        <p>{{event.title}}</p>
+                        <p class="description">
+                            {{event.description}}
+                        </p>
+                    </section>
+
+                    <section class="infos">
+                        <h2>Détail</h2>
+                        <div class="date">
+                            <p><i class="fa-solid fa-calendar-days"></i>{{event.startDate|date('d-m-Y H:i')}}</p>
+                            <p><i class="fa-solid fa-calendar-days"></i>{{event.endDate|date('d-m-Y H:i')}}</p>
+                        </div>
+                        <div class="place">
+                            {# <i class="fa-solid fa-map-location-dot"></i> #}
+                            <p>{{event.address}}</p>
+                            <p>{{event.zipCode}} </p>
+                            <p>{{event.town}}</p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <section class="participants">
+                    <h3>Liste des participants</h3>
+                    <p class="users">
+                        {% for user in event.users %}
+                            <a href="#">{{ user.pseudonyme }}</a>
+                            <br>
+                        {% endfor %}                
+                    </p>
+                </section>
+            </div>
+
+            {% for post in event.posts %}
+        
+            <div class="card cardPost">
+                <!-- Comment Row -->
+                <div class="d-flex flex-row comment-row m-t-0">
+                    <div class="avatar-container">
+                        {% if post.user != null %}
+                            
+                            <img src="{{ asset('img/avatars/' ~ post.user.avatar) }}" alt="Photo de profil de l'utilisateur" width="50" >
+                            <h5 class="card-title">  
+                                <p>  
+                                    {{post.user.pseudonyme}}  
+
+                                    {% if post.user != app.user %}
+                                        
+                                        <a href="{{ path('app_send', {'id': post.user.id }) }}"><i class="fa-solid fa-envelope"></i></a>
+
+                                    {% endif %}
+
+                                </p>
+
+                            </h5>
+
+                        {% else %}
+
+                            <img src="{{ asset('img/avatars/default-avatar.png') }}" alt="Photo de profil de l'utilisateur" width="50" >
+                            <h5 class="card-title">  <p>Profil supprimé</p></h5>
+                        {% endif %}
+                  
+                    </div>
+
+                    
+                    <div class="containtPost">
+                        <p class="text-muted float-right creationDate">{{post.creationDate|date('d-m-Y H:i')}} à {{post.creationDate|date('H:i')}}</p>
+                        <div class="comment-text">
+                            <span class="m-b-15 d-block">{{post.text}}</span>
+                        </div>
+
+                        <div class="comment-footer"> 
+                            {% if app.user == post.user or is_granted('ROLE_ADMIN') == true  %}
+                                <a href="#">Supprimer</a>
+                                <a href="{{ path('edit_post', {'id': post.id} )}}">Modifier</a>
+             
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        {% endfor %}
+        
+    </main>
+
+{% endblock %}

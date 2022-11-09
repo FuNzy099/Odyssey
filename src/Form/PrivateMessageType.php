@@ -33,13 +33,13 @@ class PrivateMessageType extends AbstractType
                 ],
                 "label" => "Votre message"          
             ])
-            ->add('recipient', EntityType::class,[
-                "class" => User::class,
-                "choice_label" => "pseudonyme",
-                "attr" => [
-                    "class" => "form-control"
-                ],
-            ])
+            // ->add('recipient', EntityType::class,[
+            //     "class" => User::class,
+            //     "choice_label" => "pseudonyme",
+            //     "attr" => [
+            //         "class" => "form-control",
+            //     ],
+            // ])
             ->add('envoyer', SubmitType::class, [
                 "attr" => [
                     "class" => "btn btn-primary"

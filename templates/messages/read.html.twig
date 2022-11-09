@@ -17,11 +17,11 @@
             
             <p>Message de {{message.sender.pseudonyme}}</p>
             <p>Le {{message.creationDate|date}}</p>
-            <div>{{message.message}}</div>
-           
+            <div>{{message.message}}</div>           
 
         <div class="col">
             <a href="{{ path("app_mailbox")}}" class="btn btn-primary">Retour à la boite de réception</a>
+            <a href="{{ path('app_reponse', {'id': message.sender.id} )}}">répondre</a>
         </div>
     </div>
   </section>

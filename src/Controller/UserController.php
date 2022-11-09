@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 
+use DateTime;
 use App\Entity\User;
 use App\Entity\Event;
 use App\Data\SearchData;
 use App\Repository\EventRepository;
-use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -164,6 +165,25 @@ class UserController extends AbstractController
 
             'eventsUser' => $eventsUser
             
+        ]);
+
+    }
+
+    /**
+     * @Route("/events/history/user/detail/{id}", name="detail_history")
+     */
+    public function test(ManagerRegistry $doctrine, Event $event): Response
+    {
+        // $event = $doctrine -> getRepository(Event::class) -> findby(['id' => $this -> getUser()], []);
+
+        $users = $doctrine -> getRepository(User::class) -> findby(['id' => $this -> getUser()], []);
+
+        return $this -> render('user/detailHistory.html.twig',[            
+
+            'event' => $event,
+
+            'users' => $users,
+
         ]);
 
     }

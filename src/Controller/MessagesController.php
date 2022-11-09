@@ -2,15 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Post;
 use App\Entity\User;
+use App\Entity\Event;
 use App\Entity\PrivateMessage;
 use App\Form\PrivateMessageType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Notifier\Recipient\Recipient;
 
 /**
  * @isGranted("ROLE_USER")
@@ -82,11 +85,11 @@ class MessagesController extends AbstractController
 
 
     /**
-     * @Route("/envoyer", name="app_send")
+     * @Route("/envoyer/{id}", name="app_send")
      * 
      * Route pour envoyer un message
      */
-    public function send(Request $request, ManagerRegistry $doctrine): Response
+    public function send(Request $request, ManagerRegistry $doctrine, User $user): Response
     {
         // On instancie un nouveau objet de PrivateMessage
         $message = new PrivateMessage;
@@ -98,9 +101,11 @@ class MessagesController extends AbstractController
         $form -> handleRequest($request);
 
         if($form -> isSubmitted() && $form -> isValid()){
-
+            
             // Permet d'ajouter l'expéditeur du message
             $message -> setSender($this -> getUser());
+            
+            $message -> setRecipient($user);
 
             $entityManager = $doctrine -> getManager();
 
@@ -110,13 +115,58 @@ class MessagesController extends AbstractController
 
             $this -> addFlash("message", "Message envoyé avec succès ! ");
 
-            return $this -> redirectToRoute("app_messages");
+            return $this -> redirectToRoute("show_history", ['id' => $this -> getUser() -> getId()]);
         }
 
         return $this -> render("messages/send.html.twig",[
 
-            "formMessage" => $form -> createView()
+            "formMessage" => $form -> createView(),
+            'user' => $user,
 
+        ]);
+        
+    }
+
+    /**
+     * @Route("/reponse/{id}", name="app_reponse")
+     * 
+     * Route pour envoyer un message
+     */
+    public function reponse(User $user, ManagerRegistry $doctrine, Request $request): Response
+    {
+
+        // On instancie un nouveau objet de PrivateMessage
+        $message = new PrivateMessage;
+
+        // On créer un formulaire qui ce base sur le builder de PrivateMessageType
+        $form = $this -> createForm(PrivateMessageType::class, $message);
+
+        // Permet de récupèrer le formulaire dans la requette dans le but de le traiter
+        $form -> handleRequest($request);
+
+        if($form -> isSubmitted() && $form -> isValid()){
+            
+            $message -> setSender($this -> getUser());
+ 
+            $message -> setRecipient($user);
+
+            $entityManager = $doctrine -> getManager();
+
+            $entityManager -> persist($message);
+
+            $entityManager -> flush();
+
+            $this -> addFlash("message", "Message envoyé avec succès ! ");
+
+            return $this -> redirectToRoute("app_outbox", ['id' => $this -> getUser() -> getId()]);
+        }
+
+
+
+
+        return $this -> render("messages/send.html.twig",[
+            "formMessage" => $form -> createView(),
+            'user' => $user,
         ]);
         
     }

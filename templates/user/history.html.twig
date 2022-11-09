@@ -13,50 +13,52 @@
 
 <main class="historyMain">
 
-    <h1> Historique de vos évènements  </h1>
+  <h1> Historique de vos évènements  </h1>
 
-    {% for eventUser in eventsUser %}
+    <div class="messageFlash">
+       
+        {% include 'flash.html.twig'  %}     
+
+    </div>
+    
+  {# {{ dump(eventUser) }}  #}
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Pseudonyme</th>
+        <th scope="col">Titre</th>
+        <th scope="col">Description</th>
+        <th scope="col">Date de début</th>
+        <th scope="col">Date de fin</th>
+        <th scope="col">Ville</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+
+
+    <tbody>
+
+      {% for eventUser in eventsUser %}
 
         {% if app.user in eventUser.users %}
         
-            {# {{ dump(eventUser) }}  #}
-
-            <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">Pseudonyme</th>
-                    <th scope="col">Titre</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Date de début</th>
-                    <th scope="col">Date de fin</th>
-                    <th scope="col">Nombre de places</th>
-                    <th scope="col">Ville</th>
-                    <th scope="col">Code postal</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row"> {{eventUser.userCreator.pseudonyme}} </th>
-                    <td>{{eventUser.title}}</td>
-                    <td>{{eventUser.description}}</td>
-                    <td>{{eventUser.startDate|date('d-m-Y H:i')}}</td>
-                    <td>{{eventUser.endDate|date('d-m-Y H:i')}}</td>
-                    <td>{{eventUser.maxPlaces}}</td>
-                    <td>{{eventUser.town}}</td>
-                    <td>{{eventUser.zipCode}}</td>
-                  </tr>
-                </tbody>
-              </table>
-
-           
-
+          <tr>
+            <th scope="row"> {{eventUser.userCreator.pseudonyme}} </th>
+            <td>{{eventUser.title}}</td>
+            <td>{{eventUser.description}}</td>
+            <td>{{eventUser.startDate|date('d-m-Y H:i')}}</td>
+            <td>{{eventUser.endDate|date('d-m-Y H:i')}}</td>
+            <td>{{eventUser.town}}</td>
+            <td><a href="{{path('detail_history', {'id' : eventUser.id} )}}">Détails</a></td>
+  
+          </tr>
         {% endif %}
 
         
-    {% endfor %}
-
-
-
+      {% endfor %}
+    </tbody>
+  </table>
 </main>
 
 {% endblock %}
