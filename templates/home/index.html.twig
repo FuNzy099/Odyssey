@@ -111,27 +111,46 @@
 
                 </div>
 
-            </div>  
-{# 
-            <div class="listPlanets">
-                <p>Mercure</p>
-                <p>Venus</p>
-                <p>Terre</p>
-                <p>Mars</p>
-                <p>Jupiter</p>
-                <p>Saturne</p>
-                <p>Uranus</p>
-                <p>Neptune</p>
-            </div> #}
-
-       
+            </div> 
+           
+            
         </div>
+            
+        <section class="imageJour">
+            <hr style="color: white; width: 60vw;">
+
+            <h1>L'image du jour</h1>
+            <form >
+                <label for="datepiceker">Selectionner une date:
+                    <input id="datepicker" type="date" min="" max="" > 
+                </label>
+            </form>
+       
+            <section class="title-section">
+                <h2 id="title"></h2>
+                <p id="date"></p>
+                <small style="display: block;" id="copyright" ></small>
+            </section>
+       
+            <section id="media-section">
+            </section>
+       
+            <div class="description-div">
+                <p id="description"></p>
+            </div>
+        </section>
+
+   
+
+          
+       
 
     </section>  
 
 </div>
 
-</main>    
+</main>   
+
 
 
 
@@ -140,4 +159,10 @@
     <h1>Je suis dans le home ✅</h1>
 
 </div> #}
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('js/api.js')}}"></script>
+
 {% endblock %}
