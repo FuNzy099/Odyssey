@@ -119,31 +119,32 @@
         <section class="imageJour">
             <hr style="color: white; width: 60vw;">
 
-            <h1>L'image du jour</h1>
-            <form >
-                <label for="datepiceker">Selectionner une date:
-                    <input id="datepicker" type="date" min="" max="" > 
-                </label>
-            </form>
-       
+            <h1 class="titleDay">L'image du jour</h1>       
+            
             <section class="title-section">
                 <h2 id="title"></h2>
                 <p id="date"></p>
                 <small style="display: block;" id="copyright" ></small>
             </section>
+
+            <div class="test">
        
-            <section id="media-section">
-            </section>
-       
-            <div class="description-div">
-                <p id="description"></p>
+                <section id="media-section">
+                </section>
+        
+                <div class="description-div">
+                    <p id="description"></p>
+                </div>
+
             </div>
+
+            <form >
+                <label for="datepiceker">Selectionner une date:
+                    <input id="datepicker" type="date" min="" max="" > 
+                </label>
+            </form>
         </section>
 
-   
-
-          
-       
 
     </section>  
 
@@ -163,6 +164,6 @@
 
 {% block javascripts %}
 
-    <script src="{{ asset('js/api.js')}}"></script>
+    <script src="{{ asset('js/apiApod.js')}}"></script>
 
 {% endblock %}

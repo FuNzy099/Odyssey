@@ -15,10 +15,11 @@ function nasarequested() {
     const information = document.querySelector("#description");
     const currentDate = new Date().toISOString().slice(0, 10);
 
-    const imageSection = `<a id="hdimg" href="" target="-blank">
-     <figure class="image-div">
-     <img id="image_of_the_day" src="" alt="image journaliere de la nasa">
-     </figure>
+    const imageSection = 
+    `<a id="hdimg" href="" target="-blank">
+        <figure class="image-div">
+            <img id="image_of_the_day" src="" alt="image journaliere de la nasa">
+        </figure>
      </a>`
 
     const videoSection = `<div class="video-div"> <iframe id="videoLink" src="" frameborder="0"></iframe></div>`
