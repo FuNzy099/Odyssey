@@ -1,0 +1,206 @@
+/* smartphone */
+@media screen and (min-width: 451px) and (max-width: 765px){
+
+    .mainHome{
+        background-size: 350% auto;
+    }
+
+    .moreDetail p {
+        margin-right: 16%;
+        color: red;
+    }
+
+        /* ! PARTIE CONCERNANT LE MENU BURGER */
+    
+    /* Parent contenant l'icon burger */
+    header .iconBurger{
+        display: flex;
+        justify-content: center;
+        align-self: center;
+        width: 50px;
+        height: 50px;
+        color: white;
+        margin-right: 5%;
+        border-radius: 50%;
+        background-color: #111827;
+        position: relative;
+        z-index: 4;
+ 
+    }
+
+    /* Span représentant la barre du milieu du menu burger */
+    .iconBurger span{
+        width: 30px;
+        height: 3px;
+        align-self: center;
+        background-color: white;
+    }
+
+    /* Span pour créer lees barres du haut et du bas du menu burger */
+    .iconBurger span::before, .iconBurger span::after{
+        content: '';
+        position: absolute;
+        width: 30px;
+        height: 3px;
+        background-color: white;
+    }
+
+    /* Permet de placer la barre du haut et du bas */
+    .iconBurger span::before{
+        transform: translateY(-10px);
+    }
+
+    .iconBurger span::after{
+        transform: translateY(10px);
+    }
+
+    /* Permet de faire disparaitre la barre du milieu du menu burger au click de l'utilisateur, cette classe est attribué à l'aide du JS */
+    .iconBurger.active span{
+        background-color: transparent;
+    }
+
+    /* Permet d'éffectuer une rotation permettant d'afficher une croix */
+    .iconBurger.active span::before{
+        transform: translateY(0px) rotateZ(45deg);
+    }
+
+    .iconBurger.active span::after{
+        transform: translateY(0px) rotateZ(-45deg);
+    }
+
+
+    /* Permet de retirer les boutons de navigation pour l'user en session et le visiteur  */
+    .groupButton, .navGuest{
+        display: none;
+    }
+
+    .navMobile{
+        position: fixed;
+        display: block;
+        width: 350px;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        background-color: #111827;
+        z-index: 3;
+        transform: translateX(-100%); /*Permet de sortir la menu de navigation mobile de l'ecrans */
+        transition: 0.4s transform cubic-bezier(.43,.73,0,.98);
+    }
+
+    .navMobile.active{
+        transform: initial;
+    }
+
+    .mobileOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(20, 20, 20, 0.4);
+        display: none;
+        z-index: 2;
+    }
+
+    .mobileOverlay.active{
+        display:initial;
+    }
+
+    /* Logo, nom du site */
+    .groupInfosBurger figure{
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 16px;
+    }
+
+    /* Nom du site */
+    .groupInfosBurger figcaption{
+        align-self: center;
+        color: white;
+        font-family: 'play', sans-serif;
+        font-size: 1.5em;
+    }
+
+    /* Avatar et Nom user */
+    .userBurger{
+        text-align: center;
+        width: 90%;
+        margin: auto;
+        border-bottom: 1px solid #565656;
+        padding-bottom: 10px ;
+    }
+
+    .avatarUserBurger{
+        text-align: center;
+    }
+
+    .avatarUserBurger img{
+        width: 130px;
+        height: 130px;
+        object-fit: cover;   
+        border-radius: 30px;    
+    }
+
+    .userBurger .pseudo{
+        font-size: 1.8em;
+        font-family: 'play', sans-serif;
+         padding-bottom: 10px;
+    }
+
+    /* Liste des bouttons de la nav burger */
+   .groupButtonBurger, .navGuestBurger{
+        display: flex;
+        flex-direction: column;
+   }
+
+
+   /* Nom du boutton */
+   .logoEntitled{
+        display: flex;
+   }
+
+   /* Logo du boutton */
+   .logoEntitled svg{
+        width: 30px;
+        height: 30px;
+        color: azure;
+        margin: 15px 0 0 15px
+   }
+
+   .dropbtnBurger{
+        background-color: #111827;
+        color: azure;
+        border: none;
+        margin: 15px 0 0 15px;
+        font-size: 1em;
+        font-family: 'play', sans-serif;
+   }
+
+   .dropdownBurgerAdmin-content, .dropdownBurgerEvent-content, .dropdownBurgerProfil-content {
+    display: none;
+    min-width: 200px;
+    z-index: 5;
+}
+
+.dropdownBurgerAdmin-content.active, .dropdownBurgerEvent-content.active, .dropdownBurgerProfil-content.active{
+
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdownBurgerAdmin-content.active a, .dropdownBurgerEvent-content.active a, .dropdownBurgerProfil-content a {
+    color: white;
+    font-family: 'play' , sans-serif;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 1em;
+    margin: 0 0 0 75px;
+    
+}
+
+
+    
+
+
+}

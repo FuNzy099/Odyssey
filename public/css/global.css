@@ -5,53 +5,55 @@
 
 /* Image de background  */
 
-
-.mainHome{
+.mainHome {
     background-image: url(../../img/wallhaven.jpg);
     background-size: 100% auto;
     background-repeat: no-repeat;
     background-attachment: fixed;
-}  
+}
 
-.wrapperHome{
+.wrapperHome {
     position: relative;
     max-width: 1280px;
     margin: 0 auto 5%;
 }
 
 
-                                            /* Image principale contenant également le <h1> et le <p> de la figCaption  */
 
-.MainImg{
+
+/* Image principale contenant également le <h1> et le <p> de la figCaption  */
+
+.MainImg {
     display: flex;
     position: relative;
     text-align: center;
-    margin-bottom: 0 ; /* POUR CONTRER LE BOOOOOOOTSRAP */
+    margin-bottom: 0;
+    /* POUR CONTRER LE BOOOOOOOTSRAP */
 }
 
 /* Image de la terre */
-.imgEarth{
+.imgEarth {
     margin-top: 5%;
     border-top-left-radius: 100px;
     border-top-right-radius: 100px;
 }
 
-.MainImg figcaption{
+.MainImg figcaption {
     color: white;
     position: absolute;
-    top: 50%; 
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-.MainImg h1{
+.MainImg h1 {
     font-size: 3em;
     text-shadow: 3px 3px black;
     /* font-family: 'play', sans-serif; */
-    font-family:  'Roboto Slab', serif;
+    font-family: 'Roboto Slab', serif;
 }
 
-.MainImg p{
+.MainImg p {
     font-size: 1.5em;
     text-shadow: 3px 3px black;
     font-family: 'play', sans-serif;
@@ -60,76 +62,98 @@
 
 
 
-                                            /* Vignette du carousel des planètes dans le home */
+                                                    /* ! Vignette du carousel des planètes dans le home */
 
-.diapo{
+.diapo {
+    position: relative;
+    overflow: hidden;
     color: white;
     background-color: rgb(0, 0, 0);
-    border-bottom-left-radius: 100px;
-    border-bottom-right-radius: 100px;
     padding: 3% 0;
 }
 
-/* .elements{
+#nav-right,
+#nav-left {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-size: 2.5em;
+    cursor: pointer;
 
-    display: flex;
-
-} */
-
-.element{
-    display: flex;
-    width: 80%;
-    margin: auto;
 }
 
-.element figure{
-    display: flex;
+#nav-right {
+    right: 20px;
 }
 
-.nbPosition{
+#nav-left {
+    left: 20px;
+}
+
+.elements {
+    display: flex;
+    transition: 1s linear;
+}
+
+.element {
+    display: none;
+    flex: 1 0 100%;
+    position: relative;
+}
+
+.element figure {
+    display: flex;
+    padding-left: 10%;
+}
+
+.element .imgPlanet {
+    width: 300px;
+    height: 300px;
+}
+
+.nbPosition {
     font-size: xxx-large;
     color: rgba(255, 255, 255, 0.20);
     font-weight: bold;
     margin-right: 10px;
 }
 
-.imgPlanet{
-    width: 300px;
-}
 
-.infosPlanet{
+.infosPlanet {
     display: flex;
     flex-direction: column;
     height: 230px;
     font-size: 0.9em;
     margin-top: 3%;
+    padding: 20px 20px 80px 20px;
 }
 
-.infosPlanet h2{
+.infosPlanet h2 {
     font-size: xx-large;
     margin-bottom: 20px;
 }
 
-.descriptionPlanet{
+.descriptionPlanet {
     text-align: justify;
     width: 80%;
 }
 
-.blockDescriptionAndDetail{
+/* .blockDescriptionAndDetail{
+display: flex;
+flex-direction: column;
+margin-bottom: auto;
+} */
+
+.moreDetail {
     display: flex;
-    flex-direction: column;
-    margin-bottom: auto;
 }
 
-.moreDetail{
-    display: flex;
-}
-
-.moreDetail p{
+.moreDetail p {
     margin-right: 15%;
 }
 
-.listPlanets{
+.listPlanets {
     display: flex;
     width: 80%;
     margin: auto;
@@ -137,23 +161,128 @@
     margin-top: 3%;
 }
 
+.dots {
+    text-align: center;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+    cursor: pointer;
+    margin: 50px 50px 0px 50px;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+.dot.active,
+.dot:hover {
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 1.1em;
+}
 
 
 
+                                                    /* ! PARTIE CONCERNANT L'API APOD*/
+
+hr {
+    width: 50%;
+    margin: auto;
+}
+
+section,
+.imageJour {
+    color: white;
+    background-color: rgb(0, 0, 0);
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
+}
+
+.wrapperMediaDescrition {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.titleDay {
+    text-align: center;
+    font-family: 'play', sans-serif;
+    margin: 10px auto;
+}
+
+#date {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.title-section {
+    padding: 1rem;
+}
+
+.wrapperMedia {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-evenly; */
+    align-self: center;
+    align-items: center;
+}
+
+/* Cette classe proviens de l'API APOD */
+#image_of_the_day {
+    width: 350px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+#image_of_the_day:hover {
+    background-color: rgba(138, 138, 138, 0.212);
+}
+
+#videoLink {
+
+    height: 450px;
+}
+
+.description-div {
+    width: 50%;
+    /* margin:0.1rem auto 1rem; */
+    border: solid 1px white;
+    padding: 0.5rem;
+    border-radius: 00.5rem;
+}
+
+#title {
+    font-family: 'play', sans-serif;
+}
+
+#description {
+    line-height: 1.82;
+    text-align: justify;
+}
+
+#datepicker {
+    box-sizing: border-box;
+    width: 9rem;
+    padding: 00.2rem;
+    border-radius: 0.5rem;
+}
+
+.imageJour form {
+    text-align: center;
+    margin-top: 35px;
+    padding-bottom: 35px;
+}
+
+.selectDate{
+    width: 100%;
+}
 
 
 
-
-
-
-
-
-
-
-                                                            /* ! PARTIE CONCERNANT L'INTERFACE ADMIN */
+                                                    /* ! PARTIE CONCERNANT L'INTERFACE ADMIN */
 
 /* Main de la page index.html.twig dans admin */
-.mainAdmin{
+.mainAdmin {
     text-align: center;
     margin: auto;
     width: 60%;
@@ -161,7 +290,7 @@
 }
 
 /* Main de la page listUsers.html.twig dans admin */
-.mainAdminUsers{
+.mainAdminUsers {
     text-align: center;
     margin: auto;
     width: 60%;
@@ -169,20 +298,22 @@
     margin-bottom: 5%;
 }
 
-.mainAdminEvents{
+.mainAdminEvents {
     margin: auto;
     width: 90%;
     min-height: 70vh;
     margin-bottom: 5%;
 }
 
-.mainAdminEvents h1, .mainAdminEvents p{
+.mainAdminEvents h1,
+.mainAdminEvents p {
     text-align: center;
 }
 
 
 /* Main de la page editUser.html.twig dans admin */
-.mainEditUser, .mainEditEvent{
+.mainEditUser,
+.mainEditEvent {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -191,7 +322,8 @@
     width: 40%;
 }
 
-.containtEditUser, .containtEditEvent{
+.containtEditUser,
+.containtEditEvent {
     border: solid 1px black;
     border-radius: 30px;
     background: rgba(0, 0, 0, 0.8);
@@ -201,13 +333,14 @@
 
 
 /* Css concernant le bouton submit de la page editUser.html.twig dans admin */
-.mainEditUser .submit, .mainEditEvent .submit{
+.mainEditUser .submit,
+.mainEditEvent .submit {
     margin-top: 5%;
     text-align: center;
 }
 
-th{
-    padding: 0 20px  !important;
+th {
+    padding: 0 20px !important;
     text-align: center;
 }
 
@@ -215,30 +348,34 @@ th{
 
 /* Css commun à toutes les pages admin */
 
-.mainAdminUsers table{
+.mainAdminUsers table {
     text-align: center;
 }
 
 .mainEditUser .roles,
 .mainEditUser .pseudonyme,
-.mainEditEvent .eventTitle, .eventDescription, .eventStartDate, .eventEndDate{
+.mainEditEvent .eventTitle,
+.eventDescription,
+.eventStartDate,
+.eventEndDate {
     margin-top: 3%;
 }
 
-.containtDate{
+.containtDate {
     display: flex;
     justify-content: center;
     justify-content: space-evenly;
 }
 
-.eventStartDate div, .eventEndDate div{
+.eventStartDate div,
+.eventEndDate div {
     width: 95%;
     display: flex;
     flex-direction: column;
     text-align: center;
 }
 
-.containtDate input{
+.containtDate input {
     text-align: center;
 }
 
@@ -247,52 +384,54 @@ th{
 .eventTitle #admin_edit_event_title,
 .eventDescription #admin_edit_event_description,
 .eventStartDate #admin_edit_event_startDate,
-.eventEndDate #admin_edit_event_endDate{  
+.eventEndDate #admin_edit_event_endDate {
     margin-top: 1%;
 }
 
-.eventDescription #admin_edit_event_description{
+.eventDescription #admin_edit_event_description {
     height: 110px;
     text-overflow: ellipsis;
 }
 
 
-.mainAdmin h1, .mainAdminUsers h1, .mainEditUser h1, .mainAdminEvents h1{
+.mainAdmin h1,
+.mainAdminUsers h1,
+.mainEditUser h1,
+.mainAdminEvents h1 {
     font-family: 'play', sans-serif;
     font-weight: bold;
     margin-top: 2%;
 }
 
-.mainAdmin p,  .mainAdminUsers p, .mainEditUser p, .mainAdminEvents p{
+.mainAdmin p,
+.mainAdminUsers p,
+.mainEditUser p,
+.mainAdminEvents p {
     margin: 2% 0;
 }
 
-.mainAdmin table, .mainAdminUsers table{
-    margin-top: 2% ;
+.mainAdmin table,
+.mainAdminUsers table {
+    margin-top: 2%;
 }
 
 
 
 
+                                                    /* ! PARTIE CONCERNANT LA LISTE DES EVENEMENTS AVEC FILTRE*/
 
-
-
-
-
-                                                            /* ! PARTIE CONCERNANT LA LISTE DES EVENEMENTS AVEC FILTRE*/
-
-*{
-    font-family:  'Roboto Slab', serif;
+* {
+    font-family: 'Roboto Slab', serif;
 }
 
-.mainEvent{
+.mainEvent {
     width: 100%;
     background-image: url('../../img/fondEventtruc.jpg');
     background-repeat: no-repeat;
-    background-size: cover; 
+    background-size: cover;
 }
 
-.wrapperEvent{
+.wrapperEvent {
     min-height: 70vh;
     margin: 1em auto;
     max-width: 800px;
@@ -308,7 +447,7 @@ th{
 
 
 /* Message quand la recherche de l'utilisateur ne correspond à aucun évènement */
-.sendMessage{
+.sendMessage {
     width: 50%;
     margin: auto;
     margin-top: 60px;
@@ -320,13 +459,13 @@ th{
 
 /* Barre de filtre */
 
-.containtFilter{
+.containtFilter {
     border-radius: 30px;
     padding: 15px;
     background-color: white;
 }
 
-.containtFilter h1{
+.containtFilter h1 {
     font-family: 'play', sans-serif;
     font-weight: bold;
     font-size: 1.7em;
@@ -334,93 +473,94 @@ th{
     margin-bottom: 20px;
 }
 
-.containtFilter .row{
+.containtFilter .row {
     margin-top: 15px;
 }
 
-.btnFilter{
+.btnFilter {
     display: flex;
     justify-content: space-evenly;
     margin-top: 2em;
 }
 
-.resetFilter{
+.resetFilter {
     color: white;
     text-decoration: none;
 }
 
-.button a:hover{
+.button a:hover {
     color: white;
 }
 
 
 /* Evenement */
 
-.card{
-    padding:50px;
+.card {
+    padding: 50px;
     border-radius: 20px;
     border: 1px solid black;
-    margin-bottom: 50px ;
+    margin-bottom: 50px;
 }
 
-.ContaintInfosGlobalEvent{
+.ContaintInfosGlobalEvent {
     display: flex;
     width: 95%;
     justify-content: space-between;
     margin-bottom: 30px;
 }
 
-.infosUser{
+.infosUser {
     display: flex;
     flex-direction: column;
     text-align: center;
     align-self: center;
 }
 
-.infosUser p{
+.infosUser p {
     font-family: 'play', sans-serif;
     font-weight: bold;
     font-size: 1.5em;
     margin-bottom: 0;
 }
 
-.infosEvent{
+.infosEvent {
     margin-left: 10%;
     width: 80%;
 }
 
-.infosEvent p{
+.infosEvent p {
     background-color: rgb(240, 240, 240);
     height: 180px;
     padding: 10px;
     border-radius: 10px;
 }
-.infosEvent h3{
+
+.infosEvent h3 {
     font-family: 'play', sans-serif;
     font-weight: bold;
     color: black;
 }
 
-.avatarUserCreator .avatar{
+.avatarUserCreator .avatar {
     border: 5px solid white;
-    box-shadow: 0px 2px 5px black ;
+    box-shadow: 0px 2px 5px black;
     border-radius: 10px;
     width: 150px;
     height: 150px;
     object-fit: cover;
 }
 
-.infosEvent .description{
+.infosEvent .description {
     text-align: justify;
 }
 
-.containtInfosAppointment{
+.containtInfosAppointment {
     display: flex;
     justify-content: space-between;
     width: 95%;
 }
 
-.containtInfosAppointment p{
+.containtInfosAppointment p {
     margin-bottom: 3px;
 }
 
@@ -428,14 +568,14 @@ th{
 
 /* Bouttons d'actions de l'évènement (modifier, supprimer, inscription et désinscription) */
 
-.buttonsEvent{
+.buttonsEvent {
     display: flex;
     justify-content: space-around;
     align-self: center;
     width: 50%;
 }
 
-.buttonsEvent p{
+.buttonsEvent p {
     font-weight: bold;
     margin-top: 20px;
     margin-bottom: 0;
@@ -445,115 +585,54 @@ th{
 
 /* Barre de pagination des évènement  */
 
-#navPagination{
+#navPagination {
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
-#navPagination nav{
-    background-color: unset ;
+
+#navPagination nav {
+    background-color: unset;
 }
 
 
 
-/* !!!! */
 
 
-hr{
-    width: 50%;
-    margin: auto;
-}
-
-.image-div{
-    text-align: center;
-}
 
 
-.titleDay{
-    text-align: center;
-    font-family: 'play', sans-serif;
-    margin: 10px auto;
-}
-
-#datepicker{
-    box-sizing: border-box;
-    width: 9rem;
-    padding: 00.2rem;
-    border-radius: 0.5rem;
-}
 
 
-.title-section{
-    padding: 1rem;
-}
-
-.test{
-    display: flex;
-    justify-content: space-evenly;
-    /* align-items: center; */
-    align-items: center;
-}
-
-/* .image-div{
-    width: 40%;
-    margin: auto;
-} */
-
-#media-section{
-    width: 450px;
-    height: 450px;
-    object-fit: containP;
-}
-
-#image_of_the_day{
-    /* width: 100%; */
-    /* width: 450px;
-    height: 450px; */
-    border-radius: 20px;
-    object-fit: contain;
-}
-
-#image_of_the_day:hover{
-    background-color: rgba(138, 138, 138, 0.212);
-}
-
-.video-div{
-    /* width: 80%; */
-    height: 450px;
-    margin: auto;
-}
-
-#videoLink{
-    width: 100%;
-    /* height: 70vh */
-    height: 450px;
-}
-
-.description-div{
-    width: 50%;
-    /* margin:0.1rem auto 1rem; */
-    border: solid 1px white;
-    padding: 0.5rem;
-    border-radius: 00.5rem;
-}
-
-#description{
-    line-height:1.82;
-    text-align: justify;
-}
 
 
-.imageJour form{
-    text-align: center;
-    margin-top: 15px;
-}
 
-   /* #image_of_the_day{
-    width: 550px;
-    height: 550px;
-    object-fit: contain;
 
-   }
-                                                             */
-                                                            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

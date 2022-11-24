@@ -93,6 +93,19 @@ nav {
 
 
 
+/* ! NAVIGATION BURGER */
+
+
+.iconBurger{
+    display: none;
+}
+
+.navMobile{
+    display: none;
+}
+
+
+
 
                                             /* Paramètre du dropdown profil */
 

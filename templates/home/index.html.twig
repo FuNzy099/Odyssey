@@ -2,14 +2,9 @@
 
 {% block title %} Acceuil {% endblock %}
 
-{% block stylesheets %}
-    <link href="{{ asset('css/layoutStyles/layout.css') }}" type="text/css" rel="stylesheet" />
-    {# <link href="{{ asset('css/homeStyles/home.css') }}" type="text/css" rel="stylesheet" /> #}
-    <link href="{{ asset('css/global.css') }}" type="text/css" rel="stylesheet" />
-{% endblock %}
+
 
 {% block body %}
-
 
 <main class="mainHome">
 
@@ -25,145 +20,367 @@
         </figcaption>
     </figure>
 
-    <section class="diapo">
+    <div class="diapo">
+
+        <!-- Conteneur des "diapos" -->
         <div class="elements">
-            <div class="element active">
+
+
+
+                                                        <!-- MERCURE -->
+            
+            <div class="element">
 
                 <figure>
- 
-                    <img src="{{ asset('img/earthSlider.png')}}" class="imgPlanet">
-                    <p class="nbPosition">03</p>
+    
+                    <img src="img/sliderPlanet/mercure.png" class="imgPlanet" alt="Image déssiné représentant la planète Mercure">
+                    <figcaption class="nbPosition">01</figcaption>
 
                 </figure>
 
-                <div class="infosPlanet">
+                <section class="infosPlanet">
 
-                    <h2>Terre</h2>
+                    <h2>Mercure</h2>
 
-                    <div class="blockDescriptionAndDetail">
-
-                        <p class="descriptionPlanet">
-                            La Terre est la troisième planète par ordre d'éloignement au Soleil et la cinquième plus grande grande du système solaire, aussi bien par la masse que par son diamètre.
-                            La Terre est par ailleurs le seul objet céleste connu à abriter de la vie. 
-                            L'axe de rotation de la Terre possède une inclinaison de 23°, ce qui cause l'apparition des saisons.
-                            D'après la datation radiométrique, la Terre s'est formée il y a 4,54 milliards d'années. Elle possède un unique satellite naturel, la Lune, qui s'est formée peu après.
-                        </p>
-                        
-                    </div>
+                    <p class="descriptionPlanet">
+                        Mercure est la planète la plus proche du Soleil et la moins massive du Système solaire. Mercure est une planète tellurique, comme le sont également Vénus, la Terre et Mars.
+                        Elle est près de trois fois plus petite et presque vingt fois moins massive que la Terre mais presque aussi dense qu'elle.
+                    </p>
                     
-                    <div class="moreDetail">
+                    <aside class="moreDetail">
 
-                        <p> {Période orbitale: 365.26 jours terrestre} </p>
+                        <p> Période orbitale: 87,96 jours terrestre </p>
 
-                        <p>Satelites connus: 1</p>
+                        <p>Satelites connus: 0</p>
 
-                    </div>
+                    </aside>
+                    
+                </section>
 
-                </div>
-
-            </div>  
-
-            {# <div class="listPlanets">
-                <p>Mercure</p>
-                <p>Venus</p>
-                <p>Terre</p>
-                <p>Mars</p>
-                <p>Jupiter</p>
-                <p>Saturne</p>
-                <p>Uranus</p>
-                <p>Neptune</p>
-            </div> #}
+            </div>
 
 
 
-
+                                                        <!-- VENUS -->
 
             <div class="element">
 
                 <figure>
- 
-                    <img src="{{ asset('img/marsSlider.png')}}" class="imgPlanet">
-                    <p class="nbPosition">04</p>
+    
+                    <img src="img/sliderPlanet/venus.png" class="imgPlanet" alt="Image déssiné représentant la planète Venus">
+                    <figcaptsection class="nbPosition">02</figcaptsection>
 
                 </figure>
 
-                <div class="infosPlanet">
+                <section class="infosPlanet">
+
+                    <h2>Venus</h2>
+
+                    <p class="descriptionPlanet">
+                        Vénus est la deuxième planète du Système solaire par ordre d'éloignement au Soleil,
+                        Comme Uranus, elle possède une rotation rétrograde et tourne dans le sens opposé à celui des autres planètes : le soleil s'y lève à l'ouest et se couche à l'est.
+                        Un jour sur Vénus dure 243 jours terrestres contre 225 jours pour une année. Il lui faut donc plus de temps pour tourner autour de son axe que toute autre planète du Système solaire. 
+                    </p>
+                    
+                    <aside class="moreDetail">
+
+                        <p> Période orbitale: 224.70 jours terrestre </p>
+
+                        <p>Satelites connus: 0</p>
+
+                    </aside>
+                    
+                </section>
+
+            </div>
+                                        
+        
+                                                        <!-- TERRE -->
+
+            <!-- Première diapo -->
+            <div class="element">
+
+                <figure>
+    
+                    <img src="img/sliderPlanet/terre.png" class="imgPlanet" alt="Image déssiné représentant la planète Terre">
+                    <figcaption class="nbPosition">03</figcaption>
+
+                </figure>
+
+                <section class="infosPlanet">
+
+                    <h2>Terre</h2>
+
+                    <p class="descriptionPlanet">
+                        La Terre est la troisième planète par ordre d'éloignement au Soleil et la cinquième plus grande grande du système solaire, aussi bien par la masse que par son diamètre.
+                        La Terre est par ailleurs le seul objet céleste connu à abriter de la vie. 
+                        L'axe de rotation de la Terre possède une inclinaison de 23°, ce qui cause l'apparition des saisons.
+                        D'après la datation radiométrique, la Terre s'est formée il y a 4,54 milliards d'années. Elle possède un unique satellite naturel, la Lune, qui s'est formée peu après.
+                    </p>
+
+                    <aside class="moreDetail">
+
+                        <p> Période orbitale: 365.26 jours terrestre </p>
+
+                        <p>Satelites connus: 1</p>
+
+                    </aside>
+                    
+                </section>
+
+            </div>
+
+
+
+                                                        <!-- MARS -->
+
+            <!-- Deuxième diapo -->
+            <div class="element">
+     
+                <figure>
+    
+                    <img src="img/sliderPlanet/mars.png" class="imgPlanet" alt="Image déssiné représentant la planète Mars">
+                    <figcaption class="nbPosition">04</figcaption>
+
+                </figure>
+
+                <section class="infosPlanet">
 
                     <h2>Mars</h2>
 
-                    <div class="blockDescriptionAndDetail">
-
-                        <p class="descriptionPlanet">
-                            Mars est la quatrième planète par ordre d'éloignement au Soleil et la deuxième plus petite, Mars à aujourd'hui perdu la presque totalité de son activité géologique interne, mais également son atmosphère.
-                            C’est une planète tellurique, environ dix fois moins massive que la Terre mais dix fois plus massive que la Lune. 
-                            Mars fait l'objet de programmes d'exploration plus embitieux que pour tout les autre objet du système solaire.
-                        </p>
-                        
-                    </div>
+                    <p class="descriptionPlanet">
+                        Mars est la quatrième planète par ordre d'éloignement au Soleil et la deuxième plus petite, Mars à aujourd'hui perdu la presque totalité de son activité géologique interne, mais également son atmosphère.
+                        C’est une planète tellurique, environ dix fois moins massive que la Terre mais dix fois plus massive que la Lune. 
+                        Mars fait l'objet de programmes d'exploration plus embitieux que pour tout les autre objet du système solaire.
+                    </p>
                     
-                    <div class="moreDetail">
+                    <aside class="moreDetail">
 
                         <p> Période orbitale: 686.98 jours terrestre </p>
 
                         <p>Satelites connus: 2</p>
 
-                    </div>
+                    </aside>
 
-                </div>
-
-            </div> 
-           
-            
-        </div>
-            
-        <section class="imageJour">
-            <hr style="color: white; width: 60vw;">
-
-            <h1 class="titleDay">L'image du jour</h1>       
-            
-            <section class="title-section">
-                <h2 id="title"></h2>
-                <p id="date"></p>
-                <small style="display: block;" id="copyright" ></small>
-            </section>
-
-            <div class="test">
-       
-                <section id="media-section">
                 </section>
-        
-                <div class="description-div">
-                    <p id="description"></p>
-                </div>
-
+    
             </div>
 
-            <form >
-                <label for="datepiceker">Selectionner une date:
-                    <input id="datepicker" type="date" min="" max="" > 
-                </label>
-            </form>
-        </section>
 
 
-    </section>  
+                                                        <!-- JUPITERE -->
 
-</div>
+            <div class="element">
+
+                <figure>
+    
+                    <img src="img/sliderPlanet/jupiter.png" class="imgPlanet" alt="Image déssiné représentant la planète Jupitere">
+                    <figcaptarticle class="nbPosition">05</figcaptarticle>
+
+                </figure>
+
+                <article class="infosPlanet">
+
+                    <h2>Jupiter</h2>
+
+                    <p class="descriptionPlanet">
+                        Jupiter est la cinquième planète du Système solaire par ordre d'éloignement au Soleil, 
+                        c'est l'une des quatre planètes géantes gazeuses, étant principalement composée de gaz et dépourvue de réelle surface.
+                        C'est la plus grande planète du Système solaire. Elle est même plus volumineuse que toutes les autres planètes réunies avec son rayon moyen de 69 911 km, qui vaut environ onze fois celui de la Terre.
+                    </p>
+                
+                    <aside class="moreDetail">
+
+                        <p> Période orbitale: 4 332.01 jours terrestre </p>
+
+                        <p>Satelites connus: 80</p>
+
+                    </aside>
+
+                </article>
+    
+            </div>
+
+
+
+                                                        <!-- SATURNE -->
+
+            <div class="element">
+
+                <figure>
+    
+                    <img src="img/sliderPlanet/saturn.png" class="imgPlanet" alt="Image déssiné représentant la planète Saturne">
+                    <figcaption class="nbPosition">06</figcaption>
+
+                </figure>
+
+                <article class="infosPlanet">
+
+                    <h2>Saturne</h2>
+
+                    <p class="descriptionPlanet">
+                        Saturne est la sixième planète du Système solaire par ordre d'éloignement au Soleil, La caractéristique la plus célèbre de la planète est son système d'anneaux proéminent.
+                        Composés principalement de particules de glace et de poussières, ils sont observés pour la première fois en 1610 par Galilée et se seraient formés il y a moins de 100 millions d'années.
+                    </p>
+
+                    <aside class="moreDetail">
+
+                        <p> Période orbitale: 10 754 jours terrestre </p>
+
+                        <p>Satelites connus: 82</p>
+
+                    </aside>
+
+                </article>
+    
+            </div>
+
+
+
+                                                        <!-- URANUS -->
+            
+            <div class="element">
+
+                <figure>
+    
+                    <img src="img/sliderPlanet/uranus.png" class="imgPlanet" alt="Image déssiné représentant la planète Uranus">
+                    <figcaption class="nbPosition">07</figcaption>
+
+                </figure>
+
+                <section class="infosPlanet">
+
+                    <h2>Uranus</h2>
+
+                    <p class="descriptionPlanet">
+                        Uranus est la septième planète du Système solaire par ordre d'éloignement au Soleil. Elle est la première planète découverte à l’époque moderne avec un télescope et non connue depuis l'Antiquité.
+                        Bien qu'elle soit visible à l’œil nu, son caractère planétaire n'est alors pas identifié en raison de son très faible éclat et de son déplacement apparent dans le ciel très lent.
+                    </p>
+                    
+                    <aside class="moreDetail">
+
+                        <p> Période orbitale: 30 698 jours terrestre </p>
+
+                        <p>Satelites connus: 27</p>
+
+                    </aside>
+
+                </section>
+    
+            </div>  
+            
+            
+
+                                                        <!-- NEPTUNE -->
+            
+            <div class="element">
+
+                <figure>
+    
+                    <img src="img/sliderPlanet/neptune.png" class="imgPlanet" alt="Image déssiné représentant la planète Neptune">
+                    <figcaption class="nbPosition">08</figcaption>
+
+                </figure>
+
+                <section class="infosPlanet">
+
+                    <h2>Neptune</h2>
+
+                    <p class="descriptionPlanet">
+                        Neptune est la huitième planète par ordre d'éloignement au Soleil et la plus éloignée connue du Système solaire.
+                        N'étant pas visible à l'œil nu, Neptune est le premier objet céleste et la seule des huit planètes du Système solaire à avoir été découverte par déduction plutôt que par observation empirique.
+                        Il s'agit de la troisième planète la plus massive du Système solaire et de la quatrième plus grande par la taille.
+                    </p>
+
+                    <aside class="moreDetail">
+
+                        <p> Période orbitale: 60 216,8 jours terrestre </p>
+
+                        <p>Satelites connus: 14</p>
+
+                    </aside>
+
+                </section>
+    
+            </div>  
+
+
+        </div>
+
+        <!-- The dots/circles -->
+        <div class="dots dotsClick">
+            <span class="dot dotClick" onclick="currentSlide(1)">Mercure</span>
+            <span class="dot dotClick" onclick="currentSlide(2)">Venus</span>
+            <span class="dot dotClick" onclick="currentSlide(3)">Terre</span>
+            <span class="dot dotClick" onclick="currentSlide(4)">Mars</span>
+            <span class="dot dotClick" onclick="currentSlide(5)">Jupiter</span>
+            <span class="dot dotClick" onclick="currentSlide(6)">Saturne</span>
+            <span class="dot dotClick" onclick="currentSlide(7)">Uranus</span>
+            <span class="dot dotClick" onclick="currentSlide(8)">Neptune</span>
+        </div>
+    
+        <!-- Flèches de navigation -->
+        {# <button id="nav-left" class="las la-chevron-left"> + </button> #}
+        {# <i id="nav-left" class="las la-chevron-left"></i>
+        <i id="nav-right" class="las la-chevron-right"></i> #}
+
+        <i id="nav-left" class="fa-solid fa-angles-left"></i>
+        <i id="nav-right" class="fa-solid fa-angles-right"></i>
+
+
+    
+    
+    </div>
+
+
+                                                            {# Partie concernant l'image du jour de l'API Apod #}
+
+    <section class="imageJour">
+
+        <hr style="color: white; width: 60vw;">
+
+        <h1 class="titleDay">L'image du jour de la Nasa</h1>       
+        <p id="date"></p>
+        
+        
+        <div class="wrapperMediaDescrition">
+            <div class="wrapperMedia">
+                
+                <div id="media-section">
+                </div>
+                <small style="display: block;" id="copyright" ></small>
+                
+            </div>
+
+            <div class="description-div">
+                <h2 id="title"></h2>
+                <p id="description"></p>
+            </div>
+        </div>
+
+        <form class="selectDate">
+            <label for="datepiceker">Selectionner une date:
+                <input id="datepicker" type="date" min="" max="" > 
+            </label>
+        </form>
+    </section>
+
 
 </main>   
 
 
-
-
-
-{# <div class="example-wrapper">
-    <h1>Je suis dans le home ✅</h1>
-
-</div> #}
 {% endblock %}
 
 {% block javascripts %}
 
+<script src="https://kit.fontawesome.com/7d0ef989cc.js" crossorigin="anonymous"></script>
+{{ encore_entry_script_tags('app') }}
     <script src="{{ asset('js/apiApod.js')}}"></script>
+    <script src="{{ asset('js/sliderPlanet.js')}}"></script>
+    <script src="{{ asset('js/menuBurger.js')}}"></script>
+
+
 
 {% endblock %}
+
+

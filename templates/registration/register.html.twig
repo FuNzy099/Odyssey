@@ -12,13 +12,6 @@
 
     </head>
 
-    {% block stylesheets %}
-
-        <link href="{{ asset('css/layoutStyles/layout.css') }}" type="text/css" rel="stylesheet" />
-
-        <link href="{{ asset('css/formStyles/registration.css') }}" type="text/css" rel="stylesheet" />
-
-    {% endblock %}
 
     {% block body %}
         {% for flash_error in app.flashes('verify_email_error') %}

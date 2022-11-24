@@ -3,11 +3,7 @@
 {% block title %}Mot de passe oublié{% endblock %}
 
 
-{% block stylesheets %}
 
-    <link href="{{ asset('css/layoutStyles/layout.css') }}" type="text/css" rel="stylesheet" />
-
-{% endblock %}
 
 {% block body %}
     {% for flash_error in app.flashes('reset_password_error') %}
