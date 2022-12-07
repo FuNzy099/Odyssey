@@ -4,5 +4,52 @@
 
 
 {% block body %}
-{{ form(formAddEvent) }}
+
+    <main class="addEventMain">
+
+        {{ form_start(formAddEvent) }}
+
+        <div class="title">
+            {{ form_row(formAddEvent.title) }}
+        </div>
+
+        <div class="inputDate">
+
+            {{ form_row(formAddEvent.startDate) }}
+
+            {{ form_row(formAddEvent.endDate) }}
+        
+        </div>
+
+        <div class="fullAddress">
+
+            {{ form_row(formAddEvent.address) }}
+
+            {{ form_row(formAddEvent.town) }}
+
+            
+        </div>
+        
+        <div class="nbPlaces">
+            
+            {{ form_row(formAddEvent.zipCode) }}
+
+            {{ form_row(formAddEvent.maxPlaces) }}
+            
+        </div>
+
+        <div class="description">
+
+            {{ form_row(formAddEvent.description) }}
+
+        </div>
+
+        <div>
+
+            {{ form_row(formAddEvent.submit) }}
+
+        </div>
+
+        {{ form_end(formAddEvent) }}
+    </main>
 {% endblock %}

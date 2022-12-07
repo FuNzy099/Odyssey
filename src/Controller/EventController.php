@@ -18,24 +18,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class EventController extends AbstractController
 {
 
-    // --------------------- FUNCTION QUI PERMET D'AFFICHER LA LISTE DES EVENEMENTS
+    // --------------------- FUNCTION QUI PERMET D'AFFICHER LA LISTE DES EVENEMENTS ET DE FILTRER
 
     /**
      * @Route("/events", name="list_events")
      * 
      * ManagerRegistry => Nous permet d'utiliser $doctrine qui est une couche d'abstration qui permet de communiquer avec la base de donnée
      */
-    public function index(ManagerRegistry $doctrine, EventRepository $repository, Request $request): Response
+    public function index(EventRepository $repository, Request $request): Response
     {
 
-        $user = $doctrine -> getRepository(User::class) -> findAll();
-
-        // On instancie un nouveau object SearchData
+        // On instancie un nouveau object SearchDataformulaire
         $data = new SearchData;
 
         /*
            Permet de définir au niveau de data la page dans la liste des évènements (pagination du bundle snk_paginator),
-           Pour ce faire on récupère dans la request le numéro de la page dans l'url, si la valeur de page n'est pas definit on lui attribut 1 par defaut
+           Pour ce faire on récupère dans la request le numéro de la page dans l'url, 
+           si la valeur de page n'est pas definit on lui attribut 1 par defaut
         */ 
         $data -> page = $request -> get('page', 1);
 
@@ -45,7 +44,8 @@ class EventController extends AbstractController
             1er argument : On créer le formulaire à l'aide de la classe SearchType dans le namespace Form
             2eme argument : Permet d'hydrater notre objet $data avec les données saisi dans le formulaire
 
-            Definition hydrater : C'est un terme précis pour dire que le formulaire vas remplir les attributs de l'objet avec les valeurs entrées pas l'uilisateur
+            Definition hydrater : C'est un terme précis pour dire que le formulaire 
+                                  vas remplir les attributs de l'objet avec les valeurs entrées pas l'uilisateur
         */
         $form = $this -> createForm(SearchType::class, $data);
 
@@ -54,15 +54,14 @@ class EventController extends AbstractController
   
         /*
             La méthode findSearchActualEvents() ce trouve dans le repository de Event,
-            il permettra de récupérer les évènements en lien avec une recherche, pour ce faire on lui injecte en paramètre $data qui represente les données d'une recherche
+            il permettra de récupérer les évènements global ou en lien avec une recherche, 
+            pour ce faire on lui injecte en paramètre $data qui represente les données d'une recherche
         */
         $ActualEvents = $repository -> findSearchActualEvents($data);
 
         return $this->render('event/index.html.twig', [
-            'user' => $user,
             'form' => $form -> createView(),    // Permet de créer le formulaire dans la vue
-            // 'events' => $events,             // Permet de récuperer l'enssemble des évènements (future et passé)
-            'actualEvents' => $ActualEvents,    // Permet de récuperer l'enssemble des évènementd (future évènement inferieure à la date et heure du début)
+            'actualEvents' => $ActualEvents,    // Permet de récuperer l'enssemble des évènements (future évènement)
         ]);
     }
 
@@ -80,20 +79,28 @@ class EventController extends AbstractController
         // Instanciation de Event (processus de création d'un objet depuis la class Event)
         $event = new Event();
 
-        // Permet de récuperer l'utilisateur qui à crée l'évènement/
+        // Permet d'initaliser le créateur de l'évènement comme étant l'utlisateur étant en session
         $event->setUserCreator($this->getUser());
 
         // la function createForm() => permet de construire un formulaire qui ce repose dur le builder de AddEventForm qui lui même ce repose sur l'entity Event
         $form = $this->createForm(AddEventType::class, $event);
 
-        // la function handleRequest permet de récupérer et analyser les données saises dans le formulaire en méthode POST, c'est en gros le sasse entre la saisi du formulaire et l'envoi dans la base de donné
+        /*
+            La function handleRequest permet de récupérer et analyser les données saises dans le formulaire en méthode POST,
+            c'est en gros le sasse entre la saisi du formulaire et l'envoi dans la base de donnée.
+        */ 
         $form->handleRequest($request);
 
-        // $form -> isSubmitted() => C'est l'équivalent de isset($_POST["submit"]), en gros, le formaulaire est-il validé ?!
-        // $form -> isValid() => C'est l'équivalent du filter_input, en gros, il permet de verifier l'integrité des données saisient dans le formulaire
+        /*
+            $form -> isSubmitted() => C'est l'équivalent de isset($_POST["submit"]), en gros, le formaulaire est-il validé ?!
+            $form -> isValid() => C'est l'équivalent du filter_input, il permet de verifier l'integrité des données saisient dans le formulaire
+        */
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // On passe par un manager pour récupérer depuis l'objet $doctrine notre getManager(), c'est grace à cette méthode qu'on à accès à persist() et flush()
+            /*
+                On passe par un manager pour récupérer depuis l'objet $doctrine notre getManager(),
+                c'est grace à cette méthode qu'on à accès à persist() et flush()
+            */ 
             $entityManager = $doctrine->getManager();
 
             // On persist notre objet $event, c'est l'équivalent de notre prepare() en PDO
@@ -102,7 +109,7 @@ class EventController extends AbstractController
             // On flush, c'est l'équivalent de notre execute() en PDO, c'est dans cette étape flush() que notre insert into ce fait
             $entityManager->flush();
 
-            $this -> addFlash('message', 'Votre évènements a bien été crée !');
+            $this -> addFlash('message', 'Votre évènement a bien été crée !');
 
             // Redirection vers la list des évènements 
             return $this->redirectToRoute('list_events');

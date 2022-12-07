@@ -17,6 +17,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class PostController extends AbstractController
 {
     /**
+     * Function permettant d'afficher et de poster des commentaires au seins de l'évènement
+     * 
      * @Route("/showPost/{id}", name="app_post")
      */
     public function index(ManagerRegistry $doctrine, Post $post = null, Request $request, Event $event): Response
@@ -34,7 +36,7 @@ class PostController extends AbstractController
             // On instancie un nouvelle objet DateTime
             $now = new DateTime();
 
-        
+            // On récupere addPost et on lui injecte l'objet post 
             $event -> addPost($post);
 
             // On initialise à l'aide du setter l'utilisateur ayant ecrit le commentaire

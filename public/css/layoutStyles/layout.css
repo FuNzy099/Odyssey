@@ -24,23 +24,32 @@ img {
     background: #F5F5F5;
     padding: 2px 6px;
 }
+/* 
+background-image: url(../../img/wallhaven.jpg);
+background-size: 100% auto;
+background-repeat: no-repeat;
+background-attachment: fixed;
+margin-top: 70px; */
 
 
 
 .containGeneralInBase{
     display: flex;
     flex-direction: column;
-    min-height: 71.2vh;
+    min-height: 90vh;
 }
 
 
 
 
                                             /*Navigation*/
-nav {
+#navHeader {
     display: flex;
+    position: fixed;
+    z-index: 3;
     background-color: #252737;
     height: 70px;
+    width: 100%;
     justify-content: space-between;
     font-family: 'play', sans-serif;
 }

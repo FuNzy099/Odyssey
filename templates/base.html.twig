@@ -20,9 +20,11 @@
 
             
             <link href="{{ asset('css/formStyles/editProfil.css') }}" type="text/css" rel="stylesheet">
+            
             <link href="{{ asset('css/global.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('css/mediamoyen.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('css/mediapetit.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('css/mediatrespetit.css') }}" type="text/css" rel="stylesheet" />
         {% endblock %}
 
 
@@ -34,7 +36,7 @@
 
             
             
-            <nav>
+            <nav id="navHeader">
        
              
 
@@ -72,7 +74,7 @@
                         <div class="dropdown">
                             <button class="dropbtn">Évènements</button>
                             <div class="dropdown-content">
-                                <a href='{{ path('list_events')}}' class="linkHeaderNav" id="deco">Liste des évènements</a>
+                                <a href='{{ path('list_events')}}' class="linkHeaderNav">Liste des évènements</a>
                                 <a href="{{ path('show_registration_list', {'id': app.user.id} )}}" > Vos inscriptions </a>
                                 <a href="{{ path('show_organization_list', {'id': app.user.id} )}}"> Vos évènements </a>
                                 <a href="{{ path('add_event')}}">Créer un évènement</a>

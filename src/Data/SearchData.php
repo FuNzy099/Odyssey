@@ -1,14 +1,11 @@
 <?php
 
 namespace App\Data;
-
 use DateTime;
-
 class SearchData
 {
 
     /**
-     * 
      * @var int
     */
     public $page = 1;

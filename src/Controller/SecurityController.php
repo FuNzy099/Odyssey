@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\EditProfilType;
 use App\Form\EditPasswordType;
+use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -422,22 +423,62 @@ class SecurityController extends AbstractController
     /**
      * @Route("/user/profil/deleteAccount", name="delete_account")
      */
-    public function deleteAccount(ManagerRegistry $doctrine, Request $request)
+    public function deleteAccount(ManagerRegistry $doctrine, Request $request, PostRepository $pr)
     {
 
         // Si il existe un user en session
         if($this -> getUser()){
 
-
+            // Je récupere le user en session
             $user = $this -> getUser();
             
+            // Je récupere tout les post d'une user
+            $posts = $pr->findBy(['user' => $user -> getId()]);
+
             // On déclarare un entityManager dans l'optique de récupérer getManager, c'est grace à lui que nous accédons à remove() et flush()
             $entityManager = $doctrine -> getManager();
+            
+            // Pout chaque post
+            foreach($posts as $post){
+                
+                // Je setUser à null dans le but d'appliquer une anonymisation
+                $post->setUser(null);
+                $entityManager -> persist($post);
+                $entityManager -> flush();
+                
+            }
+
+            /*
+                On déclare nameActualAvatar dans le but de récuperer dans notre disque local l'avatar actuel avant modification par l'utilisateur,
+                pour ce faire j'utilise de nouveau le getParameter('avatar_directory') pour localiser le fichier dans public/img/avatars 
+            */ 
+            $nameActualAvatar = $this -> getParameter('avatar_directory') . '/' . $user -> getAvatar();
+
+
+            // Condition pour verifier si $nameActualAvatar est differents que l'avatar par defaut de l'application ! 
+            if($nameActualAvatar != $this -> getParameter('avatar_directory') . '/default-avatar.png'){
+        
+                /*
+                    Condition pour verifier si $nameActualAvatar existe, si c'est le cas nous supprimon l'ancien avatar 
+
+                    file_exists() => Permet de verifier si un fichier ou dossier existe
+                    unlink() => permet de supprimer le fichier ou dossier
+
+                    DOCUMENTATION:
+                        file_exists() : https://www.php.net/manual/fr/function.file-exists.php
+                        unlink() : https://www.php.net/manual/fr/function.unlink.php
+                */ 
+                if(file_exists($nameActualAvatar) ){
+                    unlink($nameActualAvatar);
+                }
+
+            }
 
             $entityManager->remove($user);
 
             $entityManager->flush();
     
+            // Permet de supprimer l'ancienne session après la suppréssion d'un utilisateur
             $request->getSession()->invalidate();
     
             $this->container->get('security.token_storage')->setToken(null);
@@ -445,10 +486,8 @@ class SecurityController extends AbstractController
             $this -> addFlash('message', "Votre compte a bien été supprimé !");
             
             return $this->redirectToRoute('app_register');
-
    
         }
-
 
     }
 

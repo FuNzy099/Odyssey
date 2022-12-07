@@ -113,12 +113,23 @@ class UserController extends AbstractController
 
 
     /**
+     * Function pour afficher la liste des évènements future où l'utilisateur c'est inscrit
+     * 
      * @Route("/events/registration/user/{id}", name="show_registration_list")
      */
-    public function registrationList(ManagerRegistry $doctrine, User $users, EventRepository $repository): Response
+    public function registrationList(ManagerRegistry $doctrine, User $users): Response
     {
+        
+        /*
+            On récupére le UserRepository, et on utilise la function findby en lui injectant l'id de l'utilisateur en session
+            dans le but de récuperer l'enssemble des évènements où il c'est inscrit.
+        */
         $users = $doctrine -> getRepository(User::class) -> findby(['id' => $this -> getUser()], []);
 
+        /*
+            Cette nouvelle instanciation de l'objet DateTime sera utile pour faire une condition permettant d'afficher uniquement
+            les évènements ou la date n'est pas encore passé.
+        */ 
         $now = new DateTime();
 
         return $this -> render('user/registrationList.html.twig',[
@@ -138,15 +149,20 @@ class UserController extends AbstractController
      */
     public function organizationList(ManagerRegistry $doctrine, User $users): Response
     {
+        
         $users = $doctrine -> getRepository(User::class) -> findby(['id' => $this -> getUser()], []);
 
         $events = $doctrine -> getRepository(Event::class) -> findAll();
+
+        $now = new DateTime();
 
         return $this -> render('user/organizationList.html.twig',[
 
             'users' => $users,
 
             'events' => $events,
+
+            'now' => $now
 
         ]);
 

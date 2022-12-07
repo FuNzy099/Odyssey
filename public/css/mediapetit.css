@@ -1,16 +1,26 @@
 /* smartphone */
-@media screen and (min-width: 451px) and (max-width: 765px){
+@media screen and (min-width: 481px) and (max-width: 768px){
+    
 
     .mainHome{
         background-size: 350% auto;
     }
 
-    .moreDetail p {
-        margin-right: 16%;
-        color: red;
+    .MainImg h1 {
+        font-size: 2em;
+        text-shadow: 3px 3px black;
     }
 
-        /* ! PARTIE CONCERNANT LE MENU BURGER */
+    .MainImg p{
+        font-size: 1.3em;
+    }
+
+    /* .moreDetail p {
+        margin-right: 16%;
+        color: red;
+    } */
+
+                                                            /* ! PARTIE CONCERNANT LE MENU BURGER */
     
     /* Parent contenant l'icon burger */
     header .iconBurger{
@@ -198,6 +208,129 @@
     margin: 0 0 0 75px;
     
 }
+
+
+
+                                                            /* ! PARTIE CONCERNANT LE SLIDER */
+
+
+/* Correspond à un element du slider ( la vignette complete)*/
+.element{
+    flex-direction: column;
+}
+
+/* Fleche de droite et gauche du slider */
+#nav-right, #nav-left{
+    top: 130px;
+}
+
+/* Correspon à l'image (planette) et la figure */
+.element figure{
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+}
+
+/* Image de la planette */
+.element .imgPlanet{
+    width: 200px;
+    height: 200px;
+}
+
+/* Correspond au figcaption */
+.nbPosition{
+    display: none;
+}
+
+/* Parent contenant les infos de la planete */
+.infosPlanet{
+    /* height: 350px; */
+    /* height: 40vh;
+    margin-top: 0;
+    padding: 20px 20px 20px 20px; */
+
+    height: 45vh;
+    margin-top: 0;
+    padding: 0px 3px 20px 3px;
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+/* Nom de la planete */
+.infosPlanet h2{
+    margin: -70px auto 10px;
+}
+
+/* Description */
+.descriptionPlanet{
+    margin: 5% auto;
+}
+
+/* Concerne les infos de la periode orbitale et des satelites dans le slider */
+.moreDetail{
+    width: 80%;
+    margin: auto;
+    margin: 5px auto 0px;
+}
+
+/* Parent contenant les dots */
+.dots{
+    width: 90%;
+    margin: 20px auto 5% auto;
+    display: none;
+}
+
+
+
+                                                            /* ! PARTIE CONCERNANT L'API' */
+
+
+
+
+
+
+.titleDay{
+    margin-top: 5%;
+}
+
+.wrapperMediaDescrition{
+    flex-direction: column;
+    align-items: center;
+}
+
+.description-div{
+    width: 95%;
+    margin-top: 3%;
+    text-align: center;
+}
+
+.containtLinks{
+    margin-right: 0;
+    width: 70%;
+    justify-content: space-evenly;
+}
+
+
+
+.logoFooter{
+    width: 180px
+}
+                                                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     

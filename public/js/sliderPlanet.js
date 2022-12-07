@@ -156,6 +156,23 @@ function showSlides(n) {
     dots[slideIndex-1].className += " active";
 
     clearTimeout(timer);
-    // timer = setTimeout(() => plusSlides(1), 10000)
-    
+    // timer = setTimeout(() => plusSlides(1), 1000)
+
+    // if(window.matchMedia("(min-width: 768px)").matches){
+        
+    //     truc = document.querySelector('.moreDetail')
+
+    //     truc.style.color = 'red'
+       
+    // } else if(window.matchMedia("(min-width: 767px)").matches){
+    //     truc = document.querySelector('.moreDetail')
+
+    //     truc.style.color = 'yellow'
+    // }
+
 }
+
+
+   
+
+

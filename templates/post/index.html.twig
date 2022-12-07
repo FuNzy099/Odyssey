@@ -55,10 +55,10 @@
             {{ form_end( formComment ) }}
         </div>
 
-        {% for post in event.posts %}
         
-            <div class="card cardPost">
-                <!-- Comment Row -->
+        <div class="card cardPost">
+            <!-- Comment Row -->
+            {% for post in event.posts %}
                 <div class="d-flex flex-row comment-row m-t-0">
                     <div class="avatar-container">
                         {% if post.user != null %}

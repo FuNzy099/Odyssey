@@ -58,7 +58,7 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
-     * Permets de récupèrer les evenements en lien avec une recherche
+     * Permet d'afficher la liste compète des évènements à venir mais aussi les évènement à venir en lien avec une recherche via le filtre
      * 
      * @return PaginationInterface
      */
@@ -66,14 +66,12 @@ class EventRepository extends ServiceEntityRepository
     {
         $now = new DateTime();
 
-
         $query = $this 
             ->createQueryBuilder('event')
             ->andWhere('event.startDate >= :val')
             ->setParameter('val', $now -> format('Y-m-d H:i'))
             ->orderBy('event.startDate', 'ASC');
           
-            
             // Condition permettant à l'utilisateur de filtrer les évènements par mot clef 
             if(!empty($search -> q)){
 

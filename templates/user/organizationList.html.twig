@@ -2,81 +2,111 @@
 
 {% block title %}Liste des évènement enregistrés{% endblock %}
 
-{% block stylesheets %}
-
-<link href="{{ asset('css/layoutStyles/layout.css') }}" type="text/css" rel="stylesheet" />
-<link href="{{ asset('css/eventStyles/event.css') }}" type="text/css" rel="stylesheet" />
-
-{% endblock %}
 
 {% block body %}
 
-<main>
+<main class="mainEvent">
 
-    <h1>holla</h1>
+    <div class="wrapperEvent">
 
-    {% for user in users %}
+        <h1>holla</h1>
 
-        {# Si la liste des évènements enregistré est vide on affiche un message #}
-        {% if user.createEvents is empty %}
+        {% for user in users %}
 
-            <p> Vous n'organisez aucun évènement </p>
+            {# Si la liste des évènements enregistré est vide on affiche un message #}
+            {% if user.createEvents is empty %}
 
-        {% else %}
+                <p> Vous n'organisez aucun évènement </p>
+                
+                {% else %}
+                
+                {% for createEvent in user.createEvents %}
 
-            {% for createEvent in user.createEvents %}
+                    {% if createEvent.endDate >= now %}
 
-                <div class="example-wrapper">
+        
+                        <div class="mesCartes">
 
-                    <div class="mesCartes">
+                            <div class="card">
 
-                        <div class="card">
-                            <h5>{{ createEvent.title}}</h5>
-                            <p>{{ createEvent.description}}</p>
-                            <p>{{ createEvent.userCreator.pseudonyme}}</p>
-                            <p>
-                                Lieu du rendez-vous <br>
-                                {#
-                                    Si on veux autoriser que certains tags HTML avec le filtre raw on peut utiliser striptags dans le but d'autoriser UNIQUEMENT la balise <br> !
-                                        Donc même si on injectait une balise potentiellement dangereuse (un script en l'occurence) elle ne serais pas interptétée !
-                                        DOCUMENTATION:
-                                        triptags => https://twig.symfony.com/doc/3.x/filters/striptags.html
-                                        raw => https://twig.symfony.com/doc/3.x/filters/raw.html
-                                #}
-                                {{createEvent.fullAddressEvent| striptags('<br>')|raw}}
-                            </p>
+                                <div class="ContaintInfosGlobalEvent">
 
-                            <p>
-                                Heure du rendez-vous <br>
-                                Débute le {{ createEvent.startDate|date('d/m/Y à H:i') }} <br>
-                                Termine le {{ createEvent.endDate|date('d/m/Y à H:i') }}
-                            </p>
+                                    <div class="infosUser">
+                                        <figure class="avatarUserCreator">
+                                            <img id="edit_profil_avatar_preview" src="{{ asset('img/avatars/' ~ createEvent.userCreator.avatar) }}" class="avatar" alt="Image de profil de l'utilisateur !">
+                                        </figure>
+                                        <p>{{createEvent.userCreator.pseudonyme}}</p>
+                                    </div>
 
-                            <p>
-                                Nombre de place restant : {{ createEvent.nbSeatsAvailable }} / {{ createEvent.maxPlaces }}
-                            </p>
+                                    <div class="infosEvent">
+                                        <h3>{{createEvent.title}}</h3>
+                                        <p class="description">{{createEvent.description}}</p>
+                                    </div>
+                                        {# 
+                                    <h5>{{ createEvent.title}}</h5>
+                                    <p>{{ createEvent.description}}</p> #}
 
-                            {% if app.user  %}      
+                                </div>
 
-                                {# Si le user en session est l'organisateur de l'évènement il peut le modifier ou supprimer  #}
+                                {# div contenant les information suplementaire à l'évènement (lieu, adresse, nombre de place, nombre d'inscrit) #}
+                                <div class="containtInfosAppointment">
+
+                                    {# Infos concernant le lieu et la date du rendez-vous #}
+                                    <div class="appointment">
+                                        <h4>Lieu du rendez-vous</h4>
+                                        
+                                    
+                                        <p>Date : du {{ createEvent.startDate|date('d/m/Y à H:i') }} <br> au {{ createEvent.endDate|date('d/m/Y à H:i') }}</p>
+                                        <p>Heure : de {{createEvent.startDate|date('H:i')}} à {{createEvent.endDate|date('H:i')}} </p>
+                                        {# Ce if permet d'afficher l'adresse precise uniquement si l'utilisateur est inscrit à l'évènement ou si c'est l'organisateur de cet évènement #}
+                                        {% if app.user in createEvent.users or app.user == createEvent.userCreator %}
+                                            <p>Adresse : {{createEvent.address}}</p>
+                                        {% endif %}
+                                        <p>Ville : {{createEvent.town}}</p>
+                                        <p>Code postal : {{createEvent.zipCode}}</p>
+                                    </div>
+
+                                    {# Infos concernant le nombre de place dispo et le nombre d'inscrit #}
+                                    <div class="nbPlacesEvent">
+                                        <h4>Infos</h4>
+
+                                        <p>Nombre de place disponible : {{ createEvent.nbSeatsAvailable }} / {{ createEvent.maxPlaces }}</p>
+                                        <p>Nombre d'inscrit : {{createEvent.nbRegistered}}</p>
+                                    </div>
+
+                                </div>
+
                             
-                                <a href="{{ path('edit_event', {'id': createEvent.id} )}}">Modifier</a>
-                                <a href="{{ path('delete_event', {'id': createEvent.id} )}}">Supprimer</a>
+                                <div class="buttonsEvent">
+                                    {% if app.user  %}      
 
-                            {% endif %}
+                                        {# Si le user en session est l'organisateur de l'évènement il peut le modifier ou supprimer  #}
+                                    
+                                        <a href="{{ path('edit_event', {'id': createEvent.id} )}}" class="btn btn-primary">Modifier</a>
+                                        <a href="{{ path('delete_event', {'id': createEvent.id} )}}" class="btn btn-danger">Supprimer</a>
+
+                                    {% endif %}
+                                </div>
+
+                            </div>
 
                         </div>
+                    
+                        {% endif %}
 
-                    </div>
+                        
+                        {# {% if createEvent.endDate < now %}
+                            
+                            <p>Vous n'avez pas d'évènements d'organisé</p>
+                    
+                        {% endif %} #}
 
-                </div>
+                {% endfor %}
+                    
+            {% endif %}
 
-            {% endfor %}
-                
-        {% endif %}
-
-    {% endfor %}
-
+        {% endfor %}
+    </div>
 </main>
 
 {% endblock %}

@@ -46,20 +46,22 @@
 
                         {% if actualEvent.userCreator != null %}
                             
-                        <div class="infosUser">
-                            <figure class="avatarUserCreator">
-                                <img id="edit_profil_avatar_preview" src="{{ asset('img/avatars/' ~ actualEvent.userCreator.avatar) }}" class="avatar" alt="Image de profil de l'utilisateur !">
-                            </figure>
-                            <p>{{actualEvent.userCreator.pseudonyme}}</p>
-                        </div>
+                            <div class="infosUser">
+                                <figure class="avatarUserCreator">
+                                    <img id="edit_profil_avatar_preview" src="{{ asset('img/avatars/' ~ actualEvent.userCreator.avatar) }}" class="avatar" alt="Image de profil de l'utilisateur !">
+                                </figure>
+                                <p>{{actualEvent.userCreator.pseudonyme}}</p>
+                            </div>
 
                         {% else %}
-                        <div class="infosUser">
-                            <figure class="avatarUserCreator">
-                                <img id="edit_profil_avatar_preview" src="{{ asset('img/avatars/default-avatar.png') }}" class="avatar" alt="Image de profil de l'utilisateur !">
-                            </figure>
-                            <p>Profil supprimé</p>
-                        </div>
+
+                            <div class="infosUser">
+                                <figure class="avatarUserCreator">
+                                    <img id="edit_profil_avatar_preview" src="{{ asset('img/avatars/default-avatar.png') }}" class="avatar" alt="Image de profil de l'utilisateur !">
+                                </figure>
+                                <p>Profil supprimé</p>
+                            </div>
+
                         {% endif %}
                         {# Infos du user, pseudonyme et avatar #}
 
@@ -75,27 +77,29 @@
                     <div class="containtInfosAppointment">
 
                         {# Infos concernant le lieu et la date du rendez-vous #}
-                        <div class="appointment">
+                        <section class="appointment">
+
                             <h4>Lieu du rendez-vous</h4>
                             
-                        
                             <p>Date : du {{ actualEvent.startDate|date('d/m/Y à H:i') }} <br> au {{ actualEvent.endDate|date('d/m/Y à H:i') }}</p>
                             <p>Heure : de {{actualEvent.startDate|date('H:i')}} à {{actualEvent.endDate|date('H:i')}} </p>
+
                             {# Ce if permet d'afficher l'adresse precise uniquement si l'utilisateur est inscrit à l'évènement ou si c'est l'organisateur de cet évènement #}
                             {% if app.user in actualEvent.users or app.user == actualEvent.userCreator %}
                                 <p>Adresse : {{actualEvent.address}}</p>
                             {% endif %}
+                            
                             <p>Ville : {{actualEvent.town}}</p>
                             <p>Code postal : {{actualEvent.zipCode}}</p>
-                        </div>
+                        </section>
 
                         {# Infos concernant le nombre de place dispo et le nombre d'inscrit #}
-                        <div class="nbPlacesEvent">
+                        <section class="nbPlacesEvent">
                             <h4>Infos</h4>
 
                             <p>Nombre de place disponible : {{ actualEvent.nbSeatsAvailable }} / {{ actualEvent.maxPlaces }}</p>
                             <p>Nombre d'inscrit : {{actualEvent.nbRegistered}}</p>
-                        </div>
+                        </section>
 
                     </div>
         
