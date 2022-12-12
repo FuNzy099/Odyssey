@@ -442,9 +442,13 @@ th {
 .mainAdminUsers table {
     width: 95%;
     margin-top: 2%;
-    color: white;
+    color: black;
     margin: 15px auto ;
 
+}
+
+.mainAdminEvents tbody tr:nth-child(even), .mainAdminEvents>tbody>tr:nth-of-type(odd)>* {
+    color: rgb(0, 0, 0) !important;
 }
 
 
@@ -695,13 +699,14 @@ th {
     margin-left: 10px;
 }
 
-textarea{
+.comment textarea{
     width: 70%;
     padding: 5px;
 }
 
 .avatar-container{
     padding: 0.5rem !important;
+    text-align: center;
 }
 
 .avatar-container img{
@@ -712,9 +717,16 @@ textarea{
     margin-top: 10%;
 }
 
+.comment form{
+    width: 70%;
+    text-align: center;
+    margin: auto;
+}
 .cardPost{
     width: 70%;
     margin: 20px auto;
+    border-radius: 20px;
+    border: 1px solid black;
 }
 
 .containtPost{
@@ -810,6 +822,53 @@ body .addEventMain {
 }
 
 
+
+                                                            /* ! PAGE HISTORY USER */
+
+
+                                                            
+.historyMain{
+
+  
+    flex-direction: column;
+    margin-top: 70px;
+
+    background-image: url(../../img/night.png);
+    background-color: black;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+
+    min-height: 90vh;
+    padding-bottom: 5% ;
+}
+
+.historyMain h1{
+    text-align: center;
+}
+
+.tableHistory{
+    width: 80%; 
+    margin: 3% auto 0 auto;
+    text-align: center;
+    background-color: black;
+    padding: 50%;
+
+}
+
+.tableHistory tbody tr:nth-child(even), .tableHistory >tbody>tr:nth-of-type(odd)>* {
+    color: white !important;
+}
+
+.tableHistory tbody, .tableHistory thead{
+    border: solid 1px white;
+    color: white;
+}
+
+.descriptionHistory{
+    width: 30%;
+}
 
 
 

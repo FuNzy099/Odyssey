@@ -161,7 +161,7 @@ class EventRepository extends ServiceEntityRepository
         return $this ->createQueryBuilder('event')
                      ->andWhere('event.startDate < :val')
                      ->setParameter('val', $now->format('Y-m-d'))
-                     ->orderBy('event.creationDate', 'ASC')
+                     ->orderBy('event.endDate', 'DESC')
                      ->getQuery()
                      ->getResult();
     }
