@@ -34,15 +34,15 @@ class AdminEditEventType extends AbstractType
                 ]
             ])
             
-            ->add('startDate', DateTimeType::class, [
-                'label' => 'Date de début',
-                'widget' => 'single_text'
-            ]) 
+            // ->add('startDate', DateTimeType::class, [
+            //     'label' => 'Date de début',
+            //     'widget' => 'single_text'
+            // ]) 
 
-            ->add('endDate', DateTimeType::class, [
-                'label' => 'Date de début',
-                'widget' => 'single_text'
-            ]) 
+            // ->add('endDate', DateTimeType::class, [
+            //     'label' => 'Date de début',
+            //     'widget' => 'single_text'
+            // ]) 
 
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',

@@ -6,14 +6,24 @@
 
 {% block body %}
 
-  <section class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Envoyer un message à {{user.pseudonyme}} </h1>
-            {{ form(formMessage)}}
-        </div>
+  <main class="mainSentMessage">
+
+    <div class="containtSentMessage">
+
+      <h1>Envoyer un message à {{user.pseudonyme}} </h1>
+      {{ form_start(formMessage)}}
+
+          {{ form_row(formMessage.message)}}
+
+          <div class="boutons">
+            {{ form_row(formMessage.envoyer)}}
+          </div>
+
+      {{ form_end(formMessage)}}
+ 
     </div>
-  </section>
+
+  </main>
 
 {% endblock %}
 

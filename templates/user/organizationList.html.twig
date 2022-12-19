@@ -9,7 +9,14 @@
 
     <div class="wrapperEvent">
 
-        <h1>holla</h1>
+        <section class="infosOrganisation">
+
+            <h1>Liste de vos <strong>organisation aux évènements</strong></h1>
+
+            <p>Vous pouvez ici consulter l'ensemble de vos <strong>organisation</strong> concernant <strong>les évènements à venir</strong></p>
+            
+        </section>
+
 
         {% for user in users %}
 
@@ -81,7 +88,7 @@
                                     {% if app.user  %}      
 
                                         {# Si le user en session est l'organisateur de l'évènement il peut le modifier ou supprimer  #}
-                                    
+                                        <a href="{{ path('app_post', {'id': createEvent.id} )}}" class="btn btn-primary">Conversation</a>
                                         <a href="{{ path('edit_event', {'id': createEvent.id} )}}" class="btn btn-primary">Modifier</a>
                                         <a href="{{ path('delete_event', {'id': createEvent.id} )}}" class="btn btn-danger">Supprimer</a>
 
@@ -109,4 +116,8 @@
     </div>
 </main>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 {% endblock %}

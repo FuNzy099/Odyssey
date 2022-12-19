@@ -23,49 +23,54 @@ class PostController extends AbstractController
      */
     public function index(ManagerRegistry $doctrine, Post $post = null, Request $request, Event $event): Response
     {
-       
-        $form = $this -> createForm(CommentEventType::class, $post);
 
-        $form -> handleRequest($request);
+        if($this ->getUser() ){
 
-        if($form -> isSubmitted() && $form -> isValid()){
+            $form = $this -> createForm(CommentEventType::class, $post);
 
-            // getData => permet de récuperer les data rentré par l'utilisateur dans le formulaire 
-            $post = $form -> getData();
+            $form -> handleRequest($request);
 
-            // On instancie un nouvelle objet DateTime
-            $now = new DateTime();
+            if($form -> isSubmitted() && $form -> isValid()){
 
-            // On récupere addPost et on lui injecte l'objet post 
-            $event -> addPost($post);
+                // getData => permet de récuperer les data rentré par l'utilisateur dans le formulaire 
+                $post = $form -> getData();
 
-            // On initialise à l'aide du setter l'utilisateur ayant ecrit le commentaire
-            $post -> setUser($this -> getUser());
+                // On instancie un nouvelle objet DateTime
+                $now = new DateTime();
 
-            // On initialise la date de la creation du commentaire en hydratant avec la variable $now qui contient le nouvelle objet DateTime
-            $post -> setCreationDate($now);
+                // On récupere addPost et on lui injecte l'objet post 
+                $event -> addPost($post);
 
-            $entityManager = $doctrine -> getManager();
+                // On initialise à l'aide du setter l'utilisateur ayant ecrit le commentaire
+                $post -> setUser($this -> getUser());
 
-            // On persiste, c'est l'équivalent du prepare() en PDO
-            $entityManager -> persist($post);
+                // On initialise la date de la creation du commentaire en hydratant avec la variable $now qui contient le nouvelle objet DateTime
+                $post -> setCreationDate($now);
 
-            // On flush, c'est l'équivalent du execute() en PDO
-            $entityManager -> flush();
+                $entityManager = $doctrine -> getManager();
 
-            // On affiche un flash indiquant le succès à l'utilisateur
-            $this -> addFlash('message', 'Votre commentaire est bien ajouté !');
+                // On persiste, c'est l'équivalent du prepare() en PDO
+                $entityManager -> persist($post);
 
-            // On fait une redirection vers les commentaires de l'évènement en question
-            return $this -> redirectToRoute('app_post', ['id' => $event -> getId()]);
+                // On flush, c'est l'équivalent du execute() en PDO
+                $entityManager -> flush();
 
-        }
+                // On affiche un flash indiquant le succès à l'utilisateur
+                $this -> addFlash('message', 'Votre commentaire est bien ajouté !');
 
-        return $this->render('post/index.html.twig', [
-            'event' => $event,
-            'formComment' => $form -> createView()
- 
-        ]);
+                // On fait une redirection vers les commentaires de l'évènement en question*
+                return $this -> redirectToRoute('app_post', ['id' => $event-> getId()]);
+
+            }
+
+            return $this->render('post/index.html.twig', [
+                'event' => $event,
+                'formComment' => $form -> createView()
+    
+            ]);
+
+        }   return $this -> redirectToRoute('app_home');
+
     }
 
     
@@ -89,6 +94,9 @@ class PostController extends AbstractController
 
                 $this -> addFlash('message', 'Le message a bien été modifier !');
 
+                return $this -> redirectToRoute('show_history');
+
+
                 // return $this -> redirectToRoute('app_post');
                 
             }
@@ -99,5 +107,37 @@ class PostController extends AbstractController
             'editPost' => $form->createView(),
         ]);
     }
+
+
+
+    // --------------------- FUNCTION QUI PERMET DE SUPPRIMER UN EVENEMENT
+
+    /**
+     * @Route("/post/{id}/delete", name="delete_post")
+     */
+    // ManagerRegistry => Nous permet d'utiliser $doctrine qui est une couche d'abstration qui permet de communiquer avec la base de donnée
+    public function delete(ManagerRegistry $doctrine, Post $post = null): Response
+    {
+        if($this -> getUser() && $this -> getUser()  == $post -> getUser()){
+
+            // On passe par un manager pour récupérer depuis l'objet $doctrine notre getManager(), c'est grace à cette méthode qu'on à accès à remove() et flush()
+            $entityManager = $doctrine->getManager();
+    
+            // On premove notre objet $event
+            $entityManager->remove($post);
+    
+            // On flush, c'est l'équivalent de notre execute() en PDO, c'est dans cette étape flush() que notre insert into ce fait
+            $entityManager->flush();
+    
+            // Redirection vers la list des évènements 
+            return $this->redirectToRoute('list_events');
+
+        } else {
+
+            return $this -> redirectToRoute('app_home');
+
+        }
+    }
+
 
 }

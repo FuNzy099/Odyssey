@@ -29,9 +29,9 @@ class PrivateMessageType extends AbstractType
         $builder
             ->add('message', TextareaType::class,[
                 "attr" => [
-                    "class" => "form-control"
-                ],
-                "label" => "Votre message"          
+                    "class" => "form-control",
+                    "placeholder" => "Si vous souhaitez envoyer un message, saissisez votre texte ici"
+                ], 
             ])
             // ->add('recipient', EntityType::class,[
             //     "class" => User::class,

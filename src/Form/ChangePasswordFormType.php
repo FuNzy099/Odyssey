@@ -19,7 +19,10 @@ class ChangePasswordFormType extends AbstractType
             ->add('plainPassword', PasswordType::class, [
                 'required' => true,
                 'label' => 'Nouveau mot de passe',
-                'attr' => ['autocomplete' => 'new-password'],
+                'attr' => [
+                    'autocomplete' => 'new-password',
+                    'class' => 'form-control',
+                ],
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([
@@ -56,6 +59,9 @@ class ChangePasswordFormType extends AbstractType
                 Ce pourquoi je n'utilise pas un RepeatedType::class 
             */
             ->add('repeatedPassword', PasswordType::class,[
+                'attr' => [
+                    'class' => 'form-control',
+                ],
                 'label' => 'Repeter le mot de passe',
                 'mapped' => false
             ])

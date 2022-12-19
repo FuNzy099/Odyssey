@@ -156,7 +156,7 @@ class AdminController extends AbstractController
     }
 
 
-                                                        // PARTIE CONCERNANT LES UTILISATEURS
+                                                        // PARTIE CONCERNANT LES EVENEMENTS
 
    /**
      * @Route("/admin/events", name="admin_events")
@@ -203,7 +203,7 @@ class AdminController extends AbstractController
 
             $this -> addFlash('message', 'L\'évènement a bien été modifié !');
 
-            return $this -> redirectToRoute('admin_edit_events');
+            return $this -> redirectToRoute('admin_events');
         }
 
         return $this->render('admin/editEvent.html.twig', [

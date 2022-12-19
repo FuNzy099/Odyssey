@@ -19,6 +19,13 @@
     margin: 0 auto 5%;
 }
 
+.mainCGU{
+    margin-top: 70px;
+}
+
+.mainCGU h3{
+    color: black;
+}
 
 
 
@@ -307,8 +314,6 @@ hr {
     max-width: 800px;
     width: 95%;
     font: 18px/1.5 sans-serif;
-
-
     background: linear-gradient(135deg, rgba(95, 95, 95, 0.65), rgba(95, 95, 95, 0));
     backdrop-filter: blur(5px);
     border-radius: 20px;
@@ -317,21 +322,34 @@ hr {
     
 }
 
-/* Main de la page listUsers.html.twig dans admin */
-.mainAdminUsers {
-    text-align: center;
-    margin: auto;
-    width: 60%;
-    min-height: 70vh;
-    margin-bottom: 5%;
+.wrapperHomeAdmin .tableHomeAdmin{
+    color: white;
 }
 
-.mainAdminEvents {
+/* Main de la page listUsers.html.twig dans admin */
+.mainAdminUsers,.mainAdminEvents  {
+    text-align: center;
+    /* margin: auto;
+    width: 60%; */
+    min-height: 70vh;
+    /* margin-bottom: 5%; */
+    background-image: url(../../img/fondAdmin.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+    margin-top: 70px;
+
+}
+
+/* .mainAdminEvents {
     margin: auto;
     width: 90%;
     min-height: 70vh;
     margin-bottom: 5%;
-}
+    margin-top: 70px;
+    
+} */
 
 .mainAdminEvents h1,
 .mainAdminEvents p {
@@ -342,13 +360,24 @@ hr {
 /* Main de la page User.html.twig dans admin */
 .mainEditUser,
 .mainEditEvent {
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     min-height: 70vh;
-    margin: 1% auto;
-    width: 40%;
+    /* margin: 1% auto; */
+    margin-top: 70px;
+    /* width: 40%; */
+    min-height: 83vh;
+    align-items: center;
+    
+    background-image: url(../../img/essai.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
 }
+
 
 .containtEditUser,
 .containtEditEvent {
@@ -359,6 +388,13 @@ hr {
     padding: 3%;
 }
 
+.containtEditUser, .containtEditEvent{
+    width: 40%;
+}
+
+.containtEditUser form, .containtEditEvent form{
+    width: 100%;
+}
 
 /* Css concernant le bouton submit de la page editUser.html.twig dans admin */
 .mainEditUser .submit,
@@ -440,15 +476,26 @@ th {
 
 .mainAdmin table,
 .mainAdminUsers table {
-    width: 95%;
+    width: 60%;
     margin-top: 2%;
     color: black;
-    margin: 15px auto ;
-
+    margin: 15px auto 5% auto ;
+    color: rgb(255, 255, 255);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 35px;
 }
 
+.mainAdminEvents table{
+    width: 90%;
+    margin-top: 2%;
+    color: black;
+    margin: 15px auto 5% auto ;
+    color: rgb(255, 255, 255);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 35px;
+}
 .mainAdminEvents tbody tr:nth-child(even), .mainAdminEvents>tbody>tr:nth-of-type(odd)>* {
-    color: rgb(0, 0, 0) !important;
+    color: white(0, 0, 0) !important;
 }
 
 
@@ -476,6 +523,12 @@ th {
     max-width: 800px;
     width: 95%;
     font: 18px/1.5 sans-serif;
+}
+
+.wrapperEvent .infosRegistration, .wrapperEvent .infosOrganisation{
+    color: white;
+    width: 100%;
+    margin-bottom: 25px;
 }
 
 
@@ -510,6 +563,10 @@ th {
     font-size: 1.7em;
     text-align: center;
     margin-bottom: 20px;
+}
+
+.containtFilter h1 strong{
+    font-weight: bold;
 }
 
 .containtFilter form{
@@ -573,7 +630,7 @@ th {
 
 .infosEvent p {
     background-color: rgb(240, 240, 240);
-    height: 180px;
+    /* height: 180px; */
     padding: 10px;
     border-radius: 10px;
 }
@@ -643,21 +700,41 @@ th {
 
                                                             /* !POST  */
 
+.mainPost{
+    background-image: url(../../img/etoilepost.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-top: 70px;
+    min-height: 85vh;
+}
+
 .wrapper{
-    /* width: 100%; */
     width: 70%;
     margin: 40px auto;
+
+}
+
+.mainPost .wrapper .card{
+    border: 1px solid rgb(255, 255, 255);
+    background-color: #ffffffcc;
+
 }
 
 .wrapper .card-body{
     display: flex;
     justify-content: space-evenly;
+
 }
 
 .global{
     display: flex;
     flex-direction: column;
     width: 40%;
+}
+
+.global span, .infos span{
+    font-weight: bold;
 }
 
 .global .description{
@@ -673,13 +750,32 @@ th {
 }
 
 .infos p, .global p{
-    margin-bottom: 0;
+    margin-bottom: 10px;
 }
 
 .infos p i{
     margin-right: 10px;
 }
 
+.infos .place{
+    width: 100%;
+    margin: auto;
+    text-align: left;
+}
+
+.infos .truc{
+    display: flex;
+    justify-content: center;
+}
+
+.infos span{
+    width: 20%;
+    margin-right: 10px;
+}
+
+.infos .place p{
+    width: 50%;
+}
 .participants h3{
     color: black;
     font-size: 1.5em;
@@ -700,12 +796,17 @@ th {
 }
 
 .comment textarea{
-    width: 70%;
+    width: 100%;
+    height: 130px;
     padding: 5px;
 }
 
+.comment .submit{
+    margin-bottom: 50px;
+}
+
 .avatar-container{
-    padding: 0.5rem !important;
+    padding: 1.5rem !important;
     text-align: center;
 }
 
@@ -726,7 +827,9 @@ th {
     width: 70%;
     margin: 20px auto;
     border-radius: 20px;
-    border: 1px solid black;
+    border: 1px solid rgb(255, 255, 255);
+    background-color: #ffffff38;
+    color: white;
 }
 
 .containtPost{
@@ -736,11 +839,10 @@ th {
 
 .comment-text{
     width: 100%;
-    height: 80%;
+    min-height: 80%;
     text-align: left;
     padding: 10px;
-    text-align: justify;
-    
+    text-align: justify; 
 }
 
 .comment-footer{
@@ -752,6 +854,45 @@ th {
     width: 100% !important;
     text-align: right;
     margin-bottom: 0;
+    color: #9b9b9b !important;
+    font-weight: bold;
+}
+
+/* Editer un post */
+
+.mainEditPost{
+    background-image: url(../../img/editPost.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    min-height: 83vh;
+    max-width: none;
+    margin-top: 70px;
+    padding-top: 45px;
+    padding-bottom: 45px;
+}
+
+.containtEditPost{
+    width: 40%;
+    margin: auto;
+    color: rgb(255, 255, 255);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 35px;
+    border-radius: 25px;
+}
+
+.containtEditPost form{
+    margin: auto;
+    width: 80%;
+}
+
+.containtEditPost form textarea{
+    width: 100%;
+    min-height: 125px;
 }
 
 
@@ -766,6 +907,10 @@ body .addEventMain {
     background-repeat: no-repeat;
     background-position: center;
     color: white;
+}
+
+.addEventMain h1{
+    text-align: center;
 }
 
 .addEventMain{  
@@ -821,12 +966,10 @@ body .addEventMain {
     color: red;
 }
 
-
-
                                                             /* ! PAGE HISTORY USER */
 
 
-                                                            
+                                                         
 .historyMain{
 
   
@@ -846,6 +989,7 @@ body .addEventMain {
 
 .historyMain h1{
     text-align: center;
+    margin-top: 25px;
 }
 
 .tableHistory{
@@ -872,6 +1016,152 @@ body .addEventMain {
 
 
 
+                                                            /* ! PARTIE MAILBOX */
+
+.mainMailbox, .mainOutbox, .mainReadMessage, .mainSentMessage{
+
+    background-image: url(../../img/message.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    min-height: 83vh;
+    max-width: none;
+    margin-top: 70px;
+    padding-top: 45px;
+    padding-bottom: 45px;
+
+}       
+
+.containtMailbox, .containtOutbox, .containtReadMessage, .containtSentMessage{
+    width: 70%;
+    margin: auto;
+    color: rgb(255, 255, 255);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 35px;
+    border-radius: 25px;
+
+} 
+
+ .containtMailbox p,  .containtOutbox p{
+    margin-top: 25px;
+}
+
+.containtMailbox .tableMailbox, .containtOutbox .tableOutbox{
+    color: white;
+    margin-top: 55px;
+}
+
+.cellule{
+    padding-top: 15px !important;
+}
+
+.tableMailbox tr, .tableOutbox tr{
+    border-bottom: 1px solid white;
+}
+
+.tableMailbox .message, .tableOutbox .message{
+    display: block;
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-bottom: none;
+    margin: auto;   
+}
+
+.containtReadMessage form, .containtSentMessage form{
+    width: 70%;
+    margin: auto;
+}
+
+.containtReadMessage form label, .containtSentMessage form label{
+    display: none;
+}
+
+.containtReadMessage form .boutons, .containtSentMessage form .boutons{
+    margin-top: 25px;
+    display: flex;
+    width: 70%;
+    justify-content: space-evenly;
+    align-self: center;
+}
+
+.containtReadMessage form textarea{
+   width: 65%;
+   margin: auto;
+}
+
+.containtReadMessage .containteMessage{
+    text-align: justify;
+    width: 45%;
+    margin: auto;
+    min-height: 1em;
+    color: black;
+    background-color: rgb(240, 240, 240);
+    padding: 5px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+
+
+
+
+
+
+
+
+.mainResetPasseword{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    min-height: 90vh;
+    max-width: none;
+    background-image: url(../../img/resetPassword.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+.containtResetPassword{
+    width: 30%;
+    margin: auto;
+    color: rgb(255, 255, 255);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 35px;
+    border-radius: 25px;
+}
+
+.containtResetPassword form{
+    width: 100%;
+}
+
+.containtResetPassword h1{
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 15px;
+}
+
+.containtResetPassword .messageFlash{
+    width: 100%;
+}
+
+.containtResetPassword .required{
+    margin-top: 15px;
+}
+
+.containtResetPassword button{
+    width: 30%;
+    align-self: center;
+    margin-top: 25px;
+}
 
 
 

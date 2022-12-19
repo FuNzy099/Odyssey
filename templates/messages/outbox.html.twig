@@ -6,20 +6,70 @@
 
 {% block body %}
 
-<br>
-
 <div class="messageFlash">
 
 	{% include 'flash.html.twig' %}
 
 </div>
 
-<section class="container">
+<main class="mainOutbox">
+        
+
+	<div class="containtOutbox">
+
+		<h2>{{app.user.pseudonyme}} voici votre boite d'envoi</h2>
+		<a href="{{ path('app_mailbox')}}" class="btn btn-primary">Boite de réception</a>
+		<p>Vous avez envoyé: {{ app.user.send|length }} messages</p>
+		{# <a href="{{ path('app_send', {'id': app.user.id} )}}" class="btn btn-secondary">Envoyez un message</a> #}
+
+
+		<table class="table border tableOutbox">
+
+			<thead>
+				<tr>
+					<th>De</th>
+					<th>Message</th>
+					<th>Date</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				{% for message in sender %}
+
+				{% if message.isRead == 0 %}
+					{% set bold = "fw-bold" %}
+					
+				{% else %}
+					{% set bold = "" %}
+				{% endif %}
+
+					<tr>
+						<td class="{{bold}} cellule">{{ message.recipient.pseudonyme }}</td>
+						<td class="{{bold}}  cellule message">
+							<a href="{{ path("app_read_outbox", {"id": message.id})}}"> {{message.message}} </a>
+						</td>
+						<td class="{{bold}} cellule">{{message.creationDate|date('d-m-Y H:i')}}</td>
+						<td class="{{bold}}">
+							<a href="{{ path('delete', {'id': message.id })}}" class="btn btn-danger">Supprimer</a>
+						</td>
+					</tr>
+
+				{% endfor %}
+			</tbody>
+
+		</table>
+
+	</div>
+
+
+</main>
+
+{# <section class="container">
 	<div class="row">
 		<div class="col-12">
 			<h2>Messages envoyés</h2>
 			<p>Vous avez envoyé: {{ app.user.send|length }} messages</p>
-			{# <a href="{{ path('app_send', {'id': app.user.id} )}}" class="btn btn-secondary">Envoyez un message</a> #}
 			<a href="{{ path('app_mailbox', {'id': app.user.id} )}}" class="btn btn-primary">Boite de réception</a>
 		</div>
 
@@ -36,7 +86,7 @@
 		{% endif %}
 		<div class="col-3 {{bold}}">{{ message.recipient.pseudonyme }}</div>
 		<div class="col-3 {{bold}}">
-			<a href="{{ path(" app_read", {"id": message.id})}}">{{message.message}}</a>
+			<a href="{{ path("app_read_outbox", {"id": message.id})}}"> {{message.message}}</a>
 		</div>
 		<div class="col-3 {{bold}}">{{ message.creationDate|date }}</div>
 		<div class="col-3">
@@ -44,7 +94,7 @@
 		</div>
 		{% endfor %}
 	</div>
-</section>
+</section> #}
 
 
 {% endblock %}

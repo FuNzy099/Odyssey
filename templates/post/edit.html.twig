@@ -5,5 +5,28 @@
 
 
 {% block body %}
-    {{ form(editPost) }}
+
+<main class="mainEditPost">
+        
+    <div class="containtEditPost">
+
+        <h1>Modification du message</h1>
+
+
+    {{ form_start(editPost)}}
+
+        {{ form_row(editPost.text)}}
+
+
+        {{ form_row(editPost.submit)}}
+       
+
+    {{ form_end(editPost)}}
+
+
+    </div>
+
+</main>
+
+
 {% endblock %}

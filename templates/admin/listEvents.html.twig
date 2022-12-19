@@ -8,11 +8,17 @@
 
     <main class="mainAdminEvents">
 
-        <h1>Ma magnificence {{app.user.pseudonyme}}</h1>
+        <h1>Administrateur : {{app.user.pseudonyme}}</h1>
 
         <p>Vous retrouverez ici la liste complète des évènement enregistré sur le site web</p>
 
-        <table class="table table-striped border">
+        <div class="messageFlash">
+               
+            {% include 'flash.html.twig'  %}     
+        
+        </div> 
+
+        <table class="table border">
             <thead>
                 <tr>
                     <th scope="col">Créateur</th>
@@ -100,7 +106,7 @@
 
 {% block javascripts %}
     {# Script permetant à l'utilisateur d'avoir un aperçu de sont nouvelle avatar avant de l'avoir enregistré  #}
-    <script src="{{ asset('js/previewAvatar.js')}}"></script>
+    {# <script src="{{ asset('js/previewAvatar.js')}}"></script> #}
 
 
     <script

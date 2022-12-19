@@ -1,8 +1,8 @@
 /* smartphone */
-@media screen and (min-width: 481px) and (max-width: 768px){
-    
+@media screen and (min-width: 481px) and (max-width: 768px) {
 
-    .mainHome{
+
+    .mainHome {
         background-size: 350% auto;
     }
 
@@ -11,7 +11,7 @@
         text-shadow: 3px 3px black;
     }
 
-    .MainImg p{
+    .MainImg p {
         font-size: 1.3em;
     }
 
@@ -20,10 +20,10 @@
         color: red;
     } */
 
-                                                            /* ! PARTIE CONCERNANT LE MENU BURGER */
-    
+    /* ! PARTIE CONCERNANT LE MENU BURGER */
+
     /* Parent contenant l'icon burger */
-    header .iconBurger{
+    header .iconBurger {
         display: flex;
         justify-content: center;
         align-self: center;
@@ -35,11 +35,11 @@
         background-color: #111827;
         position: relative;
         z-index: 4;
- 
+
     }
 
     /* Span représentant la barre du milieu du menu burger */
-    .iconBurger span{
+    .iconBurger span {
         width: 30px;
         height: 3px;
         align-self: center;
@@ -47,7 +47,8 @@
     }
 
     /* Span pour créer lees barres du haut et du bas du menu burger */
-    .iconBurger span::before, .iconBurger span::after{
+    .iconBurger span::before,
+    .iconBurger span::after {
         content: '';
         position: absolute;
         width: 30px;
@@ -56,35 +57,36 @@
     }
 
     /* Permet de placer la barre du haut et du bas */
-    .iconBurger span::before{
+    .iconBurger span::before {
         transform: translateY(-10px);
     }
 
-    .iconBurger span::after{
+    .iconBurger span::after {
         transform: translateY(10px);
     }
 
     /* Permet de faire disparaitre la barre du milieu du menu burger au click de l'utilisateur, cette classe est attribué à l'aide du JS */
-    .iconBurger.active span{
+    .iconBurger.active span {
         background-color: transparent;
     }
 
     /* Permet d'éffectuer une rotation permettant d'afficher une croix */
-    .iconBurger.active span::before{
+    .iconBurger.active span::before {
         transform: translateY(0px) rotateZ(45deg);
     }
 
-    .iconBurger.active span::after{
+    .iconBurger.active span::after {
         transform: translateY(0px) rotateZ(-45deg);
     }
 
 
     /* Permet de retirer les boutons de navigation pour l'user en session et le visiteur  */
-    .groupButton, .navGuest{
+    .groupButton,
+    .navGuest {
         display: none;
     }
 
-    .navMobile{
+    .navMobile {
         position: fixed;
         display: block;
         width: 350px;
@@ -93,11 +95,12 @@
         height: 100vh;
         background-color: #111827;
         z-index: 3;
-        transform: translateX(-100%); /*Permet de sortir la menu de navigation mobile de l'ecrans */
-        transition: 0.4s transform cubic-bezier(.43,.73,0,.98);
+        transform: translateX(-100%);
+        /*Permet de sortir la menu de navigation mobile de l'ecrans */
+        transition: 0.4s transform cubic-bezier(.43, .73, 0, .98);
     }
 
-    .navMobile.active{
+    .navMobile.active {
         transform: initial;
     }
 
@@ -112,19 +115,19 @@
         z-index: 2;
     }
 
-    .mobileOverlay.active{
-        display:initial;
+    .mobileOverlay.active {
+        display: initial;
     }
 
     /* Logo, nom du site */
-    .groupInfosBurger figure{
+    .groupInfosBurger figure {
         display: flex;
         justify-content: space-evenly;
         margin-top: 16px;
     }
 
     /* Nom du site */
-    .groupInfosBurger figcaption{
+    .groupInfosBurger figcaption {
         align-self: center;
         color: white;
         font-family: 'play', sans-serif;
@@ -132,208 +135,291 @@
     }
 
     /* Avatar et Nom user */
-    .userBurger{
+    .userBurger {
         text-align: center;
         width: 90%;
         margin: auto;
         border-bottom: 1px solid #565656;
-        padding-bottom: 10px ;
+        padding-bottom: 10px;
     }
 
-    .avatarUserBurger{
+    .avatarUserBurger {
         text-align: center;
     }
 
-    .avatarUserBurger img{
+    .avatarUserBurger img {
         width: 130px;
         height: 130px;
-        object-fit: cover;   
-        border-radius: 30px;    
+        object-fit: cover;
+        border-radius: 30px;
     }
 
-    .userBurger .pseudo{
+    .userBurger .pseudo {
         font-size: 1.8em;
         font-family: 'play', sans-serif;
-         padding-bottom: 10px;
+        padding-bottom: 10px;
     }
 
     /* Liste des bouttons de la nav burger */
-   .groupButtonBurger, .navGuestBurger{
+    .groupButtonBurger,
+    .navGuestBurger {
         display: flex;
         flex-direction: column;
-   }
+    }
 
 
-   /* Nom du boutton */
-   .logoEntitled{
+    /* Nom du boutton */
+    .logoEntitled {
         display: flex;
-   }
+    }
 
-   /* Logo du boutton */
-   .logoEntitled svg{
+    /* Logo du boutton */
+    .logoEntitled svg {
         width: 30px;
         height: 30px;
         color: azure;
         margin: 15px 0 0 15px
-   }
+    }
 
-   .dropbtnBurger{
+    .dropbtnBurger {
         background-color: #111827;
         color: azure;
         border: none;
         margin: 15px 0 0 15px;
         font-size: 1em;
         font-family: 'play', sans-serif;
-   }
+    }
 
-   .dropdownBurgerAdmin-content, .dropdownBurgerEvent-content, .dropdownBurgerProfil-content {
-    display: none;
-    min-width: 200px;
-    z-index: 5;
-}
+    .dropdownBurgerAdmin-content,
+    .dropdownBurgerEvent-content,
+    .dropdownBurgerProfil-content {
+        display: none;
+        min-width: 200px;
+        z-index: 5;
+    }
 
-.dropdownBurgerAdmin-content.active, .dropdownBurgerEvent-content.active, .dropdownBurgerProfil-content.active{
+    .dropdownBurgerAdmin-content.active,
+    .dropdownBurgerEvent-content.active,
+    .dropdownBurgerProfil-content.active {
 
-    display: flex;
-    flex-direction: column;
-}
+        display: flex;
+        flex-direction: column;
+    }
 
-.dropdownBurgerAdmin-content.active a, .dropdownBurgerEvent-content.active a, .dropdownBurgerProfil-content a {
-    color: white;
-    font-family: 'play' , sans-serif;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    font-size: 1em;
-    margin: 0 0 0 75px;
-    
-}
+    .dropdownBurgerAdmin-content.active a,
+    .dropdownBurgerEvent-content.active a,
+    .dropdownBurgerProfil-content a {
+        color: white;
+        font-family: 'play', sans-serif;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        font-size: 1em;
+        margin: 0 0 0 75px;
 
-
-
-                                                            /* ! PARTIE CONCERNANT LE SLIDER */
+    }
 
 
-/* Correspond à un element du slider ( la vignette complete)*/
-.element{
-    flex-direction: column;
-}
 
-/* Fleche de droite et gauche du slider */
-#nav-right, #nav-left{
-    top: 130px;
-}
+    /* ! PARTIE CONCERNANT LE SLIDER */
 
-/* Correspon à l'image (planette) et la figure */
-.element figure{
-    display: flex;
-    flex-direction: column;
-    padding-left: 0;
-}
 
-/* Image de la planette */
-.element .imgPlanet{
-    width: 200px;
-    height: 200px;
-}
+    /* Correspond à un element du slider ( la vignette complete)*/
+    .element {
+        flex-direction: column;
+    }
 
-/* Correspond au figcaption */
-.nbPosition{
-    display: none;
-}
+    /* Fleche de droite et gauche du slider */
+    #nav-right,
+    #nav-left {
+        top: 130px;
+    }
 
-/* Parent contenant les infos de la planete */
-.infosPlanet{
-    /* height: 350px; */
-    /* height: 40vh;
+    /* Correspon à l'image (planette) et la figure */
+    .element figure {
+        display: flex;
+        flex-direction: column;
+        padding-left: 0;
+    }
+
+    /* Image de la planette */
+    .element .imgPlanet {
+        width: 200px;
+        height: 200px;
+    }
+
+    /* Correspond au figcaption */
+    .nbPosition {
+        display: none;
+    }
+
+    /* Parent contenant les infos de la planete */
+    .infosPlanet {
+        /* height: 350px; */
+        /* height: 40vh;
     margin-top: 0;
     padding: 20px 20px 20px 20px; */
 
-    height: 45vh;
-    margin-top: 0;
-    padding: 0px 3px 20px 3px;
-    display: flex;
-    justify-content: space-evenly;
+        height: 45vh;
+        margin-top: 0;
+        padding: 0px 3px 20px 3px;
+        display: flex;
+        justify-content: space-evenly;
 
-}
+    }
 
-/* Nom de la planete */
-.infosPlanet h2{
-    margin: -70px auto 10px;
-}
+    /* Nom de la planete */
+    .infosPlanet h2 {
+        margin: -70px auto 10px;
+    }
 
-/* Description */
-.descriptionPlanet{
-    margin: 5% auto;
-}
+    /* Description */
+    .descriptionPlanet {
+        margin: 5% auto;
+    }
 
-/* Concerne les infos de la periode orbitale et des satelites dans le slider */
-.moreDetail{
-    width: 80%;
-    margin: auto;
-    margin: 5px auto 0px;
-}
+    /* Concerne les infos de la periode orbitale et des satelites dans le slider */
+    .moreDetail {
+        width: 80%;
+        margin: auto;
+        margin: 5px auto 0px;
+    }
 
-/* Parent contenant les dots */
-.dots{
-    width: 90%;
-    margin: 20px auto 5% auto;
-    display: none;
-}
-
-
-
-                                                            /* ! PARTIE CONCERNANT L'API' */
+    /* Parent contenant les dots */
+    .dots {
+        width: 90%;
+        margin: 20px auto 5% auto;
+        display: none;
+    }
 
 
 
-
-
-
-.titleDay{
-    margin-top: 5%;
-}
-
-.wrapperMediaDescrition{
-    flex-direction: column;
-    align-items: center;
-}
-
-.description-div{
-    width: 95%;
-    margin-top: 3%;
-    text-align: center;
-}
-
-.containtLinks{
-    margin-right: 0;
-    width: 70%;
-    justify-content: space-evenly;
-}
-
-
-
-.logoFooter{
-    width: 180px
-}
-                                                        
+    /* ! PARTIE CONCERNANT L'API' */
 
 
 
 
 
 
+    .titleDay {
+        margin-top: 5%;
+    }
+
+    .wrapperMediaDescrition {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .description-div {
+        width: 95%;
+        margin-top: 3%;
+        text-align: center;
+    }
+
+    .containtLinks {
+        margin-right: 0;
+        width: 70%;
+        justify-content: space-evenly;
+    }
 
 
 
+    .logoFooter {
+        width: 180px
+    }
+
+
+    .normalFooter {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        position: absolute;
+        bottom: auto;
+        width: 100%;
+        min-height: 45vh;
+        background-color: #252737;
 
 
 
+    }
 
 
+    .normalFooter .blockFigureFooter{
+        width: 50%;
+    }
 
+    .containtLinks{
+        /* flex-direction: column; */
+        display: flex;
+        justify-content: space-evenly;
+        height: 580px;
+        text-align: center;
+    }
 
+    .containtLinks .rules, .network, .planSite{
+        padding: 5px;
+    }
+
+    .containtLinks h3{
+        min-width: 150px;
+    }
     
+
+
+
+
+
+
+
+
+    .mainEvent{
+        background-size: 100vh auto;
+    }
+
+    .card{
+        padding: 0px;
+    }
+
+    .ContaintInfosGlobalEvent{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-top: 25px;
+    }
+
+    .ContaintInfosGlobalEvent .infosEvent h3{
+        align-items: center;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .containtInfosAppointment {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    .containtInfosAppointment .appointment, .containtInfosAppointment .nbPlacesEvent{
+        width: 40%;
+    }
+
+    .buttonsEvent{
+        margin-top: 25px;
+        width: 100%;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

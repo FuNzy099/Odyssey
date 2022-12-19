@@ -57,14 +57,77 @@ class MessagesController extends AbstractController
     /**
      * @Route("/mailbox/message/{id}", name="app_read")
      * 
-     * Route pour lire le message
+     * Route pour lire le message situé dans la boite de réception 
      */
     public function read(PrivateMessage $message, ManagerRegistry $doctrine, Request $request): Response
     {
 
+        // Permet de vérifier si le déstinataire du message et celui en session
+        if($message -> getRecipient() -> getId() == $this -> getUser() -> getId()){
+
+            // Permet de créer le formulaire
+            $form = $this -> createForm(PrivateMessageType::class, $message);
+
+            // Etant donnée que le message est ouvert on initialise sont statut à true
+            $message -> setIsRead(true);
+    
+            $entityManager = $doctrine -> getManager();
+    
+            $entityManager -> persist($message);
+    
+            $entityManager -> flush(); 
+
+            // On instancie un nouveau objet de PrivateMessage dans le but de permettre une réponse
+            $newMessage = new PrivateMessage;
+
+            // On créer un formulaire qui ce base sur le builder de PrivateMessageType
+            $form = $this -> createForm(PrivateMessageType::class, $newMessage);
+
+            // Permet de récupèrer le formulaire dans la requette dans le but de le traiter
+            $form -> handleRequest($request);
+
+            if($form -> isSubmitted() && $form -> isValid()){
+            
+                // Permet d'ajouter l'expéditeur du message
+                $newMessage -> setSender($this -> getUser());
+                
+                $newMessage -> setRecipient($message -> getSender());
+    
+                $entityManager = $doctrine -> getManager();
+    
+                $entityManager -> persist($newMessage);
+    
+                $entityManager -> flush();
+    
+                $this -> addFlash("message", "Message envoyé avec succès ! ");
+    
+                return $this -> redirectToRoute("app_mailbox");
+            }
+
+    
+            return $this->render('messages/read.html.twig',[
+                "formMessage" => $form -> createView(),
+                "message" => $message
+            ]);
+            
+        } else {
+            return $this->redirectToRoute('app_mailbox');
+        }
+
+    }
+
+
+    /**
+     * @Route("/outbox/message/{id}", name="app_read_outbox")
+     * 
+     * Route pour lire le message situé dans la boite d'envoi
+     */
+    public function readtest(PrivateMessage $message, ManagerRegistry $doctrine, Request $request): Response
+    {
+
         $user = $this -> getUser();
 
-        if($message -> getRecipient() -> getId() == $user -> getId()){
+        if($message -> getSender() -> getId() == $user -> getId()){
     
             // Etant donnée que le message est ouvert on initialise sont statut à true
             $message -> setIsRead(true);
@@ -75,13 +138,14 @@ class MessagesController extends AbstractController
     
             $entityManager -> flush(); 
     
-            return $this->render('messages/read.html.twig', compact('message'));
+            return $this->render('messages/readOutbox.html.twig', compact('message'));
             
         } else {
             return $this->redirectToRoute('app_mailbox');
         }
 
     }
+
 
 
     /**
@@ -160,9 +224,6 @@ class MessagesController extends AbstractController
 
             return $this -> redirectToRoute("app_outbox", ['id' => $this -> getUser() -> getId()]);
         }
-
-
-
 
         return $this -> render("messages/send.html.twig",[
             "formMessage" => $form -> createView(),

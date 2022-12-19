@@ -9,15 +9,16 @@
 
 <main class="mainAdminUsers">
      
-       <div class="messageFlash">
-               
-            {% include 'flash.html.twig'  %}     
-        
-        </div> 
+    <h1>Administrateur : {{app.user.pseudonyme}}</h1>
 
-        <h1>Ma seignererie {{app.user.pseudonyme}}</h1>
+    <p>Vous retrouverez ici la liste complète des utilisateurs enregistré sur le site web</p>
 
-        <p>Vous retrouverez ici la liste complète des utilisateurs enregistré sur le site web</p>
+    <div class="messageFlash">
+            
+        {% include 'flash.html.twig'  %}     
+    
+    </div> 
+
 
         <table class="table border">
             <thead>

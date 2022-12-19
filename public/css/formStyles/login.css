@@ -10,9 +10,10 @@ body{
     display: flex;
     justify-content: center;
     position: relative;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     height: 87.2vh;
     max-width: none;
+    margin-top: 70px;
 }
 
 .containtLoginForm{

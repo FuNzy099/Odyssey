@@ -326,32 +326,9 @@
     }
 
 
-
-
-
-
-
     .logoFooter{
         width: 180px
     }
-                                                                                                                        
-                                                                
-                                                                
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     .normalFooter{
@@ -401,6 +378,76 @@
         color: white;
         text-decoration: none;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    .mainEvent{
+        background-size: 100vh auto;
+    }
+
+    .card{
+        padding: 0px;
+    }
+
+    .ContaintInfosGlobalEvent{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-top: 25px;
+    }
+
+    .ContaintInfosGlobalEvent .infosEvent{
+        width: 98%;
+        margin: auto;
+    }
+
+    .ContaintInfosGlobalEvent .infosEvent h3{
+        align-items: center;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .containtInfosAppointment{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .containtInfosAppointment .nbPlacesEvent{
+        margin: 25px 0;
+    }
+
+    .buttonsEvent{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .buttonsEvent p{
+        margin: auto;
+    }
+    .buttonsEvent a{
+        width: 50%;
+        margin: 0 auto 15px auto;
+    }
+
+
+
+
+
+
+
+
+
 
 
 }

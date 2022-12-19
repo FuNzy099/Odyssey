@@ -20,17 +20,18 @@ class AdminEditUserType extends AbstractType
         $builder
             
             ->add('pseudonyme', TextType::class, [
-                'label' => 'Nom de l\'utilisateur',
+                'label' => 'Nom de l\'utilisateur :',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('roles', ChoiceType::class,[
+                'label' => 'Roles :',
                 'expanded' => true,
                 'multiple' => true,
                 'choices' => [
-                    'administrateur' => "ROLE_ADMIN",
+                    'Administrateur' => "ROLE_ADMIN",
                     'Utilisateur' => "ROLE_USER",
                 ],
             ])
