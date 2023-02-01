@@ -65,7 +65,7 @@ window.onload = () => {
         setInterval() est une méthode qui permet de répéter une fonction ou d'exécuter un extrait de code à interval régulier
         DOCUMENTATION : https://developer.mozilla.org/en-US/docs/Web/API/setInterval
     */
-    timer = setInterval(showSlides, 3000);
+    timer = setInterval(showSlides, 10000);
 
 
     /*
@@ -156,7 +156,7 @@ function showSlides(n) {
     dots[slideIndex-1].className += " active";
 
     clearTimeout(timer);
-    // timer = setTimeout(() => plusSlides(1), 1000)
+    timer = setTimeout(() => plusSlides(1), 10000)
 
     // if(window.matchMedia("(min-width: 768px)").matches){
         
